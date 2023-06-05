@@ -12,10 +12,8 @@ import java.sql.SQLException;
 public class Conexion {
     
   
- private final String url="jdbc:sqlserver://localhost:"
-         + ";databaseName=ClinicaMilan;"
-            + "integratedSecurity=true;" +
-     "encrypt=true;trustServerCertificate=true";
+ private final String url="jdbc:sqlserver://localhost:1433;databaseName=Farmacia_Rosales_DB;"
+       + "user=sa;password=1234;" + "encrypt=true;trustServerCertificate=true";
    
     Connection cn;
     public Connection conectar(){      
