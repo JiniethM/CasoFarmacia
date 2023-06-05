@@ -88,9 +88,8 @@ public boolean verificarDatos(String dato) {
 public void Guardar(Clase_Categoria categoria) {
     try {
         CallableStatement cbst = cn.prepareCall("{call InsertarCategoria(?,?)}");
-        cbst.setInt(1, categoria.getId_Categoria());
-        cbst.setString(2, categoria.getNombre_Categoria());
-        cbst.setString(3, categoria.getDescripcion());
+        cbst.setString(1, categoria.getNombre_Categoria());
+        cbst.setString(2, categoria.getDescripcion());
         cbst.executeUpdate();
 
     } catch (SQLException e) {

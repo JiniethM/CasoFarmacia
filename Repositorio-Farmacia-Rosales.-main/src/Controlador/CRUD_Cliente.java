@@ -51,37 +51,38 @@ public class CRUD_Cliente {
 
     }
     
-     public DefaultTableModel buscarDatos(String dato) {
+     public DefaultTableModel BuscarCliente(int idCliente,String nombre1,String nombre2,String apellido1,String apellido2) {
         ResultSet rs;
-        DefaultTableModel modelo;
+    DefaultTableModel modelo;
 
-        String[] titulos = {"Id_Cliente", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2", "Numero_Celular","Direccion"};
-        String[] registro = new String[6];
+    String[] titulos = {"Id_Cliente", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2"};
+    String[] registro = new String[5];
 
-        modelo = new DefaultTableModel(null, titulos);
+    modelo = new DefaultTableModel(null, titulos);
 
-        try {
-            CallableStatement call = cn.prepareCall("{call BuscarCliente(?)}");
-            call.setString(1, dato);
-            rs = call.executeQuery();
+    try {
+        CallableStatement call = cn.prepareCall("{call BuscarCliente(?, ?, ?, ?, ?)}");
+        call.setInt(1, idCliente);
+        call.setString(2, nombre1);
+        call.setString(3, nombre2);
+        call.setString(4, apellido1);
+        call.setString(5, apellido2);
+        rs = call.executeQuery();
 
-            while (rs.next()) {
-                registro[0] = rs.getString("Id_Cliente");
-                registro[1] = rs.getString("Nombre_1");
-                registro[2] = rs.getString("Nombre_2");
-                registro[3] = rs.getString("Apellido_1");
-                registro[4] = rs.getString("Apellido_2");
-                registro[5] = rs.getString("Numero_Celular");
-                registro[5] = rs.getString("Direccion");
+        while (rs.next()) {
+            registro[0] = rs.getString("Id_Cliente");
+            registro[1] = rs.getString("Nombre_1");
+            registro[2] = rs.getString("Nombre_2");
+            registro[3] = rs.getString("Apellido_1");
+            registro[4] = rs.getString("Apellido_2");
 
-                modelo.addRow(registro);
-            }
-            return modelo;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-            return null;
+            modelo.addRow(registro);
         }
-
+        return modelo;
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+        return null;
+    }
     }
      
      
@@ -105,16 +106,17 @@ public class CRUD_Cliente {
        public void Guardar(Clase_Cliente cl) {
         try {
             CallableStatement cbst = cn.prepareCall("{call InsertarCliente(?,?,?,?,?,?)}");
-            cbst.setString(2, cl.getNombre_1());
-            cbst.setString(3, cl.getNombre_2());
-            cbst.setString(4, cl.getApellido_1());
-            cbst.setString(5, cl.getApellido_2());
+            cbst.setString(1, cl.getNombre_1());
+            cbst.setString(2, cl.getNombre_2());
+            cbst.setString(3, cl.getApellido_1());
+            cbst.setString(4, cl.getApellido_2());
             cbst.setString(5, cl.getNumero_Celular());
             cbst.setString(6, cl.getDireccion());
             cbst.executeUpdate();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
+            System.out.println(e);
         }
     }
       

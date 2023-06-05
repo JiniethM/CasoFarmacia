@@ -2,6 +2,8 @@
 package Modelo;
 
 import Vistas.InternalFrame_Cliente;
+import Vistas.JInternalFrame_Categoria;
+import Vistas.JInternalFrame_Presentacion;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JDesktopPane;
@@ -9,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -35,17 +38,17 @@ public class MDI_Farmacia extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jDesktopPane_Para_Mostrar = new javax.swing.JDesktopPane();
         jPanel4 = new javax.swing.JPanel();
         jButton6 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        jButton_Presentacion = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
+        jButton_Categoria = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -123,19 +126,6 @@ public class MDI_Farmacia extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setBackground(new java.awt.Color(0, 153, 153));
-        jButton7.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/menu.png"))); // NOI18N
-        jButton7.setText("Categoría");
-        jButton7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jButton7.setBorderPainted(false);
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
         jButton2.setText("Cerrar Seción");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +134,11 @@ public class MDI_Farmacia extends javax.swing.JFrame {
         });
 
         jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -154,50 +149,43 @@ public class MDI_Farmacia extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton10))))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jButton2)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addComponent(jButton1)
-                .addGap(32, 32, 32))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jButton_Cliente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(24, 24, 24)
                 .addComponent(jButton11)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(jButton12)
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addComponent(jButton10)
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
                 .addComponent(jButton13)
-                .addGap(27, 27, 27)
+                .addGap(32, 32, 32)
                 .addComponent(jButton5)
-                .addGap(18, 18, 18)
-                .addComponent(jButton7)
-                .addGap(103, 103, 103)
+                .addGap(57, 57, 57)
                 .addComponent(jButton2)
-                .addGap(31, 31, 31)
+                .addGap(45, 45, 45)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -208,7 +196,7 @@ public class MDI_Farmacia extends javax.swing.JFrame {
         jDesktopPane_Para_Mostrar.setLayout(jDesktopPane_Para_MostrarLayout);
         jDesktopPane_Para_MostrarLayout.setHorizontalGroup(
             jDesktopPane_Para_MostrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1035, Short.MAX_VALUE)
+            .addGap(0, 1032, Short.MAX_VALUE)
         );
         jDesktopPane_Para_MostrarLayout.setVerticalGroup(
             jDesktopPane_Para_MostrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,16 +218,16 @@ public class MDI_Farmacia extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setBackground(new java.awt.Color(0, 153, 153));
-        jButton8.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/medicamento.png"))); // NOI18N
-        jButton8.setText("Presentación");
-        jButton8.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jButton8.setBorderPainted(false);
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Presentacion.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Presentacion.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        jButton_Presentacion.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Presentacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/medicamento.png"))); // NOI18N
+        jButton_Presentacion.setText("Presentación");
+        jButton_Presentacion.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Presentacion.setBorderPainted(false);
+        jButton_Presentacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                jButton_PresentacionActionPerformed(evt);
             }
         });
 
@@ -295,6 +283,19 @@ public class MDI_Farmacia extends javax.swing.JFrame {
             }
         });
 
+        jButton_Categoria.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Categoria.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        jButton_Categoria.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/menu.png"))); // NOI18N
+        jButton_Categoria.setText("Categoría");
+        jButton_Categoria.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Categoria.setBorderPainted(false);
+        jButton_Categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Categoria(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -303,27 +304,30 @@ public class MDI_Farmacia extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jButton6)
                 .addGap(18, 18, 18)
-                .addComponent(jButton8)
-                .addGap(18, 18, 18)
+                .addComponent(jButton_Presentacion)
+                .addGap(32, 32, 32)
                 .addComponent(jButton14)
-                .addGap(18, 18, 18)
+                .addGap(39, 39, 39)
                 .addComponent(jButton16)
-                .addGap(18, 18, 18)
+                .addGap(53, 53, 53)
                 .addComponent(jButton9)
-                .addGap(18, 18, 18)
+                .addGap(69, 69, 69)
                 .addComponent(jButton15)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(jButton_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                .addGap(25, 25, 25))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
-                    .addComponent(jButton8)
+                    .addComponent(jButton_Presentacion)
                     .addComponent(jButton14)
                     .addComponent(jButton16)
                     .addComponent(jButton9)
-                    .addComponent(jButton15))
+                    .addComponent(jButton15)
+                    .addComponent(jButton_Categoria))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -437,17 +441,28 @@ public class MDI_Farmacia extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton14ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void jButton_PresentacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_PresentacionActionPerformed
+         JInternalFrame_Presentacion est = new JInternalFrame_Presentacion();
+        int x=(jDesktopPane_Para_Mostrar.getWidth()/2)-est.getWidth()/2;
+        int y=(jDesktopPane_Para_Mostrar.getHeight()/2)-est.getHeight()/2;
+        est.setLocation(x, y);
+        jDesktopPane_Para_Mostrar.add(est);
+        est.setVisible(true);
+    }//GEN-LAST:event_jButton_PresentacionActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    private void jButton_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Categoria
+       JInternalFrame_Categoria est = new JInternalFrame_Categoria();
+        int x=(jDesktopPane_Para_Mostrar.getWidth()/2)-est.getWidth()/2;
+        int y=(jDesktopPane_Para_Mostrar.getHeight()/2)-est.getHeight()/2;
+        est.setLocation(x, y);
+        est.mostrar();
+        jDesktopPane_Para_Mostrar.add(est);
+        est.setVisible(true);
+    }//GEN-LAST:event_jButton_Categoria
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -467,6 +482,10 @@ public class MDI_Farmacia extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -503,10 +522,10 @@ public class MDI_Farmacia extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButton_Categoria;
     private javax.swing.JButton jButton_Cliente;
+    private javax.swing.JButton jButton_Presentacion;
     private javax.swing.JDesktopPane jDesktopPane_Para_Mostrar;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

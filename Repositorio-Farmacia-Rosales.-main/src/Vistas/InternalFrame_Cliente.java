@@ -52,7 +52,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     String Telefono = jTextField_telefono.getText();
     String Direccion = jTextArea_Dirrecion.getText();
 
-    Clase_Cliente cl = new Clase_Cliente( Nombre_1, Nombre_2, Apellido_1, Apellido_2, Telefono, Direccion);
+    Clase_Cliente cl = new Clase_Cliente( Nombre_1, Nombre_2, Apellido_1, Apellido_2,Telefono, Direccion);
     cc.Guardar(cl);
 }
     
@@ -374,13 +374,13 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jButton_Borrar.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Borrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar usuario.png"))); // NOI18N
         jButton_Borrar.setText("Eliminar");
-        jButton_Borrar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Borrar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton_Borrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Borrar(evt);
             }
         });
-        jPanel1.add(jButton_Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 300, 100, 40));
+        jPanel1.add(jButton_Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 290, 100, 40));
 
         jPanel6.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -427,11 +427,11 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable_Cliente(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable_Cliente
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTable_Cliente
 
     private void jTable_ClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_ClienteMouseEntered
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTable_ClienteMouseEntered
 
     private void jTable_ClienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_ClienteMouseExited
@@ -465,21 +465,32 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
     private void jButton_Buscar_Cliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Buscar_Cliente
        try {
-         DefaultTableModel modelo;
-          CRUD_Cliente cli = new CRUD_Cliente();
-    modelo = cli.buscarDatos(jTextBuscar.getText());
-    if (jTextBuscar.getText().equals("Escribe el Id, nombres o apellidos")
-       || jTextBuscar.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "Escriba el dato a buscar");
-        jTextBuscar.setText("Escribe el Id, nombres o apellidos");
-        jTextBuscar.setForeground(Color.GRAY);
-        mostrar();
-    } else {
-        jTable_Cliente.setModel(modelo);
+        DefaultTableModel modelo;
+        CRUD_Cliente cli = new CRUD_Cliente();
+        
+        Integer idCliente = null;
+        String nombre1 = null;
+        String nombre2 = null;
+        String apellido1 = null;
+        String apellido2 = null;
+
+        if (!jTextBuscar.getText().equals("Escribe el Id, nombres o apellidos") && !jTextBuscar.getText().equals("")) {
+            idCliente = Integer.valueOf(jTextBuscar.getText());
+        }
+
+        modelo = cli.BuscarCliente(idCliente,nombre1,nombre2,apellido1,apellido2 );
+
+        if (idCliente == null && nombre1 == null && nombre2 == null && apellido1 == null && apellido2 == null) {
+            JOptionPane.showMessageDialog(null, "Escriba el dato que busca");
+            jTextBuscar.setText("Escribe el Id, nombres o apellidos");
+            jTextBuscar.setForeground(Color.GRAY);
+            mostrar();
+        } else {
+            jTable_Cliente.setModel(modelo);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
     }
-} catch (Exception e) {
-    JOptionPane.showMessageDialog(null, e);
-}
 
     }//GEN-LAST:event_jButton_Buscar_Cliente
 
@@ -514,11 +525,12 @@ if (filaSeleccionada == -1) {
     }//GEN-LAST:event_jButton_Editar
 
     private void jTextBuscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextBuscar
-        // TODO add your handling code here:
+        jTextBuscar.setText("");
+        jTextBuscar.setForeground(Color.black);
     }//GEN-LAST:event_jTextBuscar
 
     private void JtextFiel_nombre1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextFiel_nombre1
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_JtextFiel_nombre1
 
     private void JtextFiel_Nombre_2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextFiel_Nombre_2

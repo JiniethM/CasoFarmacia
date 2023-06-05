@@ -1,17 +1,58 @@
 
 package Vistas;
 
+import Controlador.CRUD_Categoria;
+import Controlador.Clase_Categoria;
+import Controlador_Conexion_DB.Conexion;
+import java.awt.Color;
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author diedr
  */
 public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
 
-
+   public final Conexion con = new Conexion();
+   public  final Connection cn = (Connection) con.conectar();
+    
     public JInternalFrame_Categoria() {
         initComponents();
     }
-
+    
+     public void limpiar() {
+         jTextField_Id_Categoria.setText("");
+         jTextField_Nombre_Categoria.setText("");
+         jTextArea_Descripcion_Categoria.setText("");
+     }
+     
+     
+      
+     public void GuardarCategoria(){
+         CRUD_Categoria cc = new CRUD_Categoria();
+         String Nombre_Categoria = jTextField_Nombre_Categoria.getText();
+         String Descripcion = jTextArea_Descripcion_Categoria.getText();
+         
+         Clase_Categoria c1 = new Clase_Categoria(Nombre_Categoria,Descripcion);
+         cc.Guardar(c1);
+     }
+    
+     public void mostrar(){
+         try {
+            DefaultTableModel modelo;
+            CRUD_Categoria cli = new CRUD_Categoria();
+            modelo = cli.mostrarDatos();
+            jTable_Categoria.setModel(modelo);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+     }
+         
+     }
+    
   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -21,21 +62,21 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTable_Categoria = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jButton10 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jTextField7 = new javax.swing.JTextField();
+        jButton_Agregar_Categoria = new javax.swing.JButton();
+        jButton_Editar_categoria = new javax.swing.JButton();
+        jButton_Actualizar_Categoria = new javax.swing.JButton();
+        jButton_Eliminar_Categoria = new javax.swing.JButton();
+        jButton_Buscar = new javax.swing.JButton();
+        jTextField_Id_Categoria = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jTextField8 = new javax.swing.JTextField();
+        jTextField_Nombre_Categoria = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jTextField13 = new javax.swing.JTextField();
+        jTextArea_Descripcion_Categoria = new javax.swing.JTextArea();
+        jTextField_Buscar = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -48,7 +89,7 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         jLabel7.setForeground(new java.awt.Color(0, 153, 153));
         jLabel7.setText("Id Categoria");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_Categoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -65,40 +106,69 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
                 "Id Categoria", "Nombre de categoria", "Descripción"
             }
         ));
-        jTable2.setGridColor(new java.awt.Color(0, 153, 153));
-        jTable2.setShowGrid(true);
-        jScrollPane2.setViewportView(jTable2);
+        jTable_Categoria.setGridColor(new java.awt.Color(0, 153, 153));
+        jTable_Categoria.setShowGrid(true);
+        jTable_Categoria.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTable_Categoria(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane2.setViewportView(jTable_Categoria);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jButton10.setBackground(new java.awt.Color(0, 153, 153));
-        jButton10.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"))); // NOI18N
-        jButton10.setText("Agregar");
-        jButton10.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar_Categoria.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Agregar_Categoria.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Agregar_Categoria.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Agregar_Categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"))); // NOI18N
+        jButton_Agregar_Categoria.setText("Agregar");
+        jButton_Agregar_Categoria.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar_Categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Agregar_Categoria(evt);
+            }
+        });
 
-        jButton12.setBackground(new java.awt.Color(0, 153, 153));
-        jButton12.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/editar.png"))); // NOI18N
-        jButton12.setText("Editar");
-        jButton12.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Editar_categoria.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Editar_categoria.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Editar_categoria.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Editar_categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/editar.png"))); // NOI18N
+        jButton_Editar_categoria.setText("Editar");
+        jButton_Editar_categoria.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Editar_categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Editar_categoria(evt);
+            }
+        });
 
-        jButton11.setBackground(new java.awt.Color(0, 153, 153));
-        jButton11.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"))); // NOI18N
-        jButton11.setText("Actualizar");
-        jButton11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton_Actualizar_Categoria.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Actualizar_Categoria.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Actualizar_Categoria.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Actualizar_Categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"))); // NOI18N
+        jButton_Actualizar_Categoria.setText("Actualizar");
+        jButton_Actualizar_Categoria.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton_Actualizar_Categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Actualizar_Categoria(evt);
+            }
+        });
 
-        jButton7.setBackground(new java.awt.Color(0, 153, 153));
-        jButton7.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"))); // NOI18N
-        jButton7.setText("Eliminar");
-        jButton7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Eliminar_Categoria.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Eliminar_Categoria.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Eliminar_Categoria.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Eliminar_Categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"))); // NOI18N
+        jButton_Eliminar_Categoria.setText("Eliminar");
+        jButton_Eliminar_Categoria.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Eliminar_Categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Eliminar_Categoria(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -107,14 +177,14 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_Eliminar_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton11))
+                        .addComponent(jButton_Actualizar_Categoria))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton_Agregar_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_Editar_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -122,34 +192,44 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton10)
+                .addComponent(jButton_Agregar_Categoria)
                 .addGap(44, 44, 44)
-                .addComponent(jButton12)
+                .addComponent(jButton_Editar_categoria)
                 .addGap(41, 41, 41)
-                .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton_Actualizar_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(44, 44, 44)
-                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(jButton_Eliminar_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                 .addGap(31, 31, 31))
         );
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Buscar.png"))); // NOI18N
-        jButton3.setBorder(null);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Buscar.png"))); // NOI18N
+        jButton_Buscar.setBorder(null);
+        jButton_Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton_Buscar(evt);
             }
         });
 
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Id_Categoria.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Id_Categoria.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_Id_Categoria.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Id_Categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_Id_Categoria(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField8.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Nombre_Categoria.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Nombre_Categoria.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_Nombre_Categoria.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Nombre_Categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_Nombre_Categoria(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 153, 153));
@@ -159,10 +239,19 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Descripción");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextArea_Descripcion_Categoria.setColumns(20);
+        jTextArea_Descripcion_Categoria.setRows(5);
+        jTextArea_Descripcion_Categoria.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextArea_Descripcion_Categoria.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTextArea_Descripcion_Categoria(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(jTextArea_Descripcion_Categoria);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -172,7 +261,7 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField_Nombre_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -189,18 +278,18 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField_Nombre_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
 
-        jTextField13.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jTextField13.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField13.setText("Buscar");
-        jTextField13.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField13.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField13.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_Buscar.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jTextField_Buscar.setForeground(new java.awt.Color(153, 153, 153));
+        jTextField_Buscar.setText("Buscar");
+        jTextField_Buscar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_Buscar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField13ActionPerformed(evt);
+                jTextField_Buscar(evt);
             }
         });
 
@@ -215,13 +304,13 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(48, 48, 48)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jTextField_Id_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -237,10 +326,10 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel7)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextField_Id_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(47, 47, 47)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
@@ -290,21 +379,84 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
+    private void jTextField_Buscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Buscar
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField13ActionPerformed
+    }//GEN-LAST:event_jTextField_Buscar
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton_Buscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Buscar
+       try {
+            DefaultTableModel modelo;
+            CRUD_Categoria cc = new CRUD_Categoria();
+
+            String dato = jTextField_Buscar.getText();
+            modelo = cc.buscarDatos(dato);
+
+            if (modelo == null || modelo.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados");
+                jTextField_Buscar.setText("Escribe el dato que busca");
+                jTextField_Buscar.setForeground(Color.GRAY);
+                mostrar();
+            } else {
+                jTable_Categoria.setModel(modelo);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    
+    }//GEN-LAST:event_jButton_Buscar
+
+    private void jTextField_Id_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Id_Categoria
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jTextField_Id_Categoria
+
+    private void jTextField_Nombre_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Nombre_Categoria
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_Nombre_Categoria
+
+    private void jTextArea_Descripcion_Categoria(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTextArea_Descripcion_Categoria
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea_Descripcion_Categoria
+
+    private void jTable_Categoria(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable_Categoria
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable_Categoria
+
+    private void jButton_Agregar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Agregar_Categoria
+         CRUD_Categoria c1 = new CRUD_Categoria();
+          try {
+            if ((jTextField_Nombre_Categoria.getText().equals(""))
+                    || (jTextArea_Descripcion_Categoria.getText().equals(""))) {
+                JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
+            } else {
+                    GuardarCategoria();
+                    limpiar();
+                    JOptionPane.showMessageDialog(null, "Datos Guardados Correctamente");
+                }
+            
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e);
+        }
+    }//GEN-LAST:event_jButton_Agregar_Categoria
+
+    private void jButton_Editar_categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Editar_categoria
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_Editar_categoria
+
+    private void jButton_Actualizar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar_Categoria
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_Actualizar_Categoria
+
+    private void jButton_Eliminar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Eliminar_Categoria
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_Eliminar_Categoria
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton_Actualizar_Categoria;
+    private javax.swing.JButton jButton_Agregar_Categoria;
+    private javax.swing.JButton jButton_Buscar;
+    private javax.swing.JButton jButton_Editar_categoria;
+    private javax.swing.JButton jButton_Eliminar_Categoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -316,10 +468,10 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTable jTable_Categoria;
+    private javax.swing.JTextArea jTextArea_Descripcion_Categoria;
+    private javax.swing.JTextField jTextField_Buscar;
+    private javax.swing.JTextField jTextField_Id_Categoria;
+    private javax.swing.JTextField jTextField_Nombre_Categoria;
     // End of variables declaration//GEN-END:variables
 }
