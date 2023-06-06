@@ -10,10 +10,10 @@ import java.sql.SQLException;
  * @author diedr
  */
 public class Conexion {
-    
-  
- private final String url="jdbc:sqlserver://localhost:1433;databaseName=Farmacia_Rosales_DB;"
-       + "user=sa;password=1234;" + "encrypt=true;trustServerCertificate=true";
+    private final String url="jdbc:sqlserver://localhost:53733;"
+         + ";database=Farmacia_Rosales_DB;"
+            + "integratedSecurity=true;" +
+     "encrypt=true;trustServerCertificate=true";
    
     Connection cn;
     public Connection conectar(){      
@@ -22,7 +22,7 @@ public class Conexion {
             System.out.println("Conexion establecida");
             return cn;
         } catch (SQLException e) {
-            System.out.println("Error en la conexión: "+e);
+            System.out.println("Error en la conexion: "+e);
         }
         return null;
     }  

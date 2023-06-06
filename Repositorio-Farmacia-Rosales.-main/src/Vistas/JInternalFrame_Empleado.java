@@ -212,7 +212,6 @@ Clase_Empleado bla = new Clase_Empleado (Nombre_1, Nombre_2, Apellido_1, Apellid
         });
 
         jTextApellido2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextApellido2.setText("DiedrinzonFargas");
         jTextApellido2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTextApellido2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -511,7 +510,7 @@ Clase_Empleado bla = new Clase_Empleado (Nombre_1, Nombre_2, Apellido_1, Apellid
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel13)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -638,7 +637,40 @@ panel.setBorder(borde);
     java.sql.Time horaEntrada = java.sql.Time.valueOf(horaEntradaStr);
    String horaSalidaStr = jTexthorasal.getText();
     java.sql.Time horaSalida = java.sql.Time.valueOf(horaSalidaStr);
-        
+            try {
+                String query = "{call ActualizarEmpleado(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+                CallableStatement cbst = cn.prepareCall(query);
+                cbst.setInt(1, Integer.parseInt(jTextIdEmpleado.getText()));
+                cbst.setString(2, Nombre_1);
+                cbst.setString(3, Nombre_2);
+                cbst.setString(4, Apellido_1);
+                cbst.setString(5, Apellido_2);
+                cbst.setString(6, Numero_Celular);
+                cbst.setString(7, Gmail);
+                cbst.setString(8, Direccion);
+                cbst.setTime(9, horaEntrada);
+                cbst.setTime(10, horaSalida);
+
+                // Ejecutar la actualización en la base de datos
+                cbst.executeUpdate();
+
+                // Restablecer los campos de texto
+                jTextNombre1.setText("");
+                jTextNombre2.setText("");
+                jTextApellido1.setText("");
+                jTextApellido2.setText("");
+                jTexTelefono.setText("");
+                jTextGmail.setText("");
+                jTextADirecion.setText("");
+                jTexthoraentra.setText("");
+                jTexthorasal.setText("");
+                jTextIdEmpleado.setEditable(true);
+
+               JOptionPane.showMessageDialog(this, "Actualización realizada con éxito");
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al actualizar los datos: " + e.getMessage());
+    }  
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void BorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarActionPerformed
@@ -678,7 +710,6 @@ panel.setBorder(borde);
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -688,7 +719,6 @@ panel.setBorder(borde);
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

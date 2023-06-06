@@ -24,8 +24,8 @@ import javax.swing.JPanel;
 public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
     private JPanel panel;
-     public final Conexion con = new Conexion();
-    public  final Connection cn = (Connection) con.conectar();
+    public final Conexion con = new Conexion();
+   public  final Connection cn = (Connection) con.conectar();
     
     public InternalFrame_Cliente() {
       
