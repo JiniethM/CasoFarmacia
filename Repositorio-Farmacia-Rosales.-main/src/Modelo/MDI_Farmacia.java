@@ -3,6 +3,7 @@ package Modelo;
 
 import Vistas.InternalFrame_Cliente;
 import Vistas.JInternalFrame_Categoria;
+import Vistas.JInternalFrame_Empleado;
 import Vistas.JInternalFrame_Presentacion;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -37,7 +38,7 @@ public class MDI_Farmacia extends javax.swing.JFrame {
         jButton12 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        Empleado = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jDesktopPane_Para_Mostrar = new javax.swing.JDesktopPane();
@@ -113,16 +114,16 @@ public class MDI_Farmacia extends javax.swing.JFrame {
         jButton13.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton13.setBorderPainted(false);
 
-        jButton5.setBackground(new java.awt.Color(0, 153, 153));
-        jButton5.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/empleado.png"))); // NOI18N
-        jButton5.setText("Empleado");
-        jButton5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jButton5.setBorderPainted(false);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        Empleado.setBackground(new java.awt.Color(0, 153, 153));
+        Empleado.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        Empleado.setForeground(new java.awt.Color(255, 255, 255));
+        Empleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/empleado.png"))); // NOI18N
+        Empleado.setText("Empleado");
+        Empleado.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        Empleado.setBorderPainted(false);
+        Empleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                EmpleadoActionPerformed(evt);
             }
         });
 
@@ -156,7 +157,7 @@ public class MDI_Farmacia extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Empleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -182,7 +183,7 @@ public class MDI_Farmacia extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jButton13)
                 .addGap(32, 32, 32)
-                .addComponent(jButton5)
+                .addComponent(Empleado)
                 .addGap(57, 57, 57)
                 .addComponent(jButton2)
                 .addGap(45, 45, 45)
@@ -464,9 +465,15 @@ public class MDI_Farmacia extends javax.swing.JFrame {
         est.setVisible(true);
     }//GEN-LAST:event_jButton_Categoria
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void EmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmpleadoActionPerformed
+       JInternalFrame_Empleado es = new JInternalFrame_Empleado();
+       int x=(jDesktopPane_Para_Mostrar.getWidth()/2)-es.getWidth()/2;
+       int y=(jDesktopPane_Para_Mostrar.getHeight()/2)-es.getHeight()/2;
+       es.setLocation(x,y);
+       es.mostrar();
+       jDesktopPane_Para_Mostrar.add(es);
+       es.setVisible(true);
+    }//GEN-LAST:event_EmpleadoActionPerformed
 
     private void jButton_Cliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Cliente
         InternalFrame_Cliente est = new InternalFrame_Cliente();
@@ -502,6 +509,7 @@ public class MDI_Farmacia extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Empleado;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
@@ -520,7 +528,6 @@ public class MDI_Farmacia extends javax.swing.JFrame {
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton9;
     private javax.swing.JButton jButton_Categoria;
