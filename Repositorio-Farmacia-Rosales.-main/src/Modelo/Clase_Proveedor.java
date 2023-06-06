@@ -1,43 +1,37 @@
 
-package Controlador;
+package Modelo;
 
 /**
  *
  * @author diedr
  */
-public class Clase_Cliente {
-    int Id_Cliente;
+public class Clase_Proveedor {
+    int Id_Proveedor;
     String Nombre_1;
-    String Nombre_2;
+    String  Nombre_2;
     String Apellido_1;
     String Apellido_2;
+    String Gmail;
     String Numero_Celular;
     String Direccion;
 
-    public Clase_Cliente(int Id_Cliente, String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Direccion) {
-        this.Id_Cliente = Id_Cliente;
+    public Clase_Proveedor(int Id_Proveedor, String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Gmail, String Numero_Celular, String Direccion) {
+        this.Id_Proveedor = Id_Proveedor;
         this.Nombre_1 = Nombre_1;
         this.Nombre_2 = Nombre_2;
         this.Apellido_1 = Apellido_1;
         this.Apellido_2 = Apellido_2;
-        this.Numero_Celular = Numero_Celular;
-        this.Direccion = Direccion;
-    }
-    public Clase_Cliente(String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Direccion) {
-        this.Nombre_1 = Nombre_1;
-        this.Nombre_2 = Nombre_2;
-        this.Apellido_1 = Apellido_1;
-        this.Apellido_2 = Apellido_2;
+        this.Gmail = Gmail;
         this.Numero_Celular = Numero_Celular;
         this.Direccion = Direccion;
     }
 
-    public int getId_Cliente() {
-        return Id_Cliente;
+    public int getId_Proveedor() {
+        return Id_Proveedor;
     }
 
-    public void setId_Cliente(int Id_Cliente) {
-        this.Id_Cliente = Id_Cliente;
+    public void setId_Proveedor(int Id_Proveedor) {
+        this.Id_Proveedor = Id_Proveedor;
     }
 
     public String getNombre_1() {
@@ -72,6 +66,14 @@ public class Clase_Cliente {
         this.Apellido_2 = Apellido_2;
     }
 
+    public String getGmail() {
+        return Gmail;
+    }
+
+    public void setGmail(String Gmail) {
+        this.Gmail = Gmail;
+    }
+
     public String getNumero_Celular() {
         return Numero_Celular;
     }
@@ -87,7 +89,5 @@ public class Clase_Cliente {
     public void setDireccion(String Direccion) {
         this.Direccion = Direccion;
     }
-    
-    
-    
+
 }

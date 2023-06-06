@@ -1,5 +1,6 @@
 
 package Controlador;
+import Modelo.Clase_Empleado;
 import Controlador_Conexion_DB.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;

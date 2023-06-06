@@ -1,8 +1,7 @@
-
 package Vistas;
 
 import Controlador.CRUD_Cliente;
-import Controlador.Clase_Cliente;
+import Modelo.Clase_Cliente;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
@@ -15,8 +14,6 @@ import java.awt.BorderLayout;
 import java.sql.Connection;
 import javax.swing.JPanel;
 
-
-
 /**
  *
  * @author Oreki
@@ -24,15 +21,17 @@ import javax.swing.JPanel;
 public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
     private JPanel panel;
-     public final Conexion con = new Conexion();
-    public  final Connection cn = (Connection) con.conectar();
-    
+    public final Conexion con = new Conexion();
+    public final Connection cn = (Connection) con.conectar();
+
     public InternalFrame_Cliente() {
-      
-          initComponents();
+
+        initComponents();
+
     }
 
     public void limpiar() {
+        jTextField_Id_Ciente.setText("");
         JtextFiel_Nombre_1.setText("");
         JtextFiel_Nombre_2.setText("");
         jTextFiel_Apellido_1.setText("");
@@ -40,39 +39,48 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jTextField_telefono.setText("");
         jTextArea_Dirrecion.setText("");
 
-        
     }
-    
-    public void guardarCliente() {
-    CRUD_Cliente cc = new CRUD_Cliente();
-    String Nombre_1 = JtextFiel_Nombre_1.getText();
-    String Nombre_2 = JtextFiel_Nombre_2.getText();
-    String Apellido_1 = jTextFiel_Apellido_1.getText();
-    String Apellido_2 = jTextField_Apellido_2.getText();
-    String Telefono = jTextField_telefono.getText();
-    String Direccion = jTextArea_Dirrecion.getText();
 
-    Clase_Cliente cl = new Clase_Cliente( Nombre_1, Nombre_2, Apellido_1, Apellido_2,Telefono, Direccion);
-    cc.Guardar(cl);
-}
-    
-     public void mostrar() {
+    public void guardarCliente() {
+        CRUD_Cliente cc = new CRUD_Cliente();
+        String Nombre_1 = JtextFiel_Nombre_1.getText();
+        String Nombre_2 = JtextFiel_Nombre_2.getText();
+        String Apellido_1 = jTextFiel_Apellido_1.getText();
+        String Apellido_2 = jTextField_Apellido_2.getText();
+        String Telefono = jTextField_telefono.getText();
+        String Direccion = jTextArea_Dirrecion.getText();
+
+        Clase_Cliente cl = new Clase_Cliente(Nombre_1, Nombre_2, Apellido_1, Apellido_2, Telefono, Direccion);
+        cc.Guardar(cl);
+    }
+
+    public void mostrar() {
         try {
             DefaultTableModel modelo;
             CRUD_Cliente cli = new CRUD_Cliente();
             modelo = cli.mostrarDatos();
             jTable_Cliente.setModel(modelo);
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-       
-
 
     }
 
-    
-   
+    public void editarCliente() {
+
+        CRUD_Cliente cc = new CRUD_Cliente();
+
+        Clase_Cliente cl = new Clase_Cliente(JtextFiel_Nombre_1.getText(),
+                JtextFiel_Nombre_2.getText(),
+                jTextFiel_Apellido_1.getText(),
+                jTextField_Apellido_2.getText(),
+                jTextField_telefono.getText(),
+                jTextArea_Dirrecion.getText());
+        cc.actualizar(cl);
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -101,8 +109,8 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jTextField_Id_Ciente = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jButton_Editar = new javax.swing.JButton();
-        jButton_Actualizar = new javax.swing.JButton();
         jButton_Borrar = new javax.swing.JButton();
+        jButton_Actualizar1 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -313,6 +321,11 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jTextBuscar.setText("Buscar");
         jTextBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTextBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextBuscarMouseClicked(evt);
+            }
+        });
         jTextBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextBuscar(evt);
@@ -356,19 +369,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jButton_Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 160, 93, -1));
 
-        jButton_Actualizar.setBackground(new java.awt.Color(0, 153, 153));
-        jButton_Actualizar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton_Actualizar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar uduario.png"))); // NOI18N
-        jButton_Actualizar.setText("Actualizar");
-        jButton_Actualizar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Actualizar(evt);
-            }
-        });
-        jPanel1.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, -1, -1));
-
         jButton_Borrar.setBackground(new java.awt.Color(0, 153, 153));
         jButton_Borrar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jButton_Borrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -381,6 +381,19 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(jButton_Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 290, 100, 40));
+
+        jButton_Actualizar1.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Actualizar1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jButton_Actualizar1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Actualizar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar uduario.png"))); // NOI18N
+        jButton_Actualizar1.setText("Actualizar");
+        jButton_Actualizar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton_Actualizar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Actualizar1(evt);
+            }
+        });
+        jPanel1.add(jButton_Actualizar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -427,19 +440,19 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable_Cliente(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable_Cliente
-        
+
     }//GEN-LAST:event_jTable_Cliente
 
     private void jTable_ClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_ClienteMouseEntered
-        
+
     }//GEN-LAST:event_jTable_ClienteMouseEntered
 
     private void jTable_ClienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_ClienteMouseExited
-       
+
     }//GEN-LAST:event_jTable_ClienteMouseExited
 
     private void jTextArea_Dirrecion(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTextArea_Dirrecion
-        
+
     }//GEN-LAST:event_jTextArea_Dirrecion
 
     private void Guardar_Cliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Guardar_Cliente
@@ -453,73 +466,60 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                     || (jTextArea_Dirrecion.getText().equals(""))) {
                 JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
             } else {
-                    guardarCliente();
-                    limpiar();
-                    JOptionPane.showMessageDialog(null, "Datos Guardados Correctamente");
-                }
-            
+                guardarCliente();
+                limpiar();
+                JOptionPane.showMessageDialog(null, "Datos Guardados Correctamente");
+                mostrar();
+            }
+
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e);
         }
     }//GEN-LAST:event_Guardar_Cliente
 
     private void jButton_Buscar_Cliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Buscar_Cliente
-       try {
-        DefaultTableModel modelo;
-        CRUD_Cliente cli = new CRUD_Cliente();
-        
-        Integer idCliente = null;
-        String nombre1 = null;
-        String nombre2 = null;
-        String apellido1 = null;
-        String apellido2 = null;
+        // Botón jButton_Buscar_Cliente                                     
+        try {
+            DefaultTableModel modelo;
+            CRUD_Cliente cl = new CRUD_Cliente();
 
-        if (!jTextBuscar.getText().equals("Escribe el Id, nombres o apellidos") && !jTextBuscar.getText().equals("")) {
-            idCliente = Integer.valueOf(jTextBuscar.getText());
-        }
+            String textoBusqueda = jTextBuscar.getText();
 
-        modelo = cli.BuscarCliente(idCliente,nombre1,nombre2,apellido1,apellido2 );
+            modelo = cl.BuscarCliente(textoBusqueda);
 
-        if (idCliente == null && nombre1 == null && nombre2 == null && apellido1 == null && apellido2 == null) {
-            JOptionPane.showMessageDialog(null, "Escriba el dato que busca");
-            jTextBuscar.setText("Escribe el Id, nombres o apellidos");
-            jTextBuscar.setForeground(Color.GRAY);
-            mostrar();
-        } else {
             jTable_Cliente.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, e);
-    }
+
 
     }//GEN-LAST:event_jButton_Buscar_Cliente
 
     private void jButton_Editar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Editar
-     int filaSeleccionada = jTable_Cliente.getSelectedRow();
-if (filaSeleccionada == -1) {
-    JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla para editar");
-} else {
-    String Id_Cliente = jTable_Cliente.getValueAt(filaSeleccionada, 0) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 0).toString() : "";
+        int filaSeleccionada = jTable_Cliente.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla para editar");
+        } else {
+            String Id_Cliente = jTable_Cliente.getValueAt(filaSeleccionada, 0) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 0).toString() : "";
 
-    String nombre1 = jTable_Cliente.getValueAt(filaSeleccionada, 1) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 1).toString() : "";
-    String nombre2 = jTable_Cliente.getValueAt(filaSeleccionada, 2) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 2).toString() : "";
-    String apellido1 = jTable_Cliente.getValueAt(filaSeleccionada, 3) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 3).toString() : "";
-    String apellido2 = jTable_Cliente.getValueAt(filaSeleccionada, 4) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 4).toString() : "";
-    String telefono = jTable_Cliente.getValueAt(filaSeleccionada, 5) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 5).toString() : "";
-    String direccion = jTable_Cliente.getValueAt(filaSeleccionada, 6) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 6).toString() : "";
+            String nombre1 = jTable_Cliente.getValueAt(filaSeleccionada, 1) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 1).toString() : "";
+            String nombre2 = jTable_Cliente.getValueAt(filaSeleccionada, 2) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 2).toString() : "";
+            String apellido1 = jTable_Cliente.getValueAt(filaSeleccionada, 3) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 3).toString() : "";
+            String apellido2 = jTable_Cliente.getValueAt(filaSeleccionada, 4) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 4).toString() : "";
+            String telefono = jTable_Cliente.getValueAt(filaSeleccionada, 5) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 5).toString() : "";
+            String direccion = jTable_Cliente.getValueAt(filaSeleccionada, 6) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 6).toString() : "";
 
-    jTextField_Id_Ciente.setText(Id_Cliente);
-    JtextFiel_Nombre_1.setText(nombre1);
-    JtextFiel_Nombre_2.setText(nombre2);
-    jTextFiel_Apellido_1.setText(apellido1);
-    jTextField_Apellido_2.setText(apellido2);
-    jTextField_telefono.setText(telefono);
-    jTextArea_Dirrecion.setText(direccion);
+            jTextField_Id_Ciente.setText(Id_Cliente);
+            JtextFiel_Nombre_1.setText(nombre1);
+            JtextFiel_Nombre_2.setText(nombre2);
+            jTextFiel_Apellido_1.setText(apellido1);
+            jTextField_Apellido_2.setText(apellido2);
+            jTextField_telefono.setText(telefono);
+            jTextArea_Dirrecion.setText(direccion);
 
-    // Desactivar la edición del campo de texto para el ID del cliente
-    jTextField_Id_Ciente.setEditable(false);
-}
-
+            // Desactivar la edición del campo de texto para el ID del cliente
+            jTextField_Id_Ciente.setEditable(false);
+        }
 
 
     }//GEN-LAST:event_jButton_Editar
@@ -527,10 +527,11 @@ if (filaSeleccionada == -1) {
     private void jTextBuscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextBuscar
         jTextBuscar.setText("");
         jTextBuscar.setForeground(Color.black);
+
     }//GEN-LAST:event_jTextBuscar
 
     private void JtextFiel_nombre1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextFiel_nombre1
-       
+
     }//GEN-LAST:event_JtextFiel_nombre1
 
     private void JtextFiel_Nombre_2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextFiel_Nombre_2
@@ -553,73 +554,62 @@ if (filaSeleccionada == -1) {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_telefonoActionPerformed
 
-    private void jButton_Actualizar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar
-    String nombre1 = JtextFiel_Nombre_1.getText();
-    String nombre2 = JtextFiel_Nombre_2.getText();
-    String apellido1 = jTextFiel_Apellido_1.getText();
-    String apellido2 = jTextField_Apellido_2.getText();
-    String numeroCelular = jTextField_telefono.getText();
-    String direccion = jTextArea_Dirrecion.getText();
-
-    try {
-        String query = "{call ActualizarCliente( ?, ?, ?, ?, ?, ?, ?)}";
-        CallableStatement cbst = cn.prepareCall(query);
-        cbst.setInt(1, Integer.parseInt(jTextField_Id_Ciente.getText())); 
-        cbst.setString(2, nombre1);
-        cbst.setString(3, nombre2);
-        cbst.setString(4, apellido1);
-        cbst.setString(5, apellido2);
-        cbst.setString(6, numeroCelular);
-        cbst.setString(7, direccion);
-
-        // Ejecutar la actualización en la base de datos
-        cbst.executeUpdate();
-
-        // Restablecer los campos de texto
-        JtextFiel_Nombre_1.setText("");
-        JtextFiel_Nombre_2.setText("");
-        jTextFiel_Apellido_1.setText("");
-        jTextField_Apellido_2.setText("");
-        jTextField_telefono.setText("");
-        jTextArea_Dirrecion.setText("");
-        jTextField_Id_Ciente.setEditable(true);
-
-        JOptionPane.showMessageDialog(this, "Actualización realizada con éxito");
-
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error al actualizar los datos: " + e.getMessage());
-    }
-    }//GEN-LAST:event_jButton_Actualizar
-
     private void jButton_Borrar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Borrar
-    int fila = this.jTable_Cliente.getSelectedRow();
-    if (fila == -1) {
-        JOptionPane.showMessageDialog(null, "Seleccione el registro de la tabla");
-    } else {
-        int cod = Integer.parseInt(this.jTable_Cliente.getValueAt(fila, 0).toString());
-        try {
-            CallableStatement cbst = cn.prepareCall("{call EliminarCliente(?)}");
-            cbst.setInt(1, cod);
-            cbst.executeUpdate();
-            
-            // Eliminar la fila seleccionada de la tabla
-            DefaultTableModel modelo = (DefaultTableModel) jTable_Cliente.getModel();
-            modelo.removeRow(fila);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
+        int selectedRow = jTable_Cliente.getSelectedRow();
+        if (selectedRow != -1) {
+            String idClienteString = jTable_Cliente.getValueAt(selectedRow, 0).toString();
+            int idCliente = Integer.parseInt(idClienteString);
+
+            CRUD_Cliente cli = new CRUD_Cliente();
+            cli.eliminar(idCliente);
+            mostrar();
+            JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente");
         }
-    
-}
 
 
     }//GEN-LAST:event_jButton_Borrar
+
+    private void jTextBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextBuscarMouseClicked
+        jTextBuscar.setText("");
+        jTextBuscar.setForeground(Color.black);
+    }//GEN-LAST:event_jTextBuscarMouseClicked
+
+    private void jButton_Actualizar1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar1
+        String idCLienteText = jTextField_Id_Ciente.getText();
+        int idCliente = Integer.parseInt(idCLienteText);
+        String nombre1 = JtextFiel_Nombre_1.getText();
+        String nombre2 = JtextFiel_Nombre_2.getText();
+        String apellido1 = jTextFiel_Apellido_1.getText();
+        String apellido2 = jTextField_Apellido_2.getText();
+        String celular = jTextField_telefono.getText();
+        String direccion = jTextArea_Dirrecion.getText();
+
+        // Crear objeto Clase_Cliente con los datos obtenidos
+        Clase_Cliente cliente = new Clase_Cliente(idCliente, nombre1, nombre2, apellido1, apellido2, celular, direccion);
+
+        // Llamar al método "actualizar" de CRUD_Cliente
+        CRUD_Cliente clienteCRUD = new CRUD_Cliente();
+        clienteCRUD.actualizar(cliente);
+        mostrar();
+
+        // Refrescar la tabla mostrando los datos actualizados
+        clienteCRUD.mostrarDatos();
+        limpiar();
+
+        // Mostrar mensaje de éxito o cualquier otra notificación
+        JOptionPane.showMessageDialog(null, "Cliente actualizado exitosamente.");
+
+
+    }//GEN-LAST:event_jButton_Actualizar1
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JtextFiel_Nombre_1;
     private javax.swing.JTextField JtextFiel_Nombre_2;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton_Actualizar;
+    private javax.swing.JButton jButton_Actualizar1;
     private javax.swing.JButton jButton_Borrar;
     private javax.swing.JButton jButton_Buscar_Cliente;
     private javax.swing.JButton jButton_Editar;

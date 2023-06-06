@@ -1,5 +1,6 @@
 
 package Controlador;
+import Modelo.Class_Producto_Proveedor;
 import Controlador_Conexion_DB.Conexion;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

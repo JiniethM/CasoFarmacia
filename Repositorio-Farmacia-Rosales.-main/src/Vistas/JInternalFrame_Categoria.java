@@ -1,8 +1,7 @@
-
 package Vistas;
 
 import Controlador.CRUD_Categoria;
-import Controlador.Clase_Categoria;
+import Modelo.Clase_Categoria;
 import Controlador_Conexion_DB.Conexion;
 import java.awt.Color;
 import java.awt.HeadlessException;
@@ -16,44 +15,41 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
 
-   public final Conexion con = new Conexion();
-   public  final Connection cn = (Connection) con.conectar();
+    public final Conexion con = new Conexion();
+    public final Connection cn = (Connection) con.conectar();
     
     public JInternalFrame_Categoria() {
         initComponents();
     }
-    
-     public void limpiar() {
-         jTextField_Id_Categoria.setText("");
-         jTextField_Nombre_Categoria.setText("");
-         jTextArea_Descripcion_Categoria.setText("");
-     }
-     
-     
-      
-     public void GuardarCategoria(){
-         CRUD_Categoria cc = new CRUD_Categoria();
-         String Nombre_Categoria = jTextField_Nombre_Categoria.getText();
-         String Descripcion = jTextArea_Descripcion_Categoria.getText();
-         
-         Clase_Categoria c1 = new Clase_Categoria(Nombre_Categoria,Descripcion);
-         cc.Guardar(c1);
-     }
-    
-     public void mostrar(){
-         try {
+
+    public void limpiar() {
+        jTextField_Id_Categoria.setText("");
+        jTextField_Nombre_Categoria.setText("");
+        jTextArea_Descripcion_Categoria.setText("");
+    }
+
+    public void GuardarCategoria() {
+        CRUD_Categoria cc = new CRUD_Categoria();
+        String Nombre_Categoria = jTextField_Nombre_Categoria.getText();
+        String Descripcion = jTextArea_Descripcion_Categoria.getText();
+
+        Clase_Categoria c1 = new Clase_Categoria(Nombre_Categoria, Descripcion);
+        cc.Guardar(c1);
+    }
+
+    public void mostrar() {
+        try {
             DefaultTableModel modelo;
             CRUD_Categoria cli = new CRUD_Categoria();
             modelo = cli.mostrarDatos();
             jTable_Categoria.setModel(modelo);
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-     }
-         
-     }
-    
-  
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -287,6 +283,11 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         jTextField_Buscar.setText("Buscar");
         jTextField_Buscar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTextField_Buscar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Buscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField_BuscarMouseClicked(evt);
+            }
+        });
         jTextField_Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Buscar(evt);
@@ -384,25 +385,26 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField_Buscar
 
     private void jButton_Buscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Buscar
-       try {
-            DefaultTableModel modelo;
-            CRUD_Categoria cc = new CRUD_Categoria();
+      // Obtener el valor de búsqueda del campo de texto
+    String busqueda = jTextField_Buscar.getText().trim();
 
-            String dato = jTextField_Buscar.getText();
-            modelo = cc.buscarDatos(dato);
+    // Verificar si se proporcionó un ID o un nombre
+    int idCategoria = 0;  // Si no se proporciona un ID, se utilizará el valor 0
+    String nombreCategoria = null;
+    try {
+        idCategoria = Integer.parseInt(busqueda);
+    } catch (NumberFormatException e) {
+        nombreCategoria = busqueda;
+    }
 
-            if (modelo == null || modelo.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "No se encontraron resultados");
-                jTextField_Buscar.setText("Escribe el dato que busca");
-                jTextField_Buscar.setForeground(Color.GRAY);
-                mostrar();
-            } else {
-                jTable_Categoria.setModel(modelo);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    
+    // Llamar al método de búsqueda en el controlador
+    CRUD_Categoria crudCategoria = new CRUD_Categoria();
+    DefaultTableModel modelo = crudCategoria.buscarDatos(idCategoria, nombreCategoria, null);
+    mostrar();
+
+    // Actualizar la tabla de resultados con el modelo obtenido
+    jTable_Categoria.setModel(modelo);
+
     }//GEN-LAST:event_jButton_Buscar
 
     private void jTextField_Id_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Id_Categoria
@@ -422,33 +424,85 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTable_Categoria
 
     private void jButton_Agregar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Agregar_Categoria
-         CRUD_Categoria c1 = new CRUD_Categoria();
-          try {
+        CRUD_Categoria c1 = new CRUD_Categoria();
+        try {
             if ((jTextField_Nombre_Categoria.getText().equals(""))
                     || (jTextArea_Descripcion_Categoria.getText().equals(""))) {
                 JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
             } else {
-                    GuardarCategoria();
-                    limpiar();
-                    JOptionPane.showMessageDialog(null, "Datos Guardados Correctamente");
-                }
-            
+                GuardarCategoria();
+                limpiar();
+                mostrar();
+                JOptionPane.showMessageDialog(null, "Datos Guardados Correctamente");
+            }
+
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e);
         }
     }//GEN-LAST:event_jButton_Agregar_Categoria
 
     private void jButton_Editar_categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Editar_categoria
-        // TODO add your handling code here:
+        int filaSeleccionada = jTable_Categoria.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla para editar");
+        } else {
+            String id_Cate = jTable_Categoria.getValueAt(filaSeleccionada, 0) != null ? jTable_Categoria.getValueAt(filaSeleccionada, 0).toString() : "";
+            String nombre = jTable_Categoria.getValueAt(filaSeleccionada, 1) != null ? jTable_Categoria.getValueAt(filaSeleccionada, 1).toString() : "";
+            String Descrip = jTable_Categoria.getValueAt(filaSeleccionada, 2) != null ? jTable_Categoria.getValueAt(filaSeleccionada, 2).toString() : "";
+
+            // Asignar los valores a los campos de texto y área de texto
+            jTextField_Id_Categoria.setText(id_Cate);
+            jTextField_Nombre_Categoria.setText(nombre);
+            jTextArea_Descripcion_Categoria.setText(Descrip);
+
+            // Desactivar la edición del campo de texto para el ID de la categoría
+            jTextField_Id_Categoria.setEditable(false);
+        }
     }//GEN-LAST:event_jButton_Editar_categoria
 
     private void jButton_Actualizar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar_Categoria
-        // TODO add your handling code here:
+        String idCategoriText = jTextField_Id_Categoria.getText();
+        int idCliente = Integer.parseInt(idCategoriText);
+        String nombre = jTextField_Nombre_Categoria.getText();
+        String Decrip = jTextArea_Descripcion_Categoria.getText();
+
+        // Crear objeto Clase_Cliente con los datos obtenidos
+        Clase_Categoria cliente = new Clase_Categoria(idCliente, nombre, Decrip);
+
+        // Llamar al método "actualizar" de CRUD_Cliente
+        CRUD_Categoria Crud_Categoria = new CRUD_Categoria();
+        Crud_Categoria.actualizar(cliente);
+        mostrar();
+
+        // Refrescar la tabla mostrando los datos actualizados
+        Crud_Categoria.mostrarDatos();
+        limpiar();
+
+        // Mostrar mensaje de éxito o cualquier otra notificación
+        JOptionPane.showMessageDialog(null, "Categoria actualizada exitosamente.");
+
+
     }//GEN-LAST:event_jButton_Actualizar_Categoria
 
     private void jButton_Eliminar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Eliminar_Categoria
-        // TODO add your handling code here:
+        int selectedRow = jTable_Categoria.getSelectedRow();
+        if (selectedRow != -1) {
+            String idCategoriaString = jTable_Categoria.getValueAt(selectedRow, 0).toString();
+            int idCategoria = Integer.parseInt(idCategoriaString);
+
+            CRUD_Categoria cli = new CRUD_Categoria();
+            cli.eliminar(idCategoria);
+            mostrar();
+            JOptionPane.showMessageDialog(null, "Categoria eliminada correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la categoria");
+        }
     }//GEN-LAST:event_jButton_Eliminar_Categoria
+
+    private void jTextField_BuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_BuscarMouseClicked
+        jTextField_Buscar.setText("");
+        jTextField_Buscar.setForeground(Color.black);
+    }//GEN-LAST:event_jTextField_BuscarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

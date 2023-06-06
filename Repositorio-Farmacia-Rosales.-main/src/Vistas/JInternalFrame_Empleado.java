@@ -1,5 +1,6 @@
 
 package Vistas;
+import Modelo.Clase_Empleado;
 import Controlador_Conexion_DB.Conexion;
 import Controlador.*;
 import java.awt.BorderLayout;
@@ -212,7 +213,6 @@ Clase_Empleado bla = new Clase_Empleado (Nombre_1, Nombre_2, Apellido_1, Apellid
         });
 
         jTextApellido2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextApellido2.setText("DiedrinzonFargas");
         jTextApellido2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTextApellido2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -678,7 +678,6 @@ panel.setBorder(borde);
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -688,7 +687,6 @@ panel.setBorder(borde);
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

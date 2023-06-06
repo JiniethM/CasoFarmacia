@@ -1,5 +1,5 @@
 
-package Controlador;
+package Modelo;
 
 import java.sql.Time;
 

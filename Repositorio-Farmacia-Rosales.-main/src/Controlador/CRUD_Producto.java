@@ -1,6 +1,7 @@
 
 package Controlador;
 
+import Modelo.Clase_Producto;
 import Controlador_Conexion_DB.Conexion;
 import java.sql.Blob;
 import java.io.ByteArrayInputStream;
