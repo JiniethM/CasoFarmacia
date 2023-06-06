@@ -23,9 +23,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     private JPanel panel;
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
-
     public InternalFrame_Cliente() {
-
         initComponents();
 
     }
@@ -113,6 +111,10 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jButton_Actualizar1 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -415,7 +417,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -10,8 +10,7 @@ import java.sql.SQLException;
  * @author diedr
  */
 public class Conexion {
-    
-  
+   
  private final String url="jdbc:sqlserver://localhost:1433;databaseName=Farmacia_Rosales_DB;"
        + "user=sa;password=1234;" + "encrypt=true;trustServerCertificate=true";
    
@@ -26,6 +25,7 @@ public class Conexion {
         }
         return null;
     }  
+
 }
  
  

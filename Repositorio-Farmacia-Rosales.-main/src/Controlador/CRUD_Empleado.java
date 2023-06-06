@@ -124,7 +124,7 @@ public void Guardar(Clase_Empleado empleado) {
 
 public void actualizar(Clase_Empleado empleado) {
     try {
-        CallableStatement cbst = cn.prepareCall("{call ActualizarEmpleado(?,?,?,?,?,?,?,?,?)}");
+        CallableStatement cbst = cn.prepareCall("{call ActualizarEmpleado(?,?,?,?,?,?,?,?,?,?)}");
         cbst.setInt(1, empleado.getId_Empleado());
         cbst.setString(2, empleado.getNombre_1());
         cbst.setString(3, empleado.getNombre_2());

@@ -11,7 +11,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -511,7 +510,7 @@ Clase_Empleado bla = new Clase_Empleado (Nombre_1, Nombre_2, Apellido_1, Apellid
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel13)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -638,7 +637,40 @@ panel.setBorder(borde);
     java.sql.Time horaEntrada = java.sql.Time.valueOf(horaEntradaStr);
    String horaSalidaStr = jTexthorasal.getText();
     java.sql.Time horaSalida = java.sql.Time.valueOf(horaSalidaStr);
-        
+            try {
+                String query = "{call ActualizarEmpleado(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+                CallableStatement cbst = cn.prepareCall(query);
+                cbst.setInt(1, Integer.parseInt(jTextIdEmpleado.getText()));
+                cbst.setString(2, Nombre_1);
+                cbst.setString(3, Nombre_2);
+                cbst.setString(4, Apellido_1);
+                cbst.setString(5, Apellido_2);
+                cbst.setString(6, Numero_Celular);
+                cbst.setString(7, Gmail);
+                cbst.setString(8, Direccion);
+                cbst.setTime(9, horaEntrada);
+                cbst.setTime(10, horaSalida);
+
+                // Ejecutar la actualización en la base de datos
+                cbst.executeUpdate();
+
+                // Restablecer los campos de texto
+                jTextNombre1.setText("");
+                jTextNombre2.setText("");
+                jTextApellido1.setText("");
+                jTextApellido2.setText("");
+                jTexTelefono.setText("");
+                jTextGmail.setText("");
+                jTextADirecion.setText("");
+                jTexthoraentra.setText("");
+                jTexthorasal.setText("");
+                jTextIdEmpleado.setEditable(true);
+
+               JOptionPane.showMessageDialog(this, "Actualización realizada con éxito");
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al actualizar los datos: " + e.getMessage());
+    }  
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void BorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarActionPerformed
@@ -662,7 +694,36 @@ panel.setBorder(borde);
     }//GEN-LAST:event_BorrarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        // TODO add your handling code here:
+        int filaSelecion = jTableEmpleado.getSelectedRow();
+    if (filaSelecion == -1)  {
+        JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla para editar");
+} else {
+        String Id_Empleado = jTableEmpleado.getValueAt(filaSelecion, 0) != null ? jTableEmpleado.getValueAt(filaSelecion, 0).toString() : "";
+    
+        String Nombre_1 = jTableEmpleado.getValueAt(filaSelecion, 1) != null ? jTableEmpleado.getValueAt(filaSelecion, 1).toString() : "";
+        String Nombre_2 = jTableEmpleado.getValueAt(filaSelecion, 2) != null ? jTableEmpleado.getValueAt(filaSelecion, 2).toString() : "";
+        String Apellido_1 = jTableEmpleado.getValueAt(filaSelecion, 3) != null ? jTableEmpleado.getValueAt(filaSelecion, 3).toString() : "";
+        String Apellido_2 = jTableEmpleado.getValueAt(filaSelecion, 4) != null ? jTableEmpleado.getValueAt(filaSelecion, 4).toString() : "";
+        String Numero_Celular = jTableEmpleado.getValueAt(filaSelecion, 5) != null ? jTableEmpleado.getValueAt(filaSelecion, 5).toString() : "";
+        String Gmail = jTableEmpleado.getValueAt(filaSelecion, 6) != null ? jTableEmpleado.getValueAt(filaSelecion, 6).toString() : "";   
+        String Direccion = jTableEmpleado.getValueAt(filaSelecion, 7) != null ? jTableEmpleado.getValueAt(filaSelecion, 7).toString() : "";
+        String horaEntradaStr = jTableEmpleado.getValueAt(filaSelecion, 8) != null ? jTableEmpleado.getValueAt(filaSelecion, 8).toString() : "";
+        String horaSalidaStr = jTableEmpleado.getValueAt(filaSelecion, 9) != null ? jTableEmpleado.getValueAt(filaSelecion, 9).toString() : "";
+   
+    jTextIdEmpleado.setText(Id_Empleado);
+    jTextNombre1.setText(Nombre_1);
+    jTextNombre2.setText(Nombre_2);
+    jTextApellido1.setText(Apellido_1);
+    jTextApellido2.setText(Apellido_2);
+    jTexTelefono.setText(Numero_Celular);
+    jTextADirecion.setText(Direccion);
+    jTexthoraentra.setText(horaEntradaStr);
+    jTexthorasal.setText(horaSalidaStr);
+    
+    jTextIdEmpleado.setEditable(true);
+    
+    }   
+    
     }//GEN-LAST:event_EditarActionPerformed
 
 

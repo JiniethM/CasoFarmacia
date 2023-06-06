@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package Vistas;
 
 /**
@@ -10,9 +7,7 @@ package Vistas;
  */
 public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form JInternalFrame_Compra
-     */
+
     public JInternalFrame_Compra() {
         initComponents();
     }
