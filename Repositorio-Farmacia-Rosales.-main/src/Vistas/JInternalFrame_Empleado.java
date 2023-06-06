@@ -694,7 +694,36 @@ panel.setBorder(borde);
     }//GEN-LAST:event_BorrarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        // TODO add your handling code here:
+        int filaSelecion = jTableEmpleado.getSelectedRow();
+    if (filaSelecion == -1)  {
+        JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla para editar");
+} else {
+        String Id_Empleado = jTableEmpleado.getValueAt(filaSelecion, 0) != null ? jTableEmpleado.getValueAt(filaSelecion, 0).toString() : "";
+    
+        String Nombre_1 = jTableEmpleado.getValueAt(filaSelecion, 1) != null ? jTableEmpleado.getValueAt(filaSelecion, 1).toString() : "";
+        String Nombre_2 = jTableEmpleado.getValueAt(filaSelecion, 2) != null ? jTableEmpleado.getValueAt(filaSelecion, 2).toString() : "";
+        String Apellido_1 = jTableEmpleado.getValueAt(filaSelecion, 3) != null ? jTableEmpleado.getValueAt(filaSelecion, 3).toString() : "";
+        String Apellido_2 = jTableEmpleado.getValueAt(filaSelecion, 4) != null ? jTableEmpleado.getValueAt(filaSelecion, 4).toString() : "";
+        String Numero_Celular = jTableEmpleado.getValueAt(filaSelecion, 5) != null ? jTableEmpleado.getValueAt(filaSelecion, 5).toString() : "";
+        String Gmail = jTableEmpleado.getValueAt(filaSelecion, 6) != null ? jTableEmpleado.getValueAt(filaSelecion, 6).toString() : "";   
+        String Direccion = jTableEmpleado.getValueAt(filaSelecion, 7) != null ? jTableEmpleado.getValueAt(filaSelecion, 7).toString() : "";
+        String horaEntradaStr = jTableEmpleado.getValueAt(filaSelecion, 8) != null ? jTableEmpleado.getValueAt(filaSelecion, 8).toString() : "";
+        String horaSalidaStr = jTableEmpleado.getValueAt(filaSelecion, 9) != null ? jTableEmpleado.getValueAt(filaSelecion, 9).toString() : "";
+   
+    jTextIdEmpleado.setText(Id_Empleado);
+    jTextNombre1.setText(Nombre_1);
+    jTextNombre2.setText(Nombre_2);
+    jTextApellido1.setText(Apellido_1);
+    jTextApellido2.setText(Apellido_2);
+    jTexTelefono.setText(Numero_Celular);
+    jTextADirecion.setText(Direccion);
+    jTexthoraentra.setText(horaEntradaStr);
+    jTexthorasal.setText(horaSalidaStr);
+    
+    jTextIdEmpleado.setEditable(true);
+    
+    }   
+    
     }//GEN-LAST:event_EditarActionPerformed
 
 
