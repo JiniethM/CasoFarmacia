@@ -9,6 +9,11 @@ public class Clase_Categoria {
    int Id_Categoria;
    String Nombre_Categoria;
    String Descripcion;
+   String textoBusqueda;
+
+    public Clase_Categoria(String textoBusqueda) {
+        this.textoBusqueda = textoBusqueda;
+    }
 
     public Clase_Categoria(String Nombre_Categoria, String Descripcion) {
         this.Nombre_Categoria = Nombre_Categoria;

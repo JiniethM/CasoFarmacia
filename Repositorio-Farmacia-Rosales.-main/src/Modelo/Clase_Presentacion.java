@@ -10,6 +10,11 @@ public class Clase_Presentacion {
     int Id_Presentacion;
    String Nombre_Presentacion;
    String Detalle;
+   String textoBusqueda;
+
+    public Clase_Presentacion(String textoBusqueda) {
+        this.textoBusqueda = textoBusqueda;
+    }
 
     public Clase_Presentacion(int Id_Presentacion, String Nombre_Presentacion, String Detalle) {
         this.Id_Presentacion = Id_Presentacion;

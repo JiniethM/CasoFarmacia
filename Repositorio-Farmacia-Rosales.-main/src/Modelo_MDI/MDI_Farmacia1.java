@@ -6,7 +6,15 @@ import Vistas.JInternalFrame_Categoria;
 import Vistas.JInternalFrame_Empleado;
 import Vistas.JInternalFrame_Presentacion;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BoxLayout;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -449,6 +457,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
         est.setLocation(x, y);
         jDesktopPane_Para_Mostrar.add(est);
         est.setVisible(true);
+         est.mostrar();
     }//GEN-LAST:event_jButton_PresentacionActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -456,13 +465,16 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Categoria
-       JInternalFrame_Categoria est = new JInternalFrame_Categoria();
+  JInternalFrame_Categoria est = new JInternalFrame_Categoria();
         int x=(jDesktopPane_Para_Mostrar.getWidth()/2)-est.getWidth()/2;
         int y=(jDesktopPane_Para_Mostrar.getHeight()/2)-est.getHeight()/2;
         est.setLocation(x, y);
         est.mostrar();
         jDesktopPane_Para_Mostrar.add(est);
         est.setVisible(true);
+     est.mostrar();
+
+
     }//GEN-LAST:event_jButton_Categoria
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

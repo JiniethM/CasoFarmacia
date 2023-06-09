@@ -4,9 +4,14 @@ import Controlador.CRUD_Categoria;
 import Modelo.Clase_Categoria;
 import Controlador_Conexion_DB.Conexion;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
+import java.awt.Insets;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,9 +22,39 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
+     private JPanel panel;
     
     public JInternalFrame_Categoria() {
         initComponents();
+        
+
+        // Establecer el administrador de diseño GridBagLayout
+        setLayout(new GridBagLayout());
+
+        // Agregar los componentes al formulario utilizando GridBagConstraints
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0; // Expansión horizontal
+        gbc.weighty = 1.0; // Expansión vertical
+        gbc.fill = GridBagConstraints.BOTH; // Rellenar horizontal y verticalmente
+       
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0; // Expansión horizontal
+        gbc.weighty = 1.0; // Expansión vertical
+        gbc.fill = GridBagConstraints.BOTH; // Rellenar horizontal y verticalmente
+       
+
+        // ... Agregar más componentes según sea necesario
+
+        // Hacer el formulario autoajustable al cambiar el tamaño
+        setResizable(true);
+        setMaximizable(true);
+        setIconifiable(true);
+        setClosable(true);
+    
     }
 
     public void limpiar() {
@@ -49,6 +84,23 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         }
 
     }
+    
+    
+    public void BuscarCliente() {
+        try {
+            DefaultTableModel modelo;
+            CRUD_Categoria cli = new CRUD_Categoria();
+            modelo = cli.buscarDatos(jTextField_Buscar.getText());
+
+            if (modelo != null) {
+                jTable_Categoria.setModel(modelo);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados.");
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -64,7 +116,6 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         jButton_Editar_categoria = new javax.swing.JButton();
         jButton_Actualizar_Categoria = new javax.swing.JButton();
         jButton_Eliminar_Categoria = new javax.swing.JButton();
-        jButton_Buscar = new javax.swing.JButton();
         jTextField_Id_Categoria = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jTextField_Nombre_Categoria = new javax.swing.JTextField();
@@ -73,6 +124,7 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea_Descripcion_Categoria = new javax.swing.JTextArea();
         jTextField_Buscar = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -202,14 +254,6 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
                 .addGap(31, 31, 31))
         );
 
-        jButton_Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Buscar.png"))); // NOI18N
-        jButton_Buscar.setBorder(null);
-        jButton_Buscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Buscar(evt);
-            }
-        });
-
         jTextField_Id_Categoria.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField_Id_Categoria.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTextField_Id_Categoria.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -228,6 +272,11 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         jTextField_Nombre_Categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Nombre_Categoria(evt);
+            }
+        });
+        jTextField_Nombre_Categoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_Nombre_CategoriaKeyTyped(evt);
             }
         });
 
@@ -249,6 +298,11 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jTextArea_Descripcion_Categoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextArea_Descripcion_CategoriaKeyTyped(evt);
             }
         });
         jScrollPane1.setViewportView(jTextArea_Descripcion_Categoria);
@@ -297,53 +351,69 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
                 jTextField_Buscar(evt);
             }
         });
+        jTextField_Buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField_BuscarKeyReleased(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel6.setText("Buscar");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(48, 48, 48)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField_Id_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_Id_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(144, 144, 144)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6))
+                                .addGap(199, 199, 199))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(64, 64, 64)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jTextField_Id_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel7)
-                                .addComponent(jTextField_Id_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(47, 47, 47)
+                        .addGap(20, 20, 20)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 44, 820, 440));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 44, 800, 440));
 
         jPanel5.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -357,8 +427,8 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 802, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,15 +438,13 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, -1));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,29 +457,6 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
     private void jTextField_Buscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Buscar
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_Buscar
-
-    private void jButton_Buscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Buscar
-      // Obtener el valor de búsqueda del campo de texto
-    String busqueda = jTextField_Buscar.getText().trim();
-
-    // Verificar si se proporcionó un ID o un nombre
-    int idCategoria = 0;  // Si no se proporciona un ID, se utilizará el valor 0
-    String nombreCategoria = null;
-    try {
-        idCategoria = Integer.parseInt(busqueda);
-    } catch (NumberFormatException e) {
-        nombreCategoria = busqueda;
-    }
-
-    // Llamar al método de búsqueda en el controlador
-    CRUD_Categoria crudCategoria = new CRUD_Categoria();
-    DefaultTableModel modelo = crudCategoria.buscarDatos(idCategoria, nombreCategoria, null);
-    mostrar();
-
-    // Actualizar la tabla de resultados con el modelo obtenido
-    jTable_Categoria.setModel(modelo);
-
-    }//GEN-LAST:event_jButton_Buscar
 
     private void jTextField_Id_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Id_Categoria
         // TODO add your handling code here:
@@ -492,7 +537,13 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
 
     private void jButton_Eliminar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Eliminar_Categoria
         int selectedRow = jTable_Categoria.getSelectedRow();
-        if (selectedRow != -1) {
+        if (selectedRow != -1)
+          if (JOptionPane.showConfirmDialog(rootPane,
+                    "Se eliminará el registro, ¿desea continuar?",
+                    "Eliminar Registro",
+                    JOptionPane.WARNING_MESSAGE,
+                    JOptionPane.YES_NO_OPTION)
+                    == JOptionPane.YES_OPTION) {
             String idCategoriaString = jTable_Categoria.getValueAt(selectedRow, 0).toString();
             int idCategoria = Integer.parseInt(idCategoriaString);
 
@@ -510,16 +561,53 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         jTextField_Buscar.setForeground(Color.black);
     }//GEN-LAST:event_jTextField_BuscarMouseClicked
 
+    private void jTextField_Nombre_CategoriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_Nombre_CategoriaKeyTyped
+     char car = evt.getKeyChar();
+        String texto = jTextField_Nombre_Categoria.getText(); // Obtener el texto actual en el campo
+
+        if (((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' // Minúsculas
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' // Mayúsculas
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'Ü'
+                && car != 'ü'
+                && car != 'Ñ'
+                && car != 'ñ'
+                && (car != (char) KeyEvent.VK_SPACE))
+                || texto.length() >= 50) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField_Nombre_CategoriaKeyTyped
+
+    private void jTextArea_Descripcion_CategoriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea_Descripcion_CategoriaKeyTyped
+      String texto = jTextArea_Descripcion_Categoria.getText(); 
+
+        if (texto.length() >= 100) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextArea_Descripcion_CategoriaKeyTyped
+
+    private void jTextField_BuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_BuscarKeyReleased
+       BuscarCliente();
+    }//GEN-LAST:event_jTextField_BuscarKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Actualizar_Categoria;
     private javax.swing.JButton jButton_Agregar_Categoria;
-    private javax.swing.JButton jButton_Buscar;
     private javax.swing.JButton jButton_Editar_categoria;
     private javax.swing.JButton jButton_Eliminar_Categoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -44,33 +44,34 @@ public class CRUD_Presentacion {
     }
 }
 
-public DefaultTableModel buscarDatos(String dato) {
-    ResultSet rs;
-    DefaultTableModel modelo;
+public DefaultTableModel buscarDatos(String textoBusqueda) {
+        ResultSet rs;
+        DefaultTableModel modelo;
 
-    String[] titulos = {"Id_Presentacion", "Nombre_Presentacion", "Detalle"};
-    String[] registro = new String[3];
+        String[] titulos = {"Id_Presentacion", "Nombre_Presentacion", "Detalle"};
+        String[] registro = new String[3];
 
-    modelo = new DefaultTableModel(null, titulos);
+        modelo = new DefaultTableModel(null, titulos);
 
-    try {
-        CallableStatement call = cn.prepareCall("{call BuscarPresentacion(?)}");
-        call.setString(1, dato);
-        rs = call.executeQuery();
+        try {
+            CallableStatement call = cn.prepareCall("{call BuscarPresentacion(?)}");
+            call.setString(1, textoBusqueda);
+            rs = call.executeQuery();
 
-        while (rs.next()) {
-            registro[0] = rs.getString("Id_Presentacion");
-            registro[1] = rs.getString("Nombre_Presentacion");
-            registro[2] = rs.getString("Detalle");
 
-            modelo.addRow(registro);
-        }
+            while (rs.next()) {
+                registro[0] = rs.getString("Id_Presentacion");
+                registro[1] = rs.getString("Nombre_Presentacion");
+                registro[2] = rs.getString("Detalle");
+
+                modelo.addRow(registro);
+            }
         return modelo;
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, e);
-        return null;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
     }
-}
 
 public boolean verificarDatos(String dato) {
     ResultSet rs;

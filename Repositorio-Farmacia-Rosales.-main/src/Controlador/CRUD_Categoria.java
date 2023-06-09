@@ -44,25 +44,20 @@ public class CRUD_Categoria {
         }
     }
 
-    public DefaultTableModel buscarDatos(int idCategoria, String nombreCategoria, String descripcion) {
+    public DefaultTableModel buscarDatos(String textoBusqueda) {
         ResultSet rs;
-    DefaultTableModel modelo;
+        DefaultTableModel modelo;
 
-    String[] titulos = {"Id_Categoria", "Nombre_Categoria", "Descripcion"};
-    String[] registro = new String[3];
+        String[] titulos = {"Id_Categoria", "Nombre_Categoria", "Descripcion"};
+        String[] registro = new String[3];
 
-    modelo = new DefaultTableModel(null, titulos);
+        modelo = new DefaultTableModel(null, titulos);
 
-    try {
-        // Verificar si se proporcionó algún criterio de búsqueda
-        boolean criterioBusqueda = (idCategoria != 0) || !nombreCategoria.isEmpty() || !descripcion.isEmpty();
-
-        if (criterioBusqueda) {
-            CallableStatement call = cn.prepareCall("{call BuscarCategoria(?, ?, ?)}");
-            call.setInt(1, idCategoria);
-            call.setString(2, nombreCategoria);
-            call.setString(3, descripcion);
+        try {
+            CallableStatement call = cn.prepareCall("{call BuscarCategoria(?)}");
+            call.setString(1, textoBusqueda);
             rs = call.executeQuery();
+
 
             while (rs.next()) {
                 registro[0] = rs.getString("Id_Categoria");
@@ -71,26 +66,11 @@ public class CRUD_Categoria {
 
                 modelo.addRow(registro);
             }
-        } else {
-            // No se proporcionaron criterios de búsqueda, se mostrarán todos los registros
-            CallableStatement call = cn.prepareCall("{call ConsultarDatosCategoria}");
-            rs = call.executeQuery();
-
-            while (rs.next()) {
-                registro[0] = rs.getString("Id_Categoria");
-                registro[1] = rs.getString("Nombre_Categoria");
-                registro[2] = rs.getString("Descripcion");
-
-                modelo.addRow(registro);
-            }
-        }
-        
         return modelo;
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
-        return null;
-    }
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
     }
 
     public boolean verificarDatos(String dato) {
