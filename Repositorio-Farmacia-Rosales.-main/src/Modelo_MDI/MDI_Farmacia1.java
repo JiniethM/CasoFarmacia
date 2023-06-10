@@ -4,6 +4,7 @@ package Modelo_MDI;
 import Vistas.InternalFrame_Cliente;
 import Vistas.JInternalFrame_Categoria;
 import Vistas.JInternalFrame_Empleado;
+import Vistas.JInternalFrame_Laboratorio;
 import Vistas.JInternalFrame_Presentacion;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -56,7 +57,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
         jButton14 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
+        jButton_Laboratorio = new javax.swing.JButton();
         jButton_Categoria = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -279,16 +280,16 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
             }
         });
 
-        jButton15.setBackground(new java.awt.Color(0, 153, 153));
-        jButton15.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        jButton15.setForeground(new java.awt.Color(255, 255, 255));
-        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/laboratorio-medico.png"))); // NOI18N
-        jButton15.setText("Laboratorio");
-        jButton15.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jButton15.setBorderPainted(false);
-        jButton15.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Laboratorio.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Laboratorio.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        jButton_Laboratorio.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Laboratorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/laboratorio-medico.png"))); // NOI18N
+        jButton_Laboratorio.setText("Laboratorio");
+        jButton_Laboratorio.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Laboratorio.setBorderPainted(false);
+        jButton_Laboratorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton15ActionPerformed(evt);
+                jButton_Laboratorio(evt);
             }
         });
 
@@ -321,7 +322,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addComponent(jButton9)
                 .addGap(69, 69, 69)
-                .addComponent(jButton15)
+                .addComponent(jButton_Laboratorio)
                 .addGap(31, 31, 31)
                 .addComponent(jButton_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                 .addGap(25, 25, 25))
@@ -335,7 +336,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
                     .addComponent(jButton14)
                     .addComponent(jButton16)
                     .addComponent(jButton9)
-                    .addComponent(jButton15)
+                    .addComponent(jButton_Laboratorio)
                     .addComponent(jButton_Categoria))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -434,9 +435,15 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton15ActionPerformed
+    private void jButton_Laboratorio(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Laboratorio
+         JInternalFrame_Laboratorio est = new JInternalFrame_Laboratorio();
+        int x=(jDesktopPane_Para_Mostrar.getWidth()/2)-est.getWidth()/2;
+        int y=(jDesktopPane_Para_Mostrar.getHeight()/2)-est.getHeight()/2;
+        est.setLocation(x, y);
+        jDesktopPane_Para_Mostrar.add(est);
+        est.setVisible(true);
+       //  est.mostrar();
+    }//GEN-LAST:event_jButton_Laboratorio
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
@@ -465,7 +472,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Categoria
-  JInternalFrame_Categoria est = new JInternalFrame_Categoria();
+   JInternalFrame_Categoria est = new JInternalFrame_Categoria();
         int x=(jDesktopPane_Para_Mostrar.getWidth()/2)-est.getWidth()/2;
         int y=(jDesktopPane_Para_Mostrar.getHeight()/2)-est.getHeight()/2;
         est.setLocation(x, y);
@@ -536,7 +543,6 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
@@ -544,6 +550,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JButton jButton_Categoria;
     private javax.swing.JButton jButton_Cliente;
+    private javax.swing.JButton jButton_Laboratorio;
     private javax.swing.JButton jButton_Presentacion;
     private javax.swing.JDesktopPane jDesktopPane_Para_Mostrar;
     private javax.swing.JPanel jPanel2;
