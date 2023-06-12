@@ -43,7 +43,7 @@ public class CRUD_Laboratorio {
     }
 }
 
-public DefaultTableModel buscarDatos(String dato) {
+public DefaultTableModel buscarDatos(String textoBusqueda) {
     ResultSet rs;
     DefaultTableModel modelo;
 
@@ -54,7 +54,7 @@ public DefaultTableModel buscarDatos(String dato) {
 
     try {
         CallableStatement call = cn.prepareCall("{call BuscarLaboratorio(?)}");
-        call.setString(1, dato);
+        call.setString(1, textoBusqueda);
         rs = call.executeQuery();
 
         while (rs.next()) {
@@ -88,9 +88,8 @@ public boolean verificarDatos(String dato) {
 
 public void Guardar(Clase_Laboratorio laboratorio) {
     try {
-        CallableStatement cbst = cn.prepareCall("{call InsertarLaboratorio(?,?)}");
-        cbst.setInt(1, laboratorio.getId_Laboratorio());
-        cbst.setString(2, laboratorio.getNombre());
+        CallableStatement cbst = cn.prepareCall("{call InsertarLaboratorio(?)}");
+        cbst.setString(1, laboratorio.getNombre());
         cbst.executeUpdate();
 
     } catch (SQLException e) {

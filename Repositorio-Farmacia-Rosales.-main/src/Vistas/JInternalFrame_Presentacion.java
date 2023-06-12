@@ -1,26 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package Vistas;
 
 import Controlador.CRUD_Presentacion;
+import Modelo.Clase_Presentacion;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.HeadlessException;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
  * @author diedr
  */
 public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form JInternalFrame_Presentacion
-     */
     public JInternalFrame_Presentacion() {
         initComponents();
+        jTextField_id_presentacion.setEditable(false);
+    }
+
+    public void limpiar() {
+        jTextField_id_presentacion.setText("");
+        jTextField_Nombre_Presentacion.setText("");
+        jTextArea_Detalle.setText("");
+    }
+
+    public void GuardarPresentacion() {
+        CRUD_Presentacion cc = new CRUD_Presentacion();
+        String Nombre_Presentacion = jTextField_Nombre_Presentacion.getText();
+        String Detalle = jTextArea_Detalle.getText();
+
+        Clase_Presentacion c1 = new Clase_Presentacion(Nombre_Presentacion, Detalle);
+        cc.Guardar(c1);
     }
 
     public void mostrar() {
@@ -35,6 +50,7 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
         }
 
     }
+
     public void BuscarPresentacion() {
         try {
             DefaultTableModel modelo;
@@ -50,26 +66,27 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
+        jTextField_id_presentacion = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_Presentacion = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jButton10 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jButton_Agregar = new javax.swing.JButton();
+        jButton_Editar = new javax.swing.JButton();
+        jButton_Actualizar = new javax.swing.JButton();
+        jButton_Eliminar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jTextField8 = new javax.swing.JTextField();
+        jTextField_Nombre_Presentacion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextArea_Detalle = new javax.swing.JTextArea();
         jTextField_Buscar = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -81,9 +98,14 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
         jLabel7.setForeground(new java.awt.Color(0, 153, 153));
         jLabel7.setText("Id Presentación");
 
-        jTextField12.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField12.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField12.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_id_presentacion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_id_presentacion.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_id_presentacion.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_id_presentacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_id_presentacionActionPerformed(evt);
+            }
+        });
 
         jTable_Presentacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -112,33 +134,53 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jButton10.setBackground(new java.awt.Color(0, 153, 153));
-        jButton10.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"))); // NOI18N
-        jButton10.setText("Agregar");
-        jButton10.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Agregar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"))); // NOI18N
+        jButton_Agregar.setText("Agregar");
+        jButton_Agregar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Agregar(evt);
+            }
+        });
 
-        jButton12.setBackground(new java.awt.Color(0, 153, 153));
-        jButton12.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/editar.png"))); // NOI18N
-        jButton12.setText("Editar");
-        jButton12.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Editar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Editar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Editar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/editar.png"))); // NOI18N
+        jButton_Editar.setText("Editar");
+        jButton_Editar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Editar(evt);
+            }
+        });
 
-        jButton11.setBackground(new java.awt.Color(0, 153, 153));
-        jButton11.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"))); // NOI18N
-        jButton11.setText("Actualizar");
-        jButton11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton_Actualizar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Actualizar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Actualizar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"))); // NOI18N
+        jButton_Actualizar.setText("Actualizar");
+        jButton_Actualizar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Actualizar(evt);
+            }
+        });
 
-        jButton7.setBackground(new java.awt.Color(0, 153, 153));
-        jButton7.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"))); // NOI18N
-        jButton7.setText("Eliminar");
-        jButton7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Eliminar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Eliminar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Eliminar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"))); // NOI18N
+        jButton_Eliminar.setText("Eliminar");
+        jButton_Eliminar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Eliminar(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -147,23 +189,23 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton_Agregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_Editar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_Actualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addComponent(jButton_Eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton_Agregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(31, 31, 31)
-                .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton_Editar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(31, 31, 31)
-                .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton_Actualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(27, 27, 27)
-                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addComponent(jButton_Eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                 .addGap(23, 23, 23))
         );
 
@@ -171,9 +213,14 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel2.setForeground(new java.awt.Color(0, 153, 153));
 
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField8.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Nombre_Presentacion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Nombre_Presentacion.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_Nombre_Presentacion.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Nombre_Presentacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_Nombre_Presentacion(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 153, 153));
@@ -183,10 +230,19 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Detalle");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextArea_Detalle.setColumns(20);
+        jTextArea_Detalle.setRows(5);
+        jTextArea_Detalle.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextArea_Detalle.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTextArea_Detalle(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(jTextArea_Detalle);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -196,7 +252,7 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField_Nombre_Presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,7 +268,7 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Nombre_Presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
                 .addGap(33, 33, 33))
         );
@@ -252,7 +308,7 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField_id_presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
@@ -272,7 +328,7 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField_id_presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -340,19 +396,188 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField_BuscarMouseClicked
 
     private void jTextField_Buscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Buscar
-        
+
     }//GEN-LAST:event_jTextField_Buscar
 
     private void jTextField_BuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_BuscarKeyReleased
         BuscarPresentacion();
     }//GEN-LAST:event_jTextField_BuscarKeyReleased
 
+    private void jTextField_id_presentacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_id_presentacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_id_presentacionActionPerformed
+
+    private void jButton_Agregar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Agregar
+        CRUD_Presentacion c1 = new CRUD_Presentacion();
+        try {
+            if (jTextField_Nombre_Presentacion.getText().isEmpty() || jTextArea_Detalle.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
+            } else {
+                if (c1.verificarDatos(jTextField_Nombre_Presentacion.getText())) {
+                    JOptionPane.showMessageDialog(null, "Ya existe esta presentación");
+                } else {
+                    int option = JOptionPane.showOptionDialog(
+                            null,
+                            "Desea agregar la presentacion?",
+                            "Agregar Presentacion",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            new ImageIcon(getClass().getResource("/Vistas_Iconos/Agregar.png")),
+                            new Object[]{"Sí", "No"},
+                            "No"
+                    );
+
+                    if (option == JOptionPane.YES_OPTION) {
+                        GuardarPresentacion();
+                        limpiar();
+                        mostrar();
+
+                        JPanel panel = new JPanel();
+                        panel.setLayout(new BorderLayout());
+
+                        JLabel messageLabel = new JLabel("Presentacion agregada correctamente");
+                        messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                        messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                        panel.add(messageLabel, BorderLayout.CENTER);
+
+                        ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png"));
+                        JLabel iconLabel = new JLabel(icon);
+                        iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                        panel.add(iconLabel, BorderLayout.WEST);
+
+                        JOptionPane.showMessageDialog(null, panel, "Agregado Exitoso", JOptionPane.PLAIN_MESSAGE);
+                    }
+                }
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e);
+        }
+
+
+    }//GEN-LAST:event_jButton_Agregar
+
+    private void jButton_Editar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Editar
+        int filaSeleccionada = jTable_Presentacion.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla para editar");
+        } else {
+            String id_Prese = jTable_Presentacion.getValueAt(filaSeleccionada, 0) != null ? jTable_Presentacion.getValueAt(filaSeleccionada, 0).toString() : "";
+            String nombre = jTable_Presentacion.getValueAt(filaSeleccionada, 1) != null ? jTable_Presentacion.getValueAt(filaSeleccionada, 1).toString() : "";
+            String Detalle = jTable_Presentacion.getValueAt(filaSeleccionada, 2) != null ? jTable_Presentacion.getValueAt(filaSeleccionada, 2).toString() : "";
+
+            // Asignar los valores a los campos de texto y área de texto
+            jTextField_id_presentacion.setText(id_Prese);
+            jTextField_Nombre_Presentacion.setText(nombre);
+            jTextArea_Detalle.setText(Detalle);
+
+            // Desactivar la edición del campo de texto para el ID de la categoría
+            jTextField_id_presentacion.setEditable(false);
+        }
+    }//GEN-LAST:event_jButton_Editar
+
+    private void jButton_Actualizar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar
+        String idpresenText = jTextField_id_presentacion.getText();
+        int idCliente = Integer.parseInt(idpresenText);
+        String nombre = jTextField_Nombre_Presentacion.getText();
+        String Detalle = jTextArea_Detalle.getText();
+
+        Clase_Presentacion Presentacion = new Clase_Presentacion(idCliente, nombre, Detalle);
+
+        int option = JOptionPane.showOptionDialog(
+                null,
+                "¿Desea actualizar la presentación?",
+                "Confirmar Actualización",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png")),
+                new Object[]{"Sí", "No"},
+                "No"
+        );
+
+        if (option == JOptionPane.YES_OPTION) {
+            CRUD_Presentacion Crud_presentacion = new CRUD_Presentacion();
+            Crud_presentacion.actualizar(Presentacion);
+            mostrar();
+
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+
+            JLabel messageLabel = new JLabel("Presentación actualizada exitosamente.");
+            messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(messageLabel, BorderLayout.CENTER);
+
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"));
+            JLabel iconLabel = new JLabel(icon);
+            iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(iconLabel, BorderLayout.WEST);
+
+            JOptionPane.showMessageDialog(null, panel, "Actualización Exitosa", JOptionPane.PLAIN_MESSAGE);
+            limpiar();
+        }
+
+    }//GEN-LAST:event_jButton_Actualizar
+
+    private void jButton_Eliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Eliminar
+        int selectedRow = jTable_Presentacion.getSelectedRow();
+        if (selectedRow != -1) {
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"));
+            int option = JOptionPane.showOptionDialog(
+                    null,
+                    "Se eliminará el registro, ¿desea continuar?",
+                    "Eliminar Registro",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    icon,
+                    new Object[]{"Sí", "No"},
+                    "No"
+            );
+
+            if (option == JOptionPane.YES_OPTION) {
+                String idCategoriaString = jTable_Presentacion.getValueAt(selectedRow, 0).toString();
+                int idCategoria = Integer.parseInt(idCategoriaString);
+
+                CRUD_Presentacion cli = new CRUD_Presentacion();
+                cli.eliminar(idCategoria);
+                mostrar();
+
+                JPanel resultPanel = new JPanel();
+                resultPanel.setLayout(new BorderLayout());
+
+                JLabel resultLabel = new JLabel("Presentación eliminada correctamente");
+                resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                resultLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                resultPanel.add(resultLabel, BorderLayout.CENTER);
+
+                JLabel resultIconLabel = new JLabel(icon);
+                resultIconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                resultPanel.add(resultIconLabel, BorderLayout.WEST);
+
+                JOptionPane.showMessageDialog(null, resultPanel, "Eliminación Exitosa", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar la Presentacion");
+            }
+
+        }
+
+
+    }//GEN-LAST:event_jButton_Eliminar
+
+    private void jTextField_Nombre_Presentacion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Nombre_Presentacion
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_Nombre_Presentacion
+
+    private void jTextArea_Detalle(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTextArea_Detalle
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea_Detalle
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton_Actualizar;
+    private javax.swing.JButton jButton_Agregar;
+    private javax.swing.JButton jButton_Editar;
+    private javax.swing.JButton jButton_Eliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -365,9 +590,9 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable_Presentacion;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextArea jTextArea_Detalle;
     private javax.swing.JTextField jTextField_Buscar;
+    private javax.swing.JTextField jTextField_Nombre_Presentacion;
+    private javax.swing.JTextField jTextField_id_presentacion;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,13 +7,18 @@ package Modelo;
  */
 public class Clase_Presentacion {
 
-    int Id_Presentacion;
+   int Id_Presentacion;
    String Nombre_Presentacion;
    String Detalle;
    String textoBusqueda;
-
-    public Clase_Presentacion(String textoBusqueda) {
+    
+     public Clase_Presentacion(String textoBusqueda) {
         this.textoBusqueda = textoBusqueda;
+    }
+
+    public Clase_Presentacion(String Nombre_Presentacion, String Detalle) {
+        this.Nombre_Presentacion = Nombre_Presentacion;
+        this.Detalle = Detalle;
     }
 
     public Clase_Presentacion(int Id_Presentacion, String Nombre_Presentacion, String Detalle) {

@@ -91,10 +91,9 @@ public boolean verificarDatos(String dato) {
 
 public void Guardar(Clase_Presentacion presentacion) {
     try {
-        CallableStatement cbst = cn.prepareCall("{call InsertarPresentacion(?,?,?)}");
-        cbst.setInt(1, presentacion.getId_Presentacion());
-        cbst.setString(2, presentacion.getNombre_Presentacion());
-        cbst.setString(3, presentacion.getDetalle());
+        CallableStatement cbst = cn.prepareCall("{call InsertarPresentacion(?,?)}");
+        cbst.setString(1, presentacion.getNombre_Presentacion());
+        cbst.setString(2, presentacion.getDetalle());
         cbst.executeUpdate();
 
     } catch (SQLException e) {

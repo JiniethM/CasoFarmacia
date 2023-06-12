@@ -1,28 +1,13 @@
 
 package Modelo_MDI1;
 
-import Modelo_MDI.*;
 import Vistas.InternalFrame_Cliente;
 import Vistas.JInternalFrame_Categoria;
 import Vistas.JInternalFrame_Empleado;
 import Vistas.JInternalFrame_Laboratorio;
 import Vistas.JInternalFrame_Presentacion;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.beans.PropertyVetoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BoxLayout;
-import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
+import Vistas.JInternalFrame_Proveedor;
+
 
 
 /**
@@ -46,7 +31,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
         jButton_Cliente = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        jButton_Proveedor = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -108,13 +93,18 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
         jButton12.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton12.setBorderPainted(false);
 
-        jButton10.setBackground(new java.awt.Color(0, 153, 153));
-        jButton10.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/repartidor.png"))); // NOI18N
-        jButton10.setText("Proveedor");
-        jButton10.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jButton10.setBorderPainted(false);
+        jButton_Proveedor.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Proveedor.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        jButton_Proveedor.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Proveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/repartidor.png"))); // NOI18N
+        jButton_Proveedor.setText("Proveedor");
+        jButton_Proveedor.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Proveedor.setBorderPainted(false);
+        jButton_Proveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Proveedor(evt);
+            }
+        });
 
         jButton13.setBackground(new java.awt.Color(0, 153, 153));
         jButton13.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
@@ -173,7 +163,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton10))))
+                            .addComponent(jButton_Proveedor))))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
@@ -189,7 +179,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jButton12)
                 .addGap(37, 37, 37)
-                .addComponent(jButton10)
+                .addComponent(jButton_Proveedor)
                 .addGap(35, 35, 35)
                 .addComponent(jButton13)
                 .addGap(32, 32, 32)
@@ -443,7 +433,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
         est.setLocation(x, y);
         jDesktopPane_Para_Mostrar.add(est);
         est.setVisible(true);
-       //  est.mostrar();
+        est.mostrar();
     }//GEN-LAST:event_jButton_Laboratorio
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -481,6 +471,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
         jDesktopPane_Para_Mostrar.add(est);
         est.setVisible(true);
      est.mostrar();
+     
 
 
     }//GEN-LAST:event_jButton_Categoria
@@ -514,6 +505,16 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
       System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton_Proveedor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Proveedor
+        JInternalFrame_Proveedor est = new JInternalFrame_Proveedor();
+        int x=(jDesktopPane_Para_Mostrar.getWidth()/2)-est.getWidth()/2;
+        int y=(jDesktopPane_Para_Mostrar.getHeight()/2)-est.getHeight()/2;
+        est.setLocation(x, y);
+        est.mostrar();
+        jDesktopPane_Para_Mostrar.add(est);
+        est.setVisible(true);
+    }//GEN-LAST:event_jButton_Proveedor
+
     /**
      * @param args the command line arguments
      */
@@ -539,7 +540,6 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
@@ -553,6 +553,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton_Cliente;
     private javax.swing.JButton jButton_Laboratorio;
     private javax.swing.JButton jButton_Presentacion;
+    private javax.swing.JButton jButton_Proveedor;
     private javax.swing.JDesktopPane jDesktopPane_Para_Mostrar;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

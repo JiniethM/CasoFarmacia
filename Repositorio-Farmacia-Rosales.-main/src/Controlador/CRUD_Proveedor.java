@@ -101,15 +101,14 @@ public boolean verificarDatos(String dato) {
 
 public void Guardar(Clase_Proveedor proveedor) {
     try {
-        CallableStatement cbst = cn.prepareCall("{call InsertarProveedor(?,?,?,?,?,?,?,?)}");
-        cbst.setInt(1, proveedor.getId_Proveedor());
-        cbst.setString(2, proveedor.getNombre_1());
-        cbst.setString(3, proveedor.getNombre_2());
-        cbst.setString(4, proveedor.getApellido_1());
-        cbst.setString(5, proveedor.getApellido_2());
-        cbst.setString(6, proveedor.getGmail());
-        cbst.setString(7, proveedor.getNumero_Celular());
-        cbst.setString(8, proveedor.getDireccion());
+        CallableStatement cbst = cn.prepareCall("{call InsertarProveedor(?,?,?,?,?,?,?)}");
+        cbst.setString(1, proveedor.getNombre_1());
+        cbst.setString(2, proveedor.getNombre_2());
+        cbst.setString(3, proveedor.getApellido_1());
+        cbst.setString(4, proveedor.getApellido_2());
+        cbst.setString(5, proveedor.getGmail());
+        cbst.setString(6, proveedor.getNumero_Celular());
+        cbst.setString(7, proveedor.getDireccion());
         cbst.executeUpdate();
 
     } catch (SQLException e) {

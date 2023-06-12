@@ -3,13 +3,17 @@ package Vistas;
 import Controlador.CRUD_Categoria;
 import Modelo.Clase_Categoria;
 import Controlador_Conexion_DB.Conexion;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
-import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -22,39 +26,13 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
-     private JPanel panel;
-    
+    private JPanel panel;
+
     public JInternalFrame_Categoria() {
+
         initComponents();
-        
+        jTextField_Id_Categoria.setEditable(false);
 
-        // Establecer el administrador de diseño GridBagLayout
-        setLayout(new GridBagLayout());
-
-        // Agregar los componentes al formulario utilizando GridBagConstraints
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0; // Expansión horizontal
-        gbc.weighty = 1.0; // Expansión vertical
-        gbc.fill = GridBagConstraints.BOTH; // Rellenar horizontal y verticalmente
-       
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.weightx = 1.0; // Expansión horizontal
-        gbc.weighty = 1.0; // Expansión vertical
-        gbc.fill = GridBagConstraints.BOTH; // Rellenar horizontal y verticalmente
-       
-
-        // ... Agregar más componentes según sea necesario
-
-        // Hacer el formulario autoajustable al cambiar el tamaño
-        setResizable(true);
-        setMaximizable(true);
-        setIconifiable(true);
-        setClosable(true);
-    
     }
 
     public void limpiar() {
@@ -84,8 +62,7 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         }
 
     }
-    
-    
+
     public void BuscarCliente() {
         try {
             DefaultTableModel modelo;
@@ -477,19 +454,51 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
     private void jButton_Agregar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Agregar_Categoria
         CRUD_Categoria c1 = new CRUD_Categoria();
         try {
-            if ((jTextField_Nombre_Categoria.getText().equals(""))
-                    || (jTextArea_Descripcion_Categoria.getText().equals(""))) {
+            if (jTextField_Nombre_Categoria.getText().isEmpty() || jTextArea_Descripcion_Categoria.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
             } else {
-                GuardarCategoria();
-                limpiar();
-                mostrar();
-                JOptionPane.showMessageDialog(null, "Datos Guardados Correctamente");
-            }
+                int option = JOptionPane.showOptionDialog(
+                        null,
+                        "¿Desea guardar la Categoría?",
+                        "Confirmar Guardado",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png")),
+                        new Object[]{"Sí", "No"},
+                        "No"
+                );
 
+                if (c1.verificarDatos(jTextField_Nombre_Categoria.getText())) {
+                    JOptionPane.showMessageDialog(null, "Ya existe esta categoría");
+                }
+
+                if (option == JOptionPane.YES_OPTION) {
+                    GuardarCategoria();
+                    limpiar();
+
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new BorderLayout());
+
+                    JLabel messageLabel = new JLabel("Datos Guardados Correctamente");
+                    messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                    messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                    panel.add(messageLabel, BorderLayout.CENTER);
+
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png"));
+                    JLabel iconLabel = new JLabel(icon);
+                    iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                    panel.add(iconLabel, BorderLayout.WEST);
+
+                    JOptionPane.showMessageDialog(null, panel, "Guardado Exitoso", JOptionPane.PLAIN_MESSAGE);
+
+                    mostrar();
+                }
+            }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e);
         }
+
+
     }//GEN-LAST:event_jButton_Agregar_Categoria
 
     private void jButton_Editar_categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Editar_categoria
@@ -501,59 +510,116 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
             String nombre = jTable_Categoria.getValueAt(filaSeleccionada, 1) != null ? jTable_Categoria.getValueAt(filaSeleccionada, 1).toString() : "";
             String Descrip = jTable_Categoria.getValueAt(filaSeleccionada, 2) != null ? jTable_Categoria.getValueAt(filaSeleccionada, 2).toString() : "";
 
-            // Asignar los valores a los campos de texto y área de texto
             jTextField_Id_Categoria.setText(id_Cate);
             jTextField_Nombre_Categoria.setText(nombre);
             jTextArea_Descripcion_Categoria.setText(Descrip);
 
-            // Desactivar la edición del campo de texto para el ID de la categoría
             jTextField_Id_Categoria.setEditable(false);
         }
     }//GEN-LAST:event_jButton_Editar_categoria
 
     private void jButton_Actualizar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar_Categoria
-        String idCategoriText = jTextField_Id_Categoria.getText();
-        int idCliente = Integer.parseInt(idCategoriText);
+        String idCategoriaText = jTextField_Id_Categoria.getText();
+        int idCategoria = Integer.parseInt(idCategoriaText);
         String nombre = jTextField_Nombre_Categoria.getText();
-        String Decrip = jTextArea_Descripcion_Categoria.getText();
+        String descripcion = jTextArea_Descripcion_Categoria.getText();
 
-        // Crear objeto Clase_Cliente con los datos obtenidos
-        Clase_Categoria cliente = new Clase_Categoria(idCliente, nombre, Decrip);
+        Clase_Categoria categoria = new Clase_Categoria(idCategoria, nombre, descripcion);
 
-        // Llamar al método "actualizar" de CRUD_Cliente
-        CRUD_Categoria Crud_Categoria = new CRUD_Categoria();
-        Crud_Categoria.actualizar(cliente);
-        mostrar();
+        int option = JOptionPane.showOptionDialog(
+                null,
+                "¿Desea actualizar la categoría?",
+                "Confirmar Actualización",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png")),
+                new Object[]{"Sí", "No"},
+                "No"
+        );
 
-        // Refrescar la tabla mostrando los datos actualizados
-        Crud_Categoria.mostrarDatos();
-        limpiar();
+        if (option == JOptionPane.YES_OPTION) {
+            CRUD_Categoria crudCategoria = new CRUD_Categoria();
+            crudCategoria.actualizar(categoria);
+            mostrar();
 
-        // Mostrar mensaje de éxito o cualquier otra notificación
-        JOptionPane.showMessageDialog(null, "Categoria actualizada exitosamente.");
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+
+            JLabel messageLabel = new JLabel("Categoría actualizada exitosamente.");
+            messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(messageLabel, BorderLayout.CENTER);
+
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"));
+            JLabel iconLabel = new JLabel(icon);
+            iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(iconLabel, BorderLayout.WEST);
+
+            JOptionPane.showMessageDialog(null, panel, "Actualización Exitosa", JOptionPane.PLAIN_MESSAGE);
+            limpiar();
+        }
 
 
     }//GEN-LAST:event_jButton_Actualizar_Categoria
 
     private void jButton_Eliminar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Eliminar_Categoria
         int selectedRow = jTable_Categoria.getSelectedRow();
-        if (selectedRow != -1)
-          if (JOptionPane.showConfirmDialog(rootPane,
-                    "Se eliminará el registro, ¿desea continuar?",
-                    "Eliminar Registro",
-                    JOptionPane.WARNING_MESSAGE,
-                    JOptionPane.YES_NO_OPTION)
-                    == JOptionPane.YES_OPTION) {
-            String idCategoriaString = jTable_Categoria.getValueAt(selectedRow, 0).toString();
-            int idCategoria = Integer.parseInt(idCategoriaString);
+        if (selectedRow != -1) {
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridBagLayout());
 
-            CRUD_Categoria cli = new CRUD_Categoria();
-            cli.eliminar(idCategoria);
-            mostrar();
-            JOptionPane.showMessageDialog(null, "Categoria eliminada correctamente");
+            JLabel messageLabel = new JLabel("Se eliminará el registro, ¿desea continuar?");
+            messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"));
+            JLabel iconLabel = new JLabel(icon);
+            iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            panel.add(iconLabel);
+            panel.add(messageLabel);
+
+            int option = JOptionPane.showOptionDialog(
+                    null,
+                    panel,
+                    "Eliminar Registro",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null,
+                    new Object[]{"Sí", "No"},
+                    "No"
+            );
+
+            if (option == JOptionPane.YES_OPTION) {
+                String idCategoriaString = jTable_Categoria.getValueAt(selectedRow, 0).toString();
+                int idCategoria = Integer.parseInt(idCategoriaString);
+
+                CRUD_Categoria cli = new CRUD_Categoria();
+                cli.eliminar(idCategoria);
+                mostrar();
+
+                JPanel successPanel = new JPanel();
+                successPanel.setLayout(new BorderLayout());
+
+                JLabel successMessageLabel = new JLabel("Categoría eliminada correctamente");
+                successMessageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                successMessageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                successPanel.add(successMessageLabel, BorderLayout.CENTER);
+
+                ImageIcon successIcon = new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"));
+                JLabel successIconLabel = new JLabel(successIcon);
+                successIconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                successPanel.add(successIconLabel, BorderLayout.WEST);
+
+                JOptionPane.showMessageDialog(null, successPanel, "Eliminación Exitosa", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar la categoría");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar la categoria");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila");
         }
+
+
     }//GEN-LAST:event_jButton_Eliminar_Categoria
 
     private void jTextField_BuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_BuscarMouseClicked
@@ -562,7 +628,7 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField_BuscarMouseClicked
 
     private void jTextField_Nombre_CategoriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_Nombre_CategoriaKeyTyped
-     char car = evt.getKeyChar();
+        char car = evt.getKeyChar();
         String texto = jTextField_Nombre_Categoria.getText(); // Obtener el texto actual en el campo
 
         if (((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
@@ -587,7 +653,7 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField_Nombre_CategoriaKeyTyped
 
     private void jTextArea_Descripcion_CategoriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea_Descripcion_CategoriaKeyTyped
-      String texto = jTextArea_Descripcion_Categoria.getText(); 
+        String texto = jTextArea_Descripcion_Categoria.getText();
 
         if (texto.length() >= 100) {
             evt.consume();
@@ -595,7 +661,7 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextArea_Descripcion_CategoriaKeyTyped
 
     private void jTextField_BuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_BuscarKeyReleased
-       BuscarCliente();
+        BuscarCliente();
     }//GEN-LAST:event_jTextField_BuscarKeyReleased
 
 

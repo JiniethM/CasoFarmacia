@@ -14,7 +14,9 @@ public class Clase_Proveedor {
     String Gmail;
     String Numero_Celular;
     String Direccion;
-
+    
+    
+    
     public Clase_Proveedor(int Id_Proveedor, String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Gmail, String Numero_Celular, String Direccion) {
         this.Id_Proveedor = Id_Proveedor;
         this.Nombre_1 = Nombre_1;
@@ -25,6 +27,17 @@ public class Clase_Proveedor {
         this.Numero_Celular = Numero_Celular;
         this.Direccion = Direccion;
     }
+
+    public Clase_Proveedor(String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Gmail, String Numero_Celular, String Direccion) {
+        this.Nombre_1 = Nombre_1;
+        this.Nombre_2 = Nombre_2;
+        this.Apellido_1 = Apellido_1;
+        this.Apellido_2 = Apellido_2;
+        this.Gmail = Gmail;
+        this.Numero_Celular = Numero_Celular;
+        this.Direccion = Direccion;
+    }
+
 
     public int getId_Proveedor() {
         return Id_Proveedor;

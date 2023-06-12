@@ -54,8 +54,8 @@ public class CRUD_Cliente {
         ResultSet rs;
         DefaultTableModel modelo;
 
-        String[] titulos = {"Id_Cliente", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2"};
-        String[] registro = new String[5];
+        String[] titulos = {"Id_Cliente", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2","Numero_Celular","Direccion"};
+        String[] registro = new String[7];
 
         modelo = new DefaultTableModel(null, titulos);
 
@@ -70,6 +70,8 @@ public class CRUD_Cliente {
                 registro[2] = rs.getString("Nombre_2");
                 registro[3] = rs.getString("Apellido_1");
                 registro[4] = rs.getString("Apellido_2");
+                registro[5] = rs.getString("Numero_Celular");
+                registro[6] = rs.getString("Direccion");
 
                 modelo.addRow(registro);
             }

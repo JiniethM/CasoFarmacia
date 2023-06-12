@@ -11,7 +11,11 @@ import java.sql.CallableStatement;
 import java.sql.SQLException;
 import Controlador_Conexion_DB.Conexion;
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.sql.Connection;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -26,6 +30,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
     public InternalFrame_Cliente() {
         initComponents();
+        jTextField_Id_Ciente.setEditable(false);
 
     }
 
@@ -334,6 +339,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 "Id cliente", "Nombre 1", "Nombre 2", "Apellido 1", "Apellido 2", "Telefono", "Dirección"
             }
         ));
+        jTable_Cliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTable_Cliente.setGridColor(new java.awt.Color(0, 153, 153));
         jTable_Cliente.setShowGrid(false);
         jTable_Cliente.setShowHorizontalLines(true);
@@ -511,23 +517,46 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     private void Guardar_Cliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Guardar_Cliente
         CRUD_Cliente cl = new CRUD_Cliente();
         try {
-            if ((JtextFiel_Nombre_1.getText().equals(""))
-                    || (JtextFiel_Nombre_2.getText().equals(""))
-                    || (jTextFiel_Apellido_1.getText().equals(""))
-                    || (jTextField_Apellido_2.getText().equals(""))
-                    || (jFormattedTextFieldTelefono.getText().equals("    -    "))
-                    || (jTextArea_Dirrecion.getText().equals(""))) {
+            if (JtextFiel_Nombre_1.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
             } else {
-                guardarCliente();
-                limpiar();
-                JOptionPane.showMessageDialog(null, "Datos Guardados Correctamente");
-                mostrar();
-            }
+                int option = JOptionPane.showOptionDialog(
+                        null,
+                        "¿Desea guardar el cliente?",
+                        "Confirmar Guardado",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png")),
+                        new Object[]{"Sí", "No"},
+                        "No"
+                );
 
+                if (option == JOptionPane.YES_OPTION) {
+                    guardarCliente();
+                    limpiar();
+
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new BorderLayout());
+
+                    JLabel messageLabel = new JLabel("Datos Guardados Correctamente");
+                    messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                    messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                    panel.add(messageLabel, BorderLayout.CENTER);
+
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png"));
+                    JLabel iconLabel = new JLabel(icon);
+                    iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                    panel.add(iconLabel, BorderLayout.WEST);
+
+                    JOptionPane.showMessageDialog(null, panel, "Guardado Exitoso", JOptionPane.PLAIN_MESSAGE);
+
+                    mostrar();
+                }
+            }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e);
         }
+
     }//GEN-LAST:event_Guardar_Cliente
 
     private void jButton_Editar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Editar
@@ -588,12 +617,18 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     private void jButton_Borrar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Borrar
         int selectedRow = jTable_Cliente.getSelectedRow();
         if (selectedRow != -1) {
-            if (JOptionPane.showConfirmDialog(rootPane,
+            int option = JOptionPane.showOptionDialog(
+                    rootPane,
                     "Se eliminará el registro, ¿desea continuar?",
                     "Eliminar Registro",
+                    JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE,
-                    JOptionPane.YES_NO_OPTION)
-                    == JOptionPane.YES_OPTION) {
+                    new ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar.png")),
+                    new Object[]{"Sí", "No"},
+                    "No"
+            );
+
+            if (option == JOptionPane.YES_OPTION) {
                 String idClienteString = jTable_Cliente.getValueAt(selectedRow, 0).toString();
                 int idCliente = Integer.parseInt(idClienteString);
 
@@ -601,10 +636,37 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 cli.eliminar(idCliente);
 
                 mostrar();
-                JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente");
+
+                JPanel panel = new JPanel();
+                panel.setLayout(new BorderLayout());
+
+                JLabel messageLabel = new JLabel("Cliente eliminado correctamente");
+                messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                panel.add(messageLabel, BorderLayout.CENTER);
+
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar.png"));
+                JLabel iconLabel = new JLabel(icon);
+                iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                panel.add(iconLabel, BorderLayout.WEST);
+
+                JOptionPane.showMessageDialog(null, panel, "Eliminación Exitosa", JOptionPane.PLAIN_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente");
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+
+            JLabel messageLabel = new JLabel("Debe seleccionar un cliente");
+            messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(messageLabel, BorderLayout.CENTER);
+
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Advertencia.png"));
+            JLabel iconLabel = new JLabel(icon);
+            iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(iconLabel, BorderLayout.WEST);
+
+            JOptionPane.showMessageDialog(null, panel, "Error", JOptionPane.ERROR_MESSAGE);
         }
 
 
@@ -616,8 +678,8 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextBuscarMouseClicked
 
     private void jButton_Actualizar1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar1
-        String idCLienteText = jTextField_Id_Ciente.getText();
-        int idCliente = Integer.parseInt(idCLienteText);
+        String idClienteText = jTextField_Id_Ciente.getText();
+        int idCliente = Integer.parseInt(idClienteText);
         String nombre1 = JtextFiel_Nombre_1.getText();
         String nombre2 = JtextFiel_Nombre_2.getText();
         String apellido1 = jTextFiel_Apellido_1.getText();
@@ -625,32 +687,49 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         String celular = jFormattedTextFieldTelefono.getText();
         String direccion = jTextArea_Dirrecion.getText();
 
-        if ((jTextField_Id_Ciente.getText().equals(""))
-                || (JtextFiel_Nombre_1.getText().equals(""))
-                || (JtextFiel_Nombre_2.getText().equals(""))
-                || (JtextFiel_Nombre_2.getText().equals(""))
-                || (jTextField_Apellido_2.getText().equals(""))
-                || (jFormattedTextFieldTelefono.getText().equals("    -    "))
-                || (jTextArea_Dirrecion.getText().equals(""))) {
+        if (jTextField_Id_Ciente.getText().isEmpty() ) {
             JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
         } else {
-            JOptionPane.showMessageDialog(null, "Datos Actualizados Correctamente");
+            int option = JOptionPane.showOptionDialog(
+                    null,
+                    "¿Desea actualizar el cliente?",
+                    "Confirmar Actualización",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png")),
+                    new Object[]{"Sí", "No"},
+                    "No"
+            );
 
+            if (option == JOptionPane.YES_OPTION) {
+                // Crear objeto Clase_Cliente con los datos obtenidos
+                Clase_Cliente cliente = new Clase_Cliente(idCliente, nombre1, nombre2, apellido1, apellido2, celular, direccion);
+
+                // Llamar al método "actualizar" de CRUD_Cliente
+                CRUD_Cliente clienteCRUD = new CRUD_Cliente();
+                clienteCRUD.actualizar(cliente);
+
+                JPanel panel = new JPanel();
+                panel.setLayout(new BorderLayout());
+
+                JLabel messageLabel = new JLabel("Cliente actualizado exitosamente.");
+                messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                panel.add(messageLabel, BorderLayout.CENTER);
+
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"));
+                JLabel iconLabel = new JLabel(icon);
+                iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                panel.add(iconLabel, BorderLayout.WEST);
+
+                JOptionPane.showMessageDialog(null, panel, "Actualización Exitosa", JOptionPane.PLAIN_MESSAGE);
+            }
         }
-        // Crear objeto Clase_Cliente con los datos obtenidos
-        Clase_Cliente cliente = new Clase_Cliente(idCliente, nombre1, nombre2, apellido1, apellido2, celular, direccion);
 
-        // Llamar al método "actualizar" de CRUD_Cliente
         CRUD_Cliente clienteCRUD = new CRUD_Cliente();
-        clienteCRUD.actualizar(cliente);
-        mostrar();
-
-        // Refrescar la tabla mostrando los datos actualizados
         clienteCRUD.mostrarDatos();
         limpiar();
-
-        // Mostrar mensaje de éxito o cualquier otra notificación
-        JOptionPane.showMessageDialog(null, "Cliente actualizado exitosamente.");
+        mostrar();
 
 
     }//GEN-LAST:event_jButton_Actualizar1
@@ -764,7 +843,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField_Apellido_2KeyTyped
 
     private void jTextArea_DirrecionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea_DirrecionKeyTyped
-        String texto = jTextArea_Dirrecion.getText(); 
+        String texto = jTextArea_Dirrecion.getText();
 
         if (texto.length() >= 200) {
             evt.consume();

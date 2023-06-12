@@ -105,16 +105,15 @@ public boolean verificarDatos(String dato) {
 public void Guardar(Clase_Empleado empleado) {
     try {
         CallableStatement cbst = cn.prepareCall("{call InsertarEmpleado(?,?,?,?,?,?,?,?,?)}");
-        cbst.setInt(1, empleado.getId_Empleado());
-        cbst.setString(2, empleado.getNombre_1());
-        cbst.setString(3, empleado.getNombre_2());
-        cbst.setString(4, empleado.getApellido_1());
-        cbst.setString(5, empleado.getApellido_2());
-        cbst.setString(6, empleado.getNumero_Celular());
-        cbst.setString(7, empleado.getGmail());
-        cbst.setString(8, empleado.getDireccion());
-        cbst.setTime(9, new java.sql.Time(empleado.getHora_Entrada().getTime()));
-        cbst.setTime(10, new java.sql.Time(empleado.getHora_Salida().getTime()));
+        cbst.setString(1, empleado.getNombre_1());
+        cbst.setString(2, empleado.getNombre_2());
+        cbst.setString(3, empleado.getApellido_1());
+        cbst.setString(4, empleado.getApellido_2());
+        cbst.setString(5, empleado.getNumero_Celular());
+        cbst.setString(6, empleado.getGmail());
+        cbst.setString(7, empleado.getDireccion());
+        cbst.setTime(8, new java.sql.Time(empleado.getHora_Entrada().getTime()));
+        cbst.setTime(9, new java.sql.Time(empleado.getHora_Salida().getTime()));
         cbst.executeUpdate();
 
     } catch (SQLException e) {

@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import java.sql.Time;
@@ -8,18 +7,31 @@ import java.sql.Time;
  * @author diedr
  */
 public class Clase_Empleado {
-int Id_Empleado;
-   String Nombre_1;
-   String Nombre_2;
-   String Apellido_1;
-   String Apellido_2;
-   String Numero_Celular;
-   String Gmail;
-   String Direccion;
-   java.sql.Time Hora_Entrada;
-   java.sql.Time Hora_Salida;
 
-    public Clase_Empleado(int Id_Empleado, String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Gmail, String Direccion, Time Hora_Entrada, Time Hora_Salida) {
+    int Id_Empleado;
+    String Nombre_1;
+    String Nombre_2;
+    String Apellido_1;
+    String Apellido_2;
+    String Numero_Celular;
+    String Gmail;
+    String Direccion;
+    java.sql.Time Hora_Entrada;
+    java.sql.Time Hora_Salida;
+
+    public Clase_Empleado(String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Gmail, String Direccion, String Hora_Entrada, String Hora_Salida) {
+        this.Nombre_1 = Nombre_1;
+        this.Nombre_2 = Nombre_2;
+        this.Apellido_1 = Apellido_1;
+        this.Apellido_2 = Apellido_2;
+        this.Numero_Celular = Numero_Celular;
+        this.Gmail = Gmail;
+        this.Direccion = Direccion;
+        this.Hora_Entrada = Time.valueOf(Hora_Entrada);
+        this.Hora_Salida = Time.valueOf(Hora_Salida);
+    }
+
+    public Clase_Empleado(int Id_Empleado, String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Gmail, String Direccion, String Hora_Entrada, String Hora_Salida) {
         this.Id_Empleado = Id_Empleado;
         this.Nombre_1 = Nombre_1;
         this.Nombre_2 = Nombre_2;
@@ -28,12 +40,8 @@ int Id_Empleado;
         this.Numero_Celular = Numero_Celular;
         this.Gmail = Gmail;
         this.Direccion = Direccion;
-        this.Hora_Entrada = Hora_Entrada;
-        this.Hora_Salida = Hora_Salida;
-    }
-
-    public Clase_Empleado(String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Gmail, String Direccion, Time horaEntrada, Time horaSalida) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       this.Hora_Entrada = Time.valueOf(Hora_Entrada);
+       this.Hora_Salida = Time.valueOf(Hora_Salida);
     }
 
     public int getId_Empleado() {
