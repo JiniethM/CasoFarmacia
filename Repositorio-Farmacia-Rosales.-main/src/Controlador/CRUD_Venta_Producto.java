@@ -1,21 +1,26 @@
-
 package Controlador;
+
 import Modelo.Class_Venta_Producto;
 import Controlador_Conexion_DB.Conexion;
+import Modelo.Clase_Producto;
+import java.math.BigDecimal;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  *
  * @author diedr
  */
 public class CRUD_Venta_Producto {
-   public final Conexion con = new Conexion();
-    public  final Connection cn = (Connection) con.conectar(); 
-    
+
+    public final Conexion con = new Conexion();
+    public final Connection cn = (Connection) con.conectar();
+
     public DefaultTableModel mostrarDatosVentaProducto() {
         ResultSet rs;
         DefaultTableModel modelo;
@@ -130,6 +135,26 @@ public class CRUD_Venta_Producto {
         }
     }
 
+   
 
+   public ArrayList<Clase_Producto> mostrarDatosCombo(String busqueda) {
+    ArrayList<Clase_Producto> listaProductos = new ArrayList<>();
+    try {
+        String query = "{ CALL MostrarProductos(?) }";
+        CallableStatement cstmt = cn.prepareCall(query);
+        cstmt.setString(1, busqueda);
+        ResultSet rs = cstmt.executeQuery();
+        while (rs.next()) {
+            int idProducto = rs.getInt("Id_Producto");
+            String nombreProducto = rs.getString("Nombre");
+            float precioVenta = rs.getFloat("Precio_Venta");
+
+            Clase_Producto producto = new Clase_Producto(idProducto, nombreProducto, precioVenta);
+            listaProductos.add(producto);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e);
+    }
+    return listaProductos;
 }
-
+}

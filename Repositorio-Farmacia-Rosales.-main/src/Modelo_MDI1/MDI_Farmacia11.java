@@ -1,18 +1,13 @@
 package Modelo_MDI1;
 
 import Vistas.InternalFrame_Cliente;
-import Vistas.JFrame_Espera;
 import Vistas.JInternalFrame_Categoria;
 import Vistas.JInternalFrame_Empleado;
 import Vistas.JInternalFrame_Laboratorio;
 import Vistas.JInternalFrame_Presentacion;
 import Vistas.JInternalFrame_Producto;
 import Vistas.JInternalFrame_Proveedor;
-import Vistas.JInternalFrame_Venta_Producto;
-import Vistas.Login_Form;
 import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,9 +18,9 @@ import javax.swing.JScrollPane;
  *
  * @author diedr
  */
-public class MDI_Farmacia1 extends javax.swing.JFrame {
+public class MDI_Farmacia11 extends javax.swing.JFrame {
 
-    public MDI_Farmacia1() {
+    public MDI_Farmacia11() {
         initComponents();
 
     }
@@ -44,6 +39,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jDesktopPane_Para_Mostrar = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jButton6 = new javax.swing.JButton();
         jButton_Presentacion = new javax.swing.JButton();
@@ -205,15 +201,27 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
 
         jDesktopPane_Para_Mostrar.setBackground(new java.awt.Color(0, 0, 0));
 
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("jLabel1");
+
+        jDesktopPane_Para_Mostrar.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane_Para_MostrarLayout = new javax.swing.GroupLayout(jDesktopPane_Para_Mostrar);
         jDesktopPane_Para_Mostrar.setLayout(jDesktopPane_Para_MostrarLayout);
         jDesktopPane_Para_MostrarLayout.setHorizontalGroup(
             jDesktopPane_Para_MostrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jDesktopPane_Para_MostrarLayout.createSequentialGroup()
+                .addGap(302, 302, 302)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jDesktopPane_Para_MostrarLayout.setVerticalGroup(
             jDesktopPane_Para_MostrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jDesktopPane_Para_MostrarLayout.createSequentialGroup()
+                .addGap(188, 188, 188)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(0, 153, 153));
@@ -449,12 +457,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_Laboratorio
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        JInternalFrame_Venta_Producto est = new JInternalFrame_Venta_Producto();
-        int x = (jDesktopPane_Para_Mostrar.getWidth() / 2) - est.getWidth() / 2;
-        int y = (jDesktopPane_Para_Mostrar.getHeight() / 2) - est.getHeight() / 2;
-        est.setLocation(x, y);
-        jDesktopPane_Para_Mostrar.add(est);
-        est.setVisible(true);
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
@@ -519,10 +522,6 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton_Cliente
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -546,75 +545,21 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton_Producto
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JFrame_Espera frame = new JFrame_Espera();
-                frame.setVisible(true);
-                
 
-                // Simulación de carga del proyecto (sustituir con la lógica real de carga)
-                try {
-                    Thread.sleep(3000); // Espera de 3 segundos
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                frame.dispose();
-
-                // Mostrar el formulario de inicio de sesión después de cerrar la ventana de espera
-                java.awt.EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                        // Crear una instancia del formulario de inicio de sesión
-                        Login_Form loginForm = new Login_Form();
-                        loginForm.setLocationRelativeTo(null);
-                        loginForm.setVisible(true);
-
-                        // Esperar hasta que el formulario de inicio de sesión se cierre
-                        loginForm.addWindowListener(new WindowAdapter() {
-                            @Override
-                            public void windowClosed(WindowEvent e) {
-                                // Realizar acciones posteriores al cierre del formulario de inicio de sesión
-                                String rol = loginForm.getRol();
-
-                                if (rol != null) {
-                                    if (rol.equals("Gerente")) {
-                                        showMDI_Farmacia1();
-                                    } else if (rol.equals("Vendedor")) {
-                                        showMDI_Farmacia11();
-                                    }
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    }
-
-    private static void showMDI_Farmacia1() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                // Mostrar el MDI_Farmacia1
-                new MDI_Farmacia1().setVisible(true);
-            }
-        });
-    }
-
-    private static void showMDI_Farmacia11() {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                // Mostrar el MDI_Farmacia11
                 new MDI_Farmacia11().setVisible(true);
             }
         });
-    
     }
-
-    private javax.swing.JLabel jLabel1;
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -643,6 +588,7 @@ public class MDI_Farmacia1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton_Producto;
     private javax.swing.JButton jButton_Proveedor;
     private javax.swing.JDesktopPane jDesktopPane_Para_Mostrar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JMenuBar menuBar;

@@ -1,4 +1,3 @@
-
 package Controlador;
 
 import Modelo.Clase_Producto;
@@ -23,11 +22,10 @@ import javax.sql.rowset.serial.SerialBlob;
  * @author diedr
  */
 public class CRUD_Producto {
+
     public final Conexion con = new Conexion();
-    public  final Connection cn = (Connection) con.conectar();
-    
-    
-    
+    public final Connection cn = (Connection) con.conectar();
+
     public DefaultTableModel mostrarDatos() {
         ResultSet rs;
         DefaultTableModel modelo;
@@ -38,6 +36,51 @@ public class CRUD_Producto {
 
         try {
             CallableStatement cbstc = cn.prepareCall("{call ConsultarDatosProducto}");
+            rs = cbstc.executeQuery();
+
+            while (rs.next()) {
+                registro[0] = rs.getString("Id_Producto");
+                registro[1] = rs.getString("Nombre");
+                registro[2] = rs.getString("Descripcion");
+                registro[3] = rs.getString("Cantidad_Producto");
+                registro[4] = rs.getString("Precio_Compra");
+                registro[5] = rs.getString("Precio_Venta");
+
+                // Obtener la imagen del campo IMAGE y convertirlo a una representación adecuada (por ejemplo, una cadena Base64)
+                Blob imagenBlob = rs.getBlob("Imagen_Producto");
+                if (imagenBlob != null) {
+                    byte[] imagenBytes = imagenBlob.getBytes(1, (int) imagenBlob.length());
+                    String imagenBase64 = Base64.getEncoder().encodeToString(imagenBytes);
+                    registro[6] = imagenBase64;
+                } else {
+                    registro[6] = ""; // O puedes asignar otro valor por defecto si lo prefieres
+                }
+
+                registro[7] = rs.getString("Fecha_Caducidad");
+                registro[8] = rs.getString("Id_Categoria");
+                registro[9] = rs.getString("Id_Presentacion");
+                registro[10] = rs.getString("Id_Laboratorio");
+
+                modelo.addRow(registro);
+            }
+            return modelo;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    }
+
+    public DefaultTableModel buscarDatos(String dato) {
+        ResultSet rs;
+        DefaultTableModel modelo;
+        String[] titulos = {"Id_Producto", "Nombre", "Descripcion", "Cantidad_Producto", "Precio_Compra", "Precio_Venta", "Imagen_Producto", "Fecha_Caducidad", "Id_Categoria", "Id_Presentacion", "Id_Laboratorio"};
+        String[] registro = new String[11];
+
+        modelo = new DefaultTableModel(null, titulos);
+
+        try {
+            CallableStatement cbstc = cn.prepareCall("{call BuscarDatosProducto(?)}");
+            cbstc.setString(1, dato);
             rs = cbstc.executeQuery();
 
             while (rs.next()) {
@@ -66,60 +109,19 @@ public class CRUD_Producto {
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
-    }
-
-    public DefaultTableModel buscarDatos(String dato) {
-    ResultSet rs;
-    DefaultTableModel modelo;
-    String[] titulos = {"Id_Producto", "Nombre", "Descripcion", "Cantidad_Producto", "Precio_Compra", "Precio_Venta", "Imagen_Producto", "Fecha_Caducidad", "Id_Categoria", "Id_Presentacion", "Id_Laboratorio"};
-    String[] registro = new String[11];
-
-    modelo = new DefaultTableModel(null, titulos);
-
-    try {
-        CallableStatement cbstc = cn.prepareCall("{call BuscarDatosProducto(?)}");
-        cbstc.setString(1, dato);
-        rs = cbstc.executeQuery();
-
-        while (rs.next()) {
-            registro[0] = rs.getString("Id_Producto");
-            registro[1] = rs.getString("Nombre");
-            registro[2] = rs.getString("Descripcion");
-            registro[3] = rs.getString("Cantidad_Producto");
-            registro[4] = rs.getString("Precio_Compra");
-            registro[5] = rs.getString("Precio_Venta");
-
-            // Obtener la imagen del campo IMAGE y convertirlo a una representación adecuada (por ejemplo, una cadena Base64)
-            Blob imagenBlob = rs.getBlob("Imagen_Producto");
-            byte[] imagenBytes = imagenBlob.getBytes(1, (int) imagenBlob.length());
-            String imagenBase64 = Base64.getEncoder().encodeToString(imagenBytes);
-            registro[6] = imagenBase64;
-
-            registro[7] = rs.getString("Fecha_Caducidad");
-            registro[8] = rs.getString("Id_Categoria");
-            registro[9] = rs.getString("Id_Presentacion");
-            registro[10] = rs.getString("Id_Laboratorio");
-
-            modelo.addRow(registro);
-        }
-        return modelo;
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
-        return null;
-    }
 
     }
 
     public boolean verificarDatos(String dato) {
-       try {
-        CallableStatement cbstc = cn.prepareCall("{call VerificarDatosProducto(?)}");
-        cbstc.setString(1, dato);
-        ResultSet rs = cbstc.executeQuery();
-        return rs.next(); // Devuelve true si existe al menos un registro que cumple la condición
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
-        return false;
-    }
+        try {
+            CallableStatement cbstc = cn.prepareCall("{call VerificarDatosProducto(?)}");
+            cbstc.setString(1, dato);
+            ResultSet rs = cbstc.executeQuery();
+            return rs.next(); // Devuelve true si existe al menos un registro que cumple la condición
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+            return false;
+        }
     }
 
     public void guardarImagenProducto(String nombreTabla, String columnaImagen, String rutaImagen, Clase_Producto producto) {
@@ -204,8 +206,4 @@ public class CRUD_Producto {
         }
     }
 
-  
 }
-
-
-

@@ -109,10 +109,8 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 160, -1));
 
-        jButton6.setBackground(new java.awt.Color(0, 153, 153));
+        jButton6.setBackground(new java.awt.Color(255, 255, 51));
         jButton6.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/editar.png"))); // NOI18N
         jButton6.setText("Editar");
         jButton6.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -120,12 +118,11 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, 100, 40));
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, 80, 30));
 
-        jButton9.setBackground(new java.awt.Color(0, 153, 153));
+        jButton9.setBackground(new java.awt.Color(102, 204, 255));
         jButton9.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"))); // NOI18N
         jButton9.setText("Actualizar");
         jButton9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -133,15 +130,14 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
                 jButton9ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 210, 100, 40));
+        jPanel1.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 210, 80, 30));
 
-        jButton4.setBackground(new java.awt.Color(0, 153, 153));
+        jButton4.setBackground(new java.awt.Color(255, 102, 102));
         jButton4.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"))); // NOI18N
         jButton4.setText("Eliminar");
         jButton4.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 270, 100, -1));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 270, 80, 30));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 153, 153));
@@ -161,7 +157,6 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
         jButton7.setBackground(new java.awt.Color(0, 153, 153));
         jButton7.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar Compra.png"))); // NOI18N
         jButton7.setText("Guardar");
         jButton7.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +164,7 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, 100, 40));
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, 80, 30));
 
         jPanel8.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -243,12 +238,8 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

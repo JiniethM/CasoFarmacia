@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import java.sql.Date;
@@ -8,17 +7,28 @@ import java.sql.Date;
  * @author diedr
  */
 public class Clase_Producto {
+
     int Id_Producto;
-   String Nombre;
-   String Descripcion;
-   int Cantidad_Producto;
-   float Precio_Compra;
-   float Precio_Venta;
-   byte [] Imagen_Producto;
-   java.sql.Date Fecha_Caducidad;
-   int Id_Categoria;
-   int Id_Presentacion;
-   int Id_Laboratorio;
+    String Nombre;
+    String Descripcion;
+    int Cantidad_Producto;
+    float Precio_Compra;
+    float Precio_Venta;
+    byte[] Imagen_Producto;
+    java.sql.Date Fecha_Caducidad;
+    int Id_Categoria;
+    int Id_Presentacion;
+    int Id_Laboratorio;
+
+    public Clase_Producto(int Id_Producto, String Nombre,float Precio_Venta) {
+        this.Id_Producto = Id_Producto;
+        this.Nombre = Nombre;
+        this.Precio_Venta = Precio_Venta;
+    }
+    @Override
+     public String toString() {
+        return "ID: " + Id_Producto + ", Nombre: " + Nombre + ", Precio: " + String.valueOf(Precio_Venta);
+    }
 
     public Clase_Producto(int Id_Producto, String Nombre, String Descripcion, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, byte[] Imagen_Producto, Date Fecha_Caducidad, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio) {
         this.Id_Producto = Id_Producto;
@@ -123,4 +133,3 @@ public class Clase_Producto {
     }
 
 }
-

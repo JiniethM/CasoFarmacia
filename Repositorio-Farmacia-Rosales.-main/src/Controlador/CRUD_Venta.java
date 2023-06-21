@@ -91,11 +91,10 @@ public class CRUD_Venta {
 
     public void insertarVenta(Clase_Venta venta) {
         try {
-            CallableStatement cbst = cn.prepareCall("{call InsertarVenta(?, ?, ?, ?)}");
-            cbst.setInt(1, venta.getId_Venta());
-            cbst.setObject(2, venta.getFecha_Hora());
-            cbst.setInt(3, venta.getId_Cliente());
-            cbst.setInt(4, venta.getId_Empleado());
+            CallableStatement cbst = cn.prepareCall("{call InsertarVenta( ?, ?, ?)}");
+            cbst.setObject(1, venta.getFecha_Hora());
+            cbst.setInt(2, venta.getId_Cliente());
+            cbst.setInt(3, venta.getId_Empleado());
             cbst.executeUpdate();
 
         } catch (SQLException e) {

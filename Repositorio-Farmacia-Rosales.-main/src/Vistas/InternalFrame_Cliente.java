@@ -12,11 +12,45 @@ import java.sql.SQLException;
 import Controlador_Conexion_DB.Conexion;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -33,6 +67,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jTextField_Id_Ciente.setEditable(false);
 
     }
+   
 
     public void limpiar() {
         jTextField_Id_Ciente.setText("");
@@ -131,6 +166,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jButton_Borrar = new javax.swing.JButton();
         jButton_Actualizar1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
+        jButton_Report = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -400,7 +436,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jButton6.setBackground(new java.awt.Color(0, 153, 153));
         jButton6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/agregar-usuario.png"))); // NOI18N
         jButton6.setText("Agregar");
         jButton6.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -408,12 +443,10 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 Guardar_Cliente(evt);
             }
         });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, 93, -1));
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, 80, 30));
 
-        jButton_Editar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Editar.setBackground(new java.awt.Color(255, 255, 102));
         jButton_Editar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton_Editar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Editar Usuario.png"))); // NOI18N
         jButton_Editar.setText("Editar");
         jButton_Editar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Editar.addActionListener(new java.awt.event.ActionListener() {
@@ -421,25 +454,26 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 jButton_Editar(evt);
             }
         });
-        jPanel1.add(jButton_Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 160, 93, -1));
+        jPanel1.add(jButton_Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 160, 80, 30));
 
-        jButton_Borrar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Borrar.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Borrar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jButton_Borrar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Borrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar usuario.png"))); // NOI18N
         jButton_Borrar.setText("Eliminar");
         jButton_Borrar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton_Borrar.setMaximumSize(new java.awt.Dimension(80, 30));
+        jButton_Borrar.setMinimumSize(new java.awt.Dimension(80, 30));
+        jButton_Borrar.setPreferredSize(new java.awt.Dimension(80, 30));
         jButton_Borrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Borrar(evt);
             }
         });
-        jPanel1.add(jButton_Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 290, 100, 40));
+        jPanel1.add(jButton_Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 290, 80, 30));
 
-        jButton_Actualizar1.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Actualizar1.setBackground(new java.awt.Color(102, 204, 255));
         jButton_Actualizar1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jButton_Actualizar1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Actualizar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar uduario.png"))); // NOI18N
         jButton_Actualizar1.setText("Actualizar");
         jButton_Actualizar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton_Actualizar1.addActionListener(new java.awt.event.ActionListener() {
@@ -447,12 +481,20 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 jButton_Actualizar1(evt);
             }
         });
-        jPanel1.add(jButton_Actualizar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, -1, -1));
+        jPanel1.add(jButton_Actualizar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, 80, 30));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 153, 153));
         jLabel10.setText("Buscar");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+
+        jButton_Report.setText("Reporte");
+        jButton_Report.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_ReportMouseClicked(evt);
+            }
+        });
+        jPanel1.add(jButton_Report, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 370, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -687,7 +729,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         String celular = jFormattedTextFieldTelefono.getText();
         String direccion = jTextArea_Dirrecion.getText();
 
-        if (jTextField_Id_Ciente.getText().isEmpty() ) {
+        if (jTextField_Id_Ciente.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
         } else {
             int option = JOptionPane.showOptionDialog(
@@ -850,6 +892,38 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTextArea_DirrecionKeyTyped
 
+    private void jButton_ReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReportMouseClicked
+
+    try {
+        // Establecer la conexión JDBC
+        String url = "jdbc:sqlserver://localhost:1433;databaseName=Farmacia_Rosales_DB;TrustServerCertificate=True";
+        String usuario = "sa";
+        String contraseña = "1234";
+        Connection conexion = DriverManager.getConnection(url, usuario, contraseña);
+
+        // Cargar el archivo del informe desde el paquete Vistas
+        JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResourceAsStream("/Vistas/report1.jasper"));
+
+        // Establecer los parámetros del informe, si los hay
+        Map<String, Object> parametros = new HashMap<>();
+        // parametros.put("parametro1", valor1);
+        // parametros.put("parametro2", valor2);
+
+        // Generar el informe
+        JasperPrint print = JasperFillManager.fillReport(report, parametros, conexion);
+
+        // Mostrar el informe en un visor
+        JasperViewer viewer = new JasperViewer(print, false);
+        viewer.setVisible(true);
+
+        // Cerrar la conexión JDBC
+        conexion.close();
+    } catch (JRException | SQLException e) {
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_jButton_ReportMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JtextFiel_Nombre_1;
@@ -858,6 +932,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton_Actualizar1;
     private javax.swing.JButton jButton_Borrar;
     private javax.swing.JButton jButton_Editar;
+    private javax.swing.JButton jButton_Report;
     private javax.swing.JFormattedTextField jFormattedTextFieldTelefono;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

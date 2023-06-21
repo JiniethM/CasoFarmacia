@@ -529,7 +529,6 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
         jButton6.setBackground(new java.awt.Color(0, 153, 153));
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/agregar-usuario.png"))); // NOI18N
         jButton6.setText("Agregar");
         jButton6.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -537,12 +536,11 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
                 guardar_empleado(evt);
             }
         });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, 100, -1));
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, 80, 30));
 
         Editar.setBackground(new java.awt.Color(0, 153, 153));
         Editar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         Editar.setForeground(new java.awt.Color(255, 255, 255));
-        Editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Editar Usuario.png"))); // NOI18N
         Editar.setText("Editar");
         Editar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         Editar.addActionListener(new java.awt.event.ActionListener() {
@@ -550,12 +548,11 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
                 EditarActionPerformed(evt);
             }
         });
-        jPanel1.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 110, 100, -1));
+        jPanel1.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 110, 80, 30));
 
         Actualizar.setBackground(new java.awt.Color(0, 153, 153));
         Actualizar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         Actualizar.setForeground(new java.awt.Color(255, 255, 255));
-        Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar uduario.png"))); // NOI18N
         Actualizar.setText("Actualizar");
         Actualizar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         Actualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -563,12 +560,11 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
                 ActualizarActionPerformed(evt);
             }
         });
-        jPanel1.add(Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 180, 100, -1));
+        jPanel1.add(Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 180, 80, 30));
 
         Borrar.setBackground(new java.awt.Color(0, 153, 153));
         Borrar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         Borrar.setForeground(new java.awt.Color(255, 255, 255));
-        Borrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar usuario.png"))); // NOI18N
         Borrar.setText("Eliminar");
         Borrar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         Borrar.addActionListener(new java.awt.event.ActionListener() {
@@ -576,7 +572,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
                 BorrarActionPerformed(evt);
             }
         });
-        jPanel1.add(Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 240, 100, 40));
+        jPanel1.add(Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 240, 80, 30));
 
         jLabel14.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 153, 153));

@@ -6,11 +6,22 @@ package Modelo;
  * @author diedr
  */
 public class Class_Venta_Producto {
-   int Id_Venta_Producto;
+    int Id_Venta_Producto;
    int Cantidad;
    float Descuento;
    int Id_Venta;
    int Id_Producto;
+
+    public Class_Venta_Producto(int Cantidad, float Descuento, int Id_Venta, int Id_Producto) {
+        this.Cantidad = Cantidad;
+        this.Descuento = Descuento;
+        this.Id_Venta = Id_Venta;
+        this.Id_Producto = Id_Producto;
+    }
+   
+
+   
+   
 
     public Class_Venta_Producto(int Id_Venta_Producto, int Cantidad, float Descuento, int Id_Venta, int Id_Producto) {
         this.Id_Venta_Producto = Id_Venta_Producto;

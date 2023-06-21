@@ -275,10 +275,8 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
         });
         jPanel2.add(jTextField14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 160, -1));
 
-        jButton8.setBackground(new java.awt.Color(0, 153, 153));
+        jButton8.setBackground(new java.awt.Color(255, 255, 51));
         jButton8.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/editar.png"))); // NOI18N
         jButton8.setText("Editar");
         jButton8.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -286,12 +284,11 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 110, 100, 40));
+        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 110, 80, 30));
 
-        jButton10.setBackground(new java.awt.Color(0, 153, 153));
+        jButton10.setBackground(new java.awt.Color(51, 204, 255));
         jButton10.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"))); // NOI18N
         jButton10.setText("Actualizar");
         jButton10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -299,15 +296,14 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
                 jButton10ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, 100, 40));
+        jPanel2.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, 80, 30));
 
-        jButton11.setBackground(new java.awt.Color(0, 153, 153));
+        jButton11.setBackground(new java.awt.Color(255, 102, 102));
         jButton11.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"))); // NOI18N
         jButton11.setText("Eliminar");
         jButton11.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jPanel2.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 230, 100, -1));
+        jPanel2.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 230, 80, 30));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 153, 153));
@@ -322,7 +318,6 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
         jButton12.setBackground(new java.awt.Color(0, 153, 153));
         jButton12.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar Compra.png"))); // NOI18N
         jButton12.setText("Guardar");
         jButton12.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -330,7 +325,7 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
                 jButton12ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 50, 100, 40));
+        jPanel2.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 50, 80, 30));
 
         jPanel6.setBackground(new java.awt.Color(0, 153, 153));
 

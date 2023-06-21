@@ -1,10 +1,14 @@
-
 package Vistas;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JDesktopPane;
 
 /**
  *
@@ -15,11 +19,11 @@ public class JInternalFrame_scrit_Principal extends javax.swing.JInternalFrame {
     FondoPanel fondo = new FondoPanel();
 
     public JInternalFrame_scrit_Principal() {
-        this.setContentPane(fondo);
+         this.setContentPane(fondo);
         initComponents();
+
     }
 
- 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -27,17 +31,19 @@ public class JInternalFrame_scrit_Principal extends javax.swing.JInternalFrame {
         jPanel1 = new FondoPanel();
         jLabel1 = new javax.swing.JLabel();
 
+        setPreferredSize(new java.awt.Dimension(1500, 1500));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Imagenes/Fondo logo.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1600, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1600, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -60,19 +66,17 @@ public class JInternalFrame_scrit_Principal extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
-    
-   class FondoPanel extends JPanel
-    {
-       private Image imagen;
-     public void pain(Graphics g)
-             
-     {
-         imagen = new ImageIcon(getClass().getResource("/Vistas_Imagenes/Fondo de farmacia Rosales.png")).getImage();
-         g.drawImage(imagen, 0,0,getWidth(),getHeight(), this);
-         
-         setOpaque(false);
-         
-         super.paint(g);
-     }
-}
+    class FondoPanel extends JPanel {
+
+        private Image imagen;
+
+        public void pain(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/Vistas_Imagenes/Fondo de farmacia Rosales.png")).getImage();
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+
+            setOpaque(false);
+
+            super.paint(g);
+        }
+    }
 }

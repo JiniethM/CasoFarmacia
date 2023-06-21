@@ -154,7 +154,6 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
         jButton_Agregar_Categoria.setBackground(new java.awt.Color(0, 153, 153));
         jButton_Agregar_Categoria.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Agregar_Categoria.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Agregar_Categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"))); // NOI18N
         jButton_Agregar_Categoria.setText("Agregar");
         jButton_Agregar_Categoria.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Agregar_Categoria.addActionListener(new java.awt.event.ActionListener() {
@@ -163,10 +162,8 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Editar_categoria.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Editar_categoria.setBackground(new java.awt.Color(255, 255, 51));
         jButton_Editar_categoria.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Editar_categoria.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Editar_categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/editar.png"))); // NOI18N
         jButton_Editar_categoria.setText("Editar");
         jButton_Editar_categoria.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Editar_categoria.addActionListener(new java.awt.event.ActionListener() {
@@ -175,10 +172,9 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Actualizar_Categoria.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Actualizar_Categoria.setBackground(new java.awt.Color(51, 204, 255));
         jButton_Actualizar_Categoria.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Actualizar_Categoria.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Actualizar_Categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"))); // NOI18N
         jButton_Actualizar_Categoria.setText("Actualizar");
         jButton_Actualizar_Categoria.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton_Actualizar_Categoria.addActionListener(new java.awt.event.ActionListener() {
@@ -187,10 +183,9 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Eliminar_Categoria.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Eliminar_Categoria.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Eliminar_Categoria.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Eliminar_Categoria.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Eliminar_Categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"))); // NOI18N
         jButton_Eliminar_Categoria.setText("Eliminar");
         jButton_Eliminar_Categoria.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Eliminar_Categoria.addActionListener(new java.awt.event.ActionListener() {
@@ -206,14 +201,14 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton_Eliminar_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_Eliminar_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton_Actualizar_Categoria))
+                        .addComponent(jButton_Actualizar_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton_Agregar_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton_Editar_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton_Agregar_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_Editar_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -221,13 +216,13 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton_Agregar_Categoria)
+                .addComponent(jButton_Agregar_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
-                .addComponent(jButton_Editar_categoria)
+                .addComponent(jButton_Editar_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
-                .addComponent(jButton_Actualizar_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton_Actualizar_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addGap(44, 44, 44)
-                .addComponent(jButton_Eliminar_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(jButton_Eliminar_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addGap(31, 31, 31))
         );
 
@@ -352,17 +347,11 @@ public class JInternalFrame_Categoria extends javax.swing.JInternalFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
-                                .addGap(199, 199, 199))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(64, 64, 64)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                            .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(51, 51, 51))))
         );

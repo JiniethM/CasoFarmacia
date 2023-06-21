@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import java.time.LocalDateTime;
@@ -8,10 +7,19 @@ import java.time.LocalDateTime;
  * @author diedr
  */
 public class Clase_Venta {
+
     int Id_Venta;
     java.time.LocalDateTime Fecha_Hora;
     int Id_Cliente;
     int Id_Empleado;
+
+    public Clase_Venta(int Id_Empleado, int Id_Cliente, LocalDateTime Fecha_Hora) {
+        this.Id_Empleado = Id_Empleado;
+        this.Id_Cliente = Id_Cliente;
+        this.Fecha_Hora = Fecha_Hora;
+
+    }
+    
 
     public Clase_Venta(int Id_Venta, LocalDateTime Fecha_Hora, int Id_Cliente, int Id_Empleado) {
         this.Id_Venta = Id_Venta;
@@ -51,6 +59,5 @@ public class Clase_Venta {
     public void setId_Empleado(int Id_Empleado) {
         this.Id_Empleado = Id_Empleado;
     }
-    
-    
+
 }
