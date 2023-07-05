@@ -1,5 +1,5 @@
-
 package Controlador;
+
 import Modelo.Clase_Venta;
 import Controlador_Conexion_DB.Conexion;
 import javax.swing.*;
@@ -8,32 +8,39 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 /**
  *
  * @author diedr
  */
 public class CRUD_Venta {
+
     public final Conexion con = new Conexion();
-    public  final Connection cn = (Connection) con.conectar();
-    
-    
+    public final Connection cn = (Connection) con.conectar();
+
     public DefaultTableModel mostrarDatosVenta() {
         ResultSet rs;
         DefaultTableModel modelo;
-        String[] titulos = {"Id_Venta", "Fecha_Hora", "Id_Cliente", "Id_Empleado"};
-        String[] registro = new String[4];
+        String[] titulos = {
+            "Id_Venta", "Producto", "Cantidad", "Descuento",
+            "Cliente", "Empleado", "Fecha_Hora"
+        };
+        String[] registro = new String[7];
 
         modelo = new DefaultTableModel(null, titulos);
 
         try {
-            CallableStatement cbstc = cn.prepareCall("{call ConsultarDatosVenta}");
+            CallableStatement cbstc = cn.prepareCall("{call ObtenerVentasConProductos}");
             rs = cbstc.executeQuery();
 
             while (rs.next()) {
                 registro[0] = rs.getString("Id_Venta");
-                registro[1] = rs.getString("Fecha_Hora");
-                registro[2] = rs.getString("Id_Cliente");
-                registro[3] = rs.getString("Id_Empleado");
+                registro[1] = rs.getString("Producto");
+                registro[2] = rs.getString("Cantidad");
+                registro[3] = rs.getString("Descuento");
+                registro[4] = rs.getString("Cliente");
+                registro[5] = rs.getString("Empleado");
+                registro[6] = rs.getString("Fecha_Hora");
 
                 modelo.addRow(registro);
             }
@@ -42,6 +49,7 @@ public class CRUD_Venta {
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
+
     }
 
     public DefaultTableModel buscarDatosVenta(String dato) {
@@ -125,6 +133,5 @@ public class CRUD_Venta {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-
 
 }

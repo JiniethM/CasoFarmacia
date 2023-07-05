@@ -21,11 +21,13 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
     public JInternalFrame_Proveedor() {
         initComponents();
-        jTextField_id_Proveedor.setEditable(false);
+         jTextField_id_Proveedor1.setEditable(false);
+
     }
 
     public void limpiar() {
-        jTextField_id_Proveedor.setText("");
+        jTextField_id_Proveedor1.setText("");
+        jTextField_Cedula.setText("");
         jTextField_Nombre_1.setText("");
         jTextField_Nombre_2.setText("");
         jTextField_Apellido_1.setText("");
@@ -38,6 +40,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
     public void guardarProveedor() {
         CRUD_Proveedor cc = new CRUD_Proveedor();
+        String Cedula = jTextField_Cedula.getText();
         String Nombre1 = jTextField_Nombre_1.getText();
         String Nombre2 = jTextField_Nombre_2.getText();
         String Apellido1 = jTextField_Apellido_1.getText();
@@ -46,7 +49,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         String Telefono = jFormattedTextField_Telefono.getText();
         String Direccio = jTextArea_Direccion.getText();
 
-        Clase_Proveedor cl = new Clase_Proveedor(Nombre1, Nombre2, Apellido1, Apellido2, gmail, Telefono, Direccio);
+        Clase_Proveedor cl = new Clase_Proveedor(Cedula, Nombre1, Nombre2, Apellido1, Apellido2, Telefono, gmail, Direccio);
         cc.Guardar(cl);
     }
 
@@ -67,12 +70,13 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
         CRUD_Proveedor cc = new CRUD_Proveedor();
 
-        Clase_Proveedor cl = new Clase_Proveedor(jTextField_Nombre_1.getText(),
+        Clase_Proveedor cl = new Clase_Proveedor(jTextField_Cedula.getText(),
+                jTextField_Nombre_1.getText(),
                 jTextField_Nombre_2.getText(),
                 jTextField_Apellido_1.getText(),
                 jTextField_Apellido_2.getText(),
-                jTextField_Gmail.getText(),
                 jFormattedTextField_Telefono.getText(),
+                jTextField_Gmail.getText(),
                 jTextArea_Direccion.getText());
         cc.actualizar(cl);
 
@@ -100,7 +104,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField_id_Proveedor = new javax.swing.JTextField();
+        jTextField_Cedula = new javax.swing.JTextField();
         jTextField_Buscar = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -126,6 +130,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         jButton_Actualizar = new javax.swing.JButton();
         jButton_Editar = new javax.swing.JButton();
         jButton_Eliminar = new javax.swing.JButton();
+        jTextField_id_Proveedor1 = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -138,15 +143,15 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         jLabel2.setText("Id Proveedor");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, -1, -1));
 
-        jTextField_id_Proveedor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_id_Proveedor.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField_id_Proveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_id_Proveedor.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_Cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Cedula.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Cedula.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Cedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_id_Proveedor(evt);
+                jTextField_Cedula(evt);
             }
         });
-        jPanel1.add(jTextField_id_Proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 130, 20));
+        jPanel1.add(jTextField_Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, 200, 40));
 
         jTextField_Buscar.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jTextField_Buscar.setForeground(new java.awt.Color(153, 153, 153));
@@ -423,9 +428,9 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         jButton_Agregar.setBackground(new java.awt.Color(0, 153, 153));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Agregar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/agregar-usuario.png"))); // NOI18N
         jButton_Agregar.setText("Agregar");
         jButton_Agregar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar.setPreferredSize(new java.awt.Dimension(80, 30));
         jButton_Agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Agregar(evt);
@@ -436,22 +441,22 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         jButton_Actualizar.setBackground(new java.awt.Color(0, 153, 153));
         jButton_Actualizar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Actualizar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar uduario.png"))); // NOI18N
         jButton_Actualizar.setText("Actualizar");
         jButton_Actualizar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton_Actualizar.setPreferredSize(new java.awt.Dimension(80, 30));
         jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Actualizar(evt);
             }
         });
-        jPanel1.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 210, -1, 44));
+        jPanel1.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 210, 100, 30));
 
         jButton_Editar.setBackground(new java.awt.Color(0, 153, 153));
         jButton_Editar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Editar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Editar Usuario.png"))); // NOI18N
         jButton_Editar.setText("Editar");
         jButton_Editar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Editar.setPreferredSize(new java.awt.Dimension(80, 30));
         jButton_Editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Editar(evt);
@@ -462,15 +467,25 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         jButton_Eliminar.setBackground(new java.awt.Color(0, 153, 153));
         jButton_Eliminar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Eliminar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar usuario.png"))); // NOI18N
         jButton_Eliminar.setText("Eliminar");
         jButton_Eliminar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Eliminar.setPreferredSize(new java.awt.Dimension(80, 30));
         jButton_Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Eliminar(evt);
             }
         });
-        jPanel1.add(jButton_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, 90, 40));
+        jPanel1.add(jButton_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, 80, 30));
+
+        jTextField_id_Proveedor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_id_Proveedor1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_id_Proveedor1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_id_Proveedor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_id_Proveedor1(evt);
+            }
+        });
+        jPanel1.add(jTextField_id_Proveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 130, 20));
 
         jPanel4.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -511,7 +526,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -535,16 +550,18 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla para editar");
         } else {
             String Id_provee = jTable_Proveedor.getValueAt(filaSeleccionada, 0) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 0).toString() : "";
+            String cedula = jTable_Proveedor.getValueAt(filaSeleccionada, 1) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 1).toString() : "";
+            String nombre1 = jTable_Proveedor.getValueAt(filaSeleccionada, 2) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 2).toString() : "";
+            String nombre2 = jTable_Proveedor.getValueAt(filaSeleccionada, 3) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 3).toString() : "";
+            String apellido1 = jTable_Proveedor.getValueAt(filaSeleccionada, 4) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 4).toString() : "";
+            String apellido2 = jTable_Proveedor.getValueAt(filaSeleccionada, 5) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 5).toString() : "";
+            String gmail = jTable_Proveedor.getValueAt(filaSeleccionada, 6) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 6).toString() : "";
+            String telefono = jTable_Proveedor.getValueAt(filaSeleccionada, 7) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 7).toString() : "";
+            String direccion = jTable_Proveedor.getValueAt(filaSeleccionada, 8) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 8).toString() : "";
 
-            String nombre1 = jTable_Proveedor.getValueAt(filaSeleccionada, 1) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 1).toString() : "";
-            String nombre2 = jTable_Proveedor.getValueAt(filaSeleccionada, 2) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 2).toString() : "";
-            String apellido1 = jTable_Proveedor.getValueAt(filaSeleccionada, 3) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 3).toString() : "";
-            String apellido2 = jTable_Proveedor.getValueAt(filaSeleccionada, 4) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 4).toString() : "";
-            String gmail = jTable_Proveedor.getValueAt(filaSeleccionada, 5) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 5).toString() : "";
-            String telefono = jTable_Proveedor.getValueAt(filaSeleccionada, 6) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 6).toString() : "";
-            String direccion = jTable_Proveedor.getValueAt(filaSeleccionada, 7) != null ? jTable_Proveedor.getValueAt(filaSeleccionada, 7).toString() : "";
-
-            jTextField_id_Proveedor.setText(Id_provee);
+            
+            jTextField_id_Proveedor1.setText(Id_provee);
+            jTextField_Cedula.setText(cedula);
             jTextField_Nombre_1.setText(nombre1);
             jTextField_Nombre_2.setText(nombre2);
             jTextField_Apellido_1.setText(apellido1);
@@ -552,8 +569,6 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
             jTextField_Gmail.setText(gmail);
             jFormattedTextField_Telefono.setText(telefono);
             jTextArea_Direccion.setText(direccion);
-
-            
         }
     }//GEN-LAST:event_jButton_Editar
 
@@ -561,9 +576,9 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextArea_Direccion
 
-    private void jTextField_id_Proveedor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_id_Proveedor
+    private void jTextField_Cedula(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Cedula
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_id_Proveedor
+    }//GEN-LAST:event_jTextField_Cedula
 
     private void jTextField_Nombre_1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Nombre_1
         // TODO add your handling code here:
@@ -603,7 +618,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
                         "Confirmar Guardado",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE,
-                        new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png")),
+                        new ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png")),
                         new Object[]{"Sí", "No"},
                         "No"
                 );
@@ -620,7 +635,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
                     messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                     panel.add(messageLabel, BorderLayout.CENTER);
 
-                    ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png"));
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"));
                     JLabel iconLabel = new JLabel(icon);
                     iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                     panel.add(iconLabel, BorderLayout.WEST);
@@ -636,8 +651,13 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton_Agregar
 
     private void jButton_Actualizar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar
-        String idProveeText = jTextField_id_Proveedor.getText();
-        int idProveedor = Integer.parseInt(idProveeText);
+        int filaSeleccionada = jTable_Proveedor.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla para editar");
+    } else {
+        String idProveedorText = jTable_Proveedor.getValueAt(filaSeleccionada, 0).toString();
+        int idProveedor = Integer.parseInt(idProveedorText);
+        String cedula = jTextField_Cedula.getText();
         String nombre1 = jTextField_Nombre_1.getText();
         String nombre2 = jTextField_Nombre_2.getText();
         String apellido1 = jTextField_Apellido_1.getText();
@@ -646,7 +666,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         String telefono = jFormattedTextField_Telefono.getText();
         String direccion = jTextArea_Direccion.getText();
 
-        if (jTextField_id_Proveedor.getText().isEmpty()) {
+        if (cedula.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
         } else {
             int option = JOptionPane.showOptionDialog(
@@ -655,28 +675,28 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
                     "Confirmar Actualización",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
-                    new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png")),
+                    new ImageIcon(getClass().getResource("/Vistas_Iconos/actualizar.png")),
                     new Object[]{"Sí", "No"},
                     "No"
             );
 
             if (option == JOptionPane.YES_OPTION) {
                 // Crear objeto Clase_Proveedor con los datos obtenidos
-                Clase_Proveedor Proveedor = new Clase_Proveedor(idProveedor, nombre1, nombre2, apellido1, apellido2, gmail, telefono, direccion);
+                Clase_Proveedor proveedor = new Clase_Proveedor(idProveedor, cedula, nombre1, nombre2, apellido1, apellido2, gmail, telefono, direccion);
 
                 // Llamar al método "actualizar" de CRUD_Proveedor
-                CRUD_Proveedor clienteCRUD = new CRUD_Proveedor();
-                clienteCRUD.actualizar(Proveedor);
+                CRUD_Proveedor proveedorCRUD = new CRUD_Proveedor();
+                proveedorCRUD.actualizar(proveedor);
 
                 JPanel panel = new JPanel();
                 panel.setLayout(new BorderLayout());
 
-                JLabel messageLabel = new JLabel("Cliente actualizado exitosamente.");
+                JLabel messageLabel = new JLabel("Proveedor actualizado exitosamente.");
                 messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
                 messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 panel.add(messageLabel, BorderLayout.CENTER);
 
-                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"));
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/actualizar.png"));
                 JLabel iconLabel = new JLabel(icon);
                 iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 panel.add(iconLabel, BorderLayout.WEST);
@@ -685,10 +705,11 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
             }
         }
 
-        CRUD_Proveedor ProveedorCRUD = new CRUD_Proveedor();
-        ProveedorCRUD.mostrarDatos();
+        CRUD_Proveedor proveedorCRUD = new CRUD_Proveedor();
+        proveedorCRUD.mostrarDatos();
         limpiar();
         mostrar();
+    }
 
 
     }//GEN-LAST:event_jButton_Actualizar
@@ -702,7 +723,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
                     "Eliminar Registro",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE,
-                    new ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar.png")),
+                    new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png")),
                     new Object[]{"Sí", "No"},
                     "No"
             );
@@ -724,7 +745,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
                 messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 panel.add(messageLabel, BorderLayout.CENTER);
 
-                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar.png"));
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png"));
                 JLabel iconLabel = new JLabel(icon);
                 iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 panel.add(iconLabel, BorderLayout.WEST);
@@ -740,7 +761,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
             messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(messageLabel, BorderLayout.CENTER);
 
-            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Advertencia.png"));
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/abvertencia.png"));
             JLabel iconLabel = new JLabel(icon);
             iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(iconLabel, BorderLayout.WEST);
@@ -772,7 +793,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField_BuscarKeyReleased
 
     private void jTextArea_DireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea_DireccionKeyTyped
-         String texto = jTextArea_Direccion.getText();
+        String texto = jTextArea_Direccion.getText();
 
         if (texto.length() >= 200) {
             evt.consume();
@@ -813,7 +834,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField_Nombre_1KeyTyped
 
     private void jTextField_Nombre_2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_Nombre_2KeyTyped
-         char car = evt.getKeyChar();
+        char car = evt.getKeyChar();
         String texto = jTextField_Nombre_2.getText(); // Obtener el texto actual en el campo
 
         if (((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
@@ -863,7 +884,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField_Apellido_1KeyTyped
 
     private void jTextField_Apellido_2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_Apellido_2KeyTyped
-         char car = evt.getKeyChar();
+        char car = evt.getKeyChar();
         String texto = jTextField_Apellido_2.getText(); // Obtener el texto actual en el campo
 
         if (((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
@@ -886,6 +907,10 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
             evt.consume();
         }
     }//GEN-LAST:event_jTextField_Apellido_2KeyTyped
+
+    private void jTextField_id_Proveedor1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_id_Proveedor1
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_id_Proveedor1
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -915,9 +940,10 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField_Apellido_1;
     private javax.swing.JTextField jTextField_Apellido_2;
     private javax.swing.JTextField jTextField_Buscar;
+    private javax.swing.JTextField jTextField_Cedula;
     private javax.swing.JTextField jTextField_Gmail;
     private javax.swing.JTextField jTextField_Nombre_1;
     private javax.swing.JTextField jTextField_Nombre_2;
-    private javax.swing.JTextField jTextField_id_Proveedor;
+    private javax.swing.JTextField jTextField_id_Proveedor1;
     // End of variables declaration//GEN-END:variables
 }

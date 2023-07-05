@@ -2,8 +2,8 @@ package Vistas;
 
 import Controlador_Conexion_DB.Conexion;
 import Modelo.Login;
-import Modelo_MDI1.MDI_Farmacia1;
-import Modelo_MDI1.MDI_Farmacia11;
+import Modelo_MDI1.MDIMenu;
+import Modelo_MDI1.MDIMenu1;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 
 import java.sql.Connection;
 
-
 /**
  *
  * @author Diers
@@ -21,30 +20,30 @@ import java.sql.Connection;
 public class Login_Form extends javax.swing.JFrame {
 
     private Connection cn;
-     private String rol;
     
-    
+    private String rol;
 
     public Login_Form() {
         initComponents();
         Conexion conexion = new Conexion();
         cn = conexion.conectar();
+         centerLoginForm(this);
+         setVisible(true);
+        
     }
+
     private static void centerLoginForm(Login_Form loginForm) {
-        // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-        // Obtener el tamaño del formulario de inicio de sesión
         Dimension loginFormSize = loginForm.getSize();
 
-        // Calcular la posición para centrar el formulario
         int x = (screenSize.width - loginFormSize.width) / 2;
         int y = (screenSize.height - loginFormSize.height) / 2;
 
-        // Establecer la posición del formulario en el centro de la pantalla
         loginForm.setLocation(x, y);
     }
-    public String getRol() { // Agregar este método
+
+    public String getRol() {
         return rol;
     }
 
@@ -57,7 +56,6 @@ public class Login_Form extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jLabel5 = new javax.swing.JLabel();
         jComboBox_Rol = new javax.swing.JComboBox<>();
         jTextField_Contraseña = new javax.swing.JTextField();
         jComboBox_Usuario = new javax.swing.JComboBox<>();
@@ -106,12 +104,6 @@ public class Login_Form extends javax.swing.JFrame {
         jCheckBox1.setForeground(new java.awt.Color(0, 153, 153));
         jCheckBox1.setText("Recordar Contraseña!");
 
-        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/borrar.png"))); // NOI18N
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel5.setOpaque(true);
-
         jComboBox_Rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gerente", "Vendedor" }));
         jComboBox_Rol.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rol", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
         jComboBox_Rol.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +113,7 @@ public class Login_Form extends javax.swing.JFrame {
         });
 
         jTextField_Contraseña.setForeground(new java.awt.Color(0, 153, 153));
-        jTextField_Contraseña.setText("Contraseña");
+        jTextField_Contraseña.setText("Contraseña1");
         jTextField_Contraseña.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contraseña", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
         jTextField_Contraseña.setName("Usuario"); // NOI18N
         jTextField_Contraseña.setOpaque(true);
@@ -141,8 +133,9 @@ public class Login_Form extends javax.swing.JFrame {
             }
         });
 
-        jButton_Iniciar_sesion.setBackground(new java.awt.Color(51, 51, 255));
+        jButton_Iniciar_sesion.setBackground(new java.awt.Color(0, 153, 153));
         jButton_Iniciar_sesion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton_Iniciar_sesion.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Iniciar_sesion.setText("Iniciar Sesion");
         jButton_Iniciar_sesion.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 255, 255))));
         jButton_Iniciar_sesion.addActionListener(new java.awt.event.ActionListener() {
@@ -161,26 +154,20 @@ public class Login_Form extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jCheckBox1)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jCheckBox1)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox_Rol, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox_Usuario, 0, 236, Short.MAX_VALUE)
-                                    .addComponent(jTextField_Contraseña))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBox_Rol, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox_Usuario, 0, 236, Short.MAX_VALUE)
+                            .addComponent(jTextField_Contraseña))))
+                .addContainerGap(109, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(106, 106, 106)
                 .addComponent(jButton_Iniciar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,22 +177,17 @@ public class Login_Form extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
+                                .addGap(9, 9, 9)
                                 .addComponent(jLabel1))
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox_Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jComboBox_Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(68, 68, 68)
                         .addComponent(jLabel2))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField_Contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTextField_Contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox1)
                 .addGap(18, 18, 18)
@@ -254,7 +236,7 @@ public class Login_Form extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox_Usuario
 
     private void jButton_Iniciar_sesion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Iniciar_sesion
-      String usuario = jComboBox_Usuario.getSelectedItem().toString();
+         String usuario = jComboBox_Usuario.getSelectedItem().toString();
     String contraseña = jTextField_Contraseña.getText();
 
     if (cn != null) {
@@ -262,20 +244,16 @@ public class Login_Form extends javax.swing.JFrame {
             rol = Login.obtenerRol(cn, usuario); // Asignar el valor del rol
 
             if (rol.equals("Gerente")) {
-                // Redirigir al MDI_Farmacia1
-                MDI_Farmacia1 mdiFarmacia1 = new MDI_Farmacia1();
-                mdiFarmacia1.setVisible(true);
+                MDIMenu farmacia = new MDIMenu();
+                farmacia.setVisible(true);
             } else if (rol.equals("Vendedor")) {
-                // Redirigir al MDI_Farmacia11
-                MDI_Farmacia11 mdiFarmacia11 = new MDI_Farmacia11();
-                mdiFarmacia11.setVisible(true);
+                MDIMenu1 farmacia1 = new MDIMenu1();
+                farmacia1.setVisible(true);
             }
 
-            // Cerrar la ventana de inicio de sesión
-            dispose();
+            dispose(); // Cerrar el formulario de inicio de sesión
         } else {
-            // Mostrar mensaje de error
-            JOptionPane.showMessageDialog(this, "Credenciales inválidas. Por favor, inténtalo de nuevo.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Contraseña incorrecta. Por favor, inténtalo de nuevo.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -283,22 +261,17 @@ public class Login_Form extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_Iniciar_sesion
 
     public static void main(String args[]) {
-    // Crear una instancia del formulario de inicio de sesión
         Login_Form loginForm = new Login_Form();
-
-        // Mostrar el formulario de inicio de sesión primero
         loginForm.setVisible(true);
 
-        // Esperar hasta que el formulario de inicio de sesión se cierre
         loginForm.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                // Una vez que el formulario de inicio de sesión se cierre, mostrar el MDI o la ventana principal
+         
 
             }
         });
     }
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -309,7 +282,6 @@ public class Login_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;

@@ -64,32 +64,36 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
     public InternalFrame_Cliente() {
         initComponents();
-        jTextField_Id_Ciente.setEditable(false);
+         jTextField_Id_Ciente.setEditable(false);
+       
 
     }
-   
 
     public void limpiar() {
         jTextField_Id_Ciente.setText("");
+        JtextFiel_Cedula.setText("");
         JtextFiel_Nombre_1.setText("");
         JtextFiel_Nombre_2.setText("");
         jTextFiel_Apellido_1.setText("");
         jTextField_Apellido_2.setText("");
         jFormattedTextFieldTelefono.setText("");
+        JtextFiel_gmail.setText("");
         jTextArea_Dirrecion.setText("");
 
     }
 
     public void guardarCliente() {
         CRUD_Cliente cc = new CRUD_Cliente();
+        String Cedula = JtextFiel_Cedula.getText();
         String Nombre_1 = JtextFiel_Nombre_1.getText();
         String Nombre_2 = JtextFiel_Nombre_2.getText();
         String Apellido_1 = jTextFiel_Apellido_1.getText();
         String Apellido_2 = jTextField_Apellido_2.getText();
+        String gmail = JtextFiel_gmail.getText();
         String Telefono = jFormattedTextFieldTelefono.getText();
         String Direccion = jTextArea_Dirrecion.getText();
 
-        Clase_Cliente cl = new Clase_Cliente(Nombre_1, Nombre_2, Apellido_1, Apellido_2, Telefono, Direccion);
+        Clase_Cliente cl = new Clase_Cliente(Cedula, Nombre_1, Nombre_2, Apellido_1, Apellido_2, Telefono, gmail, Direccion);
         cc.Guardar(cl);
     }
 
@@ -110,11 +114,13 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
         CRUD_Cliente cc = new CRUD_Cliente();
 
-        Clase_Cliente cl = new Clase_Cliente(JtextFiel_Nombre_1.getText(),
+        Clase_Cliente cl = new Clase_Cliente(JtextFiel_Cedula.getText(),
+                JtextFiel_Nombre_1.getText(),
                 JtextFiel_Nombre_2.getText(),
                 jTextFiel_Apellido_1.getText(),
                 jTextField_Apellido_2.getText(),
                 jFormattedTextFieldTelefono.getText(),
+                JtextFiel_gmail.getText(),
                 jTextArea_Dirrecion.getText());
         cc.actualizar(cl);
 
@@ -135,38 +141,32 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea_Dirrecion = new javax.swing.JTextArea();
-        jSeparator1 = new javax.swing.JSeparator();
-        JtextFiel_Nombre_2 = new javax.swing.JTextField();
-        JtextFiel_Nombre_1 = new javax.swing.JTextField();
-        jTextField_Apellido_2 = new javax.swing.JTextField();
-        jTextFiel_Apellido_1 = new javax.swing.JTextField();
+        JtextFiel_Cedula = new javax.swing.JTextField();
+        JtextFiel_gmail = new javax.swing.JTextField();
         jFormattedTextFieldTelefono = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_Cliente = new javax.swing.JTable();
         jTextBuscar = new javax.swing.JTextField();
-        jTextField_Id_Ciente = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jButton_Editar = new javax.swing.JButton();
         jButton_Borrar = new javax.swing.JButton();
         jButton_Actualizar1 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
         jButton_Report = new javax.swing.JButton();
+        jTextField_Id_Ciente = new javax.swing.JTextField();
+        JtextFiel_Nombre_1 = new javax.swing.JTextField();
+        JtextFiel_Nombre_2 = new javax.swing.JTextField();
+        jTextFiel_Apellido_1 = new javax.swing.JTextField();
+        jTextField_Apellido_2 = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -177,43 +177,14 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel2.setText("Id Cliente");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
-
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel5.setOpaque(false);
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel3.setText("Nombre 1");
-
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel9.setText("Nombre 2");
-
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel7.setText("Apellido 1");
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel5.setText("Apellido 2");
-
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel8.setText("Teléfono");
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel6.setText("Dirección");
-
         jTextArea_Dirrecion.setColumns(20);
         jTextArea_Dirrecion.setRows(5);
-        jTextArea_Dirrecion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextArea_Dirrecion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dirrecion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         jTextArea_Dirrecion.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTextArea_Dirrecion(evt);
@@ -230,58 +201,34 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTextArea_Dirrecion);
 
-        JtextFiel_Nombre_2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        JtextFiel_Nombre_2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        JtextFiel_Nombre_2.addActionListener(new java.awt.event.ActionListener() {
+        JtextFiel_Cedula.setForeground(new java.awt.Color(0, 153, 153));
+        JtextFiel_Cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JtextFiel_Cedula.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        JtextFiel_Cedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JtextFiel_Nombre_2(evt);
+                JtextFiel_Cedula(evt);
             }
         });
-        JtextFiel_Nombre_2.addKeyListener(new java.awt.event.KeyAdapter() {
+        JtextFiel_Cedula.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                JtextFiel_Nombre_2KeyTyped(evt);
+                JtextFiel_CedulaKeyTyped(evt);
             }
         });
 
-        JtextFiel_Nombre_1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        JtextFiel_Nombre_1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        JtextFiel_Nombre_1.addActionListener(new java.awt.event.ActionListener() {
+        JtextFiel_gmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JtextFiel_gmail.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gmail", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        JtextFiel_gmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JtextFiel_nombre1(evt);
+                JtextFiel_gmail(evt);
             }
         });
-        JtextFiel_Nombre_1.addKeyListener(new java.awt.event.KeyAdapter() {
+        JtextFiel_gmail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                JtextFiel_Nombre_1KeyTyped(evt);
+                JtextFiel_gmailKeyTyped(evt);
             }
         });
 
-        jTextField_Apellido_2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Apellido_2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField_Apellido_2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Apellido_2(evt);
-            }
-        });
-        jTextField_Apellido_2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField_Apellido_2KeyTyped(evt);
-            }
-        });
-
-        jTextFiel_Apellido_1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFiel_Apellido_1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextFiel_Apellido_1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFiel_Apellido_1(evt);
-            }
-        });
-        jTextFiel_Apellido_1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFiel_Apellido_1KeyTyped(evt);
-            }
-        });
-
+        jFormattedTextFieldTelefono.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Numero Celular", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         try {
             jFormattedTextFieldTelefono.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
         } catch (java.text.ParseException ex) {
@@ -299,80 +246,43 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel8)
-                            .addComponent(JtextFiel_Nombre_1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(5, 5, 5)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(217, 217, 217))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JtextFiel_Nombre_2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9))
-                                .addGap(36, 36, 36)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFiel_Apellido_1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField_Apellido_2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))
-                                .addGap(61, 61, 61))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jFormattedTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
+                .addComponent(JtextFiel_Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JtextFiel_gmail, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(jFormattedTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jSeparator1)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel9)
-                        .addComponent(jLabel5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JtextFiel_Nombre_2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFiel_Apellido_1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_Apellido_2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JtextFiel_Nombre_1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jFormattedTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JtextFiel_Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JtextFiel_gmail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jFormattedTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 25, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 710, -1));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 980, -1));
 
         jTable_Cliente.setForeground(new java.awt.Color(0, 153, 153));
         jTable_Cliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id cliente", "Nombre 1", "Nombre 2", "Apellido 1", "Apellido 2", "Telefono", "Dirección"
+                "Id cliente", "Cedula", "Nombre 1", "Nombre 2", "Apellido 1", "Apellido 2", "Telefono", "Dirección"
             }
         ));
         jTable_Cliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -399,12 +309,11 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jTable_Cliente);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 680, 130));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 980, 250));
 
         jTextBuscar.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jTextBuscar.setForeground(new java.awt.Color(153, 153, 153));
-        jTextBuscar.setText("Buscar");
-        jTextBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         jTextBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -421,17 +330,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 jTextBuscarKeyReleased(evt);
             }
         });
-        jPanel1.add(jTextBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 270, 30));
-
-        jTextField_Id_Ciente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Id_Ciente.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField_Id_Ciente.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_Id_Ciente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Id_Ciente(evt);
-            }
-        });
-        jPanel1.add(jTextField_Id_Ciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 130, 20));
+        jPanel1.add(jTextBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 270, 40));
 
         jButton6.setBackground(new java.awt.Color(0, 153, 153));
         jButton6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -443,7 +342,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 Guardar_Cliente(evt);
             }
         });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, 80, 30));
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 80, 30));
 
         jButton_Editar.setBackground(new java.awt.Color(255, 255, 102));
         jButton_Editar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -454,7 +353,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 jButton_Editar(evt);
             }
         });
-        jPanel1.add(jButton_Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 160, 80, 30));
+        jPanel1.add(jButton_Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 80, 30));
 
         jButton_Borrar.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Borrar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -469,7 +368,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 jButton_Borrar(evt);
             }
         });
-        jPanel1.add(jButton_Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 290, 80, 30));
+        jPanel1.add(jButton_Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 190, 80, 30));
 
         jButton_Actualizar1.setBackground(new java.awt.Color(102, 204, 255));
         jButton_Actualizar1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -481,12 +380,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 jButton_Actualizar1(evt);
             }
         });
-        jPanel1.add(jButton_Actualizar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, 80, 30));
-
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel10.setText("Buscar");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+        jPanel1.add(jButton_Actualizar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 190, 80, 30));
 
         jButton_Report.setText("Reporte");
         jButton_Report.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -494,7 +388,79 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 jButton_ReportMouseClicked(evt);
             }
         });
-        jPanel1.add(jButton_Report, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 370, -1, -1));
+        jButton_Report.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ReportActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton_Report, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 190, -1, -1));
+
+        jTextField_Id_Ciente.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTextField_Id_Ciente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Id_Ciente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ID Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        jTextField_Id_Ciente.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Id_Ciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_Id_Ciente(evt);
+            }
+        });
+        jPanel1.add(jTextField_Id_Ciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 45));
+
+        JtextFiel_Nombre_1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JtextFiel_Nombre_1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Primer Nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        JtextFiel_Nombre_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtextFiel_nombre1(evt);
+            }
+        });
+        JtextFiel_Nombre_1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JtextFiel_Nombre_1KeyTyped(evt);
+            }
+        });
+        jPanel1.add(JtextFiel_Nombre_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 160, 45));
+
+        JtextFiel_Nombre_2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JtextFiel_Nombre_2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Segundo Nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        JtextFiel_Nombre_2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtextFiel_Nombre_2(evt);
+            }
+        });
+        JtextFiel_Nombre_2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JtextFiel_Nombre_2KeyTyped(evt);
+            }
+        });
+        jPanel1.add(JtextFiel_Nombre_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 160, 40));
+
+        jTextFiel_Apellido_1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFiel_Apellido_1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Primer Apellido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        jTextFiel_Apellido_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFiel_Apellido_1(evt);
+            }
+        });
+        jTextFiel_Apellido_1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFiel_Apellido_1KeyTyped(evt);
+            }
+        });
+        jPanel1.add(jTextFiel_Apellido_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 160, 40));
+
+        jTextField_Apellido_2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Apellido_2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Segundo Apellido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        jTextField_Apellido_2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_Apellido_2(evt);
+            }
+        });
+        jTextField_Apellido_2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_Apellido_2KeyTyped(evt);
+            }
+        });
+        jPanel1.add(jTextField_Apellido_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 20, 160, 40));
 
         jPanel6.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -508,7 +474,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(0, 18, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 875, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -533,7 +499,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -568,7 +534,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                         "Confirmar Guardado",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE,
-                        new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png")),
+                        new ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png")),
                         new Object[]{"Sí", "No"},
                         "No"
                 );
@@ -585,7 +551,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                     messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                     panel.add(messageLabel, BorderLayout.CENTER);
 
-                    ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png"));
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"));
                     JLabel iconLabel = new JLabel(icon);
                     iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                     panel.add(iconLabel, BorderLayout.WEST);
@@ -606,21 +572,24 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla para editar");
         } else {
-            String Id_Cliente = jTable_Cliente.getValueAt(filaSeleccionada, 0) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 0).toString() : "";
+            String id = jTable_Cliente.getValueAt(filaSeleccionada, 0) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 0).toString() : "";
+            String Cedula = jTable_Cliente.getValueAt(filaSeleccionada, 1) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 1).toString() : "";
+            String nombre1 = jTable_Cliente.getValueAt(filaSeleccionada, 2) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 2).toString() : "";
+            String nombre2 = jTable_Cliente.getValueAt(filaSeleccionada, 3) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 3).toString() : "";
+            String apellido1 = jTable_Cliente.getValueAt(filaSeleccionada, 4) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 4).toString() : "";
+            String apellido2 = jTable_Cliente.getValueAt(filaSeleccionada, 5) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 5).toString() : "";
+            String telefono = jTable_Cliente.getValueAt(filaSeleccionada, 6) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 6).toString() : "";
+            String Gmail = jTable_Cliente.getValueAt(filaSeleccionada, 7) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 7).toString() : "";
+            String direccion = jTable_Cliente.getValueAt(filaSeleccionada, 8) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 8).toString() : "";
 
-            String nombre1 = jTable_Cliente.getValueAt(filaSeleccionada, 1) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 1).toString() : "";
-            String nombre2 = jTable_Cliente.getValueAt(filaSeleccionada, 2) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 2).toString() : "";
-            String apellido1 = jTable_Cliente.getValueAt(filaSeleccionada, 3) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 3).toString() : "";
-            String apellido2 = jTable_Cliente.getValueAt(filaSeleccionada, 4) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 4).toString() : "";
-            String telefono = jTable_Cliente.getValueAt(filaSeleccionada, 5) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 5).toString() : "";
-            String direccion = jTable_Cliente.getValueAt(filaSeleccionada, 6) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 6).toString() : "";
-
-            jTextField_Id_Ciente.setText(Id_Cliente);
+            jTextField_Id_Ciente.setText(id);
+            JtextFiel_Cedula.setText(Cedula);
             JtextFiel_Nombre_1.setText(nombre1);
             JtextFiel_Nombre_2.setText(nombre2);
             jTextFiel_Apellido_1.setText(apellido1);
             jTextField_Apellido_2.setText(apellido2);
             jFormattedTextFieldTelefono.setText(telefono);
+            JtextFiel_gmail.setText(Gmail);
             jTextArea_Dirrecion.setText(direccion);
 
             // Desactivar la edición del campo de texto para el ID del cliente
@@ -648,10 +617,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFiel_Apellido_1
 
-    private void jTextField_Id_Ciente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Id_Ciente
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_Id_Ciente
-
     private void jTextField_Apellido_2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Apellido_2
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_Apellido_2
@@ -665,7 +630,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                     "Eliminar Registro",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE,
-                    new ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar.png")),
+                    new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png")),
                     new Object[]{"Sí", "No"},
                     "No"
             );
@@ -687,7 +652,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 panel.add(messageLabel, BorderLayout.CENTER);
 
-                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar.png"));
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png"));
                 JLabel iconLabel = new JLabel(icon);
                 iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 panel.add(iconLabel, BorderLayout.WEST);
@@ -703,7 +668,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
             messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(messageLabel, BorderLayout.CENTER);
 
-            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Advertencia.png"));
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/abvertencia.png"));
             JLabel iconLabel = new JLabel(icon);
             iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(iconLabel, BorderLayout.WEST);
@@ -722,11 +687,13 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     private void jButton_Actualizar1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar1
         String idClienteText = jTextField_Id_Ciente.getText();
         int idCliente = Integer.parseInt(idClienteText);
+        String cedula = JtextFiel_Cedula.getText();
         String nombre1 = JtextFiel_Nombre_1.getText();
         String nombre2 = JtextFiel_Nombre_2.getText();
         String apellido1 = jTextFiel_Apellido_1.getText();
         String apellido2 = jTextField_Apellido_2.getText();
         String celular = jFormattedTextFieldTelefono.getText();
+        String Gmail = JtextFiel_gmail.getText();
         String direccion = jTextArea_Dirrecion.getText();
 
         if (jTextField_Id_Ciente.getText().isEmpty()) {
@@ -738,14 +705,14 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                     "Confirmar Actualización",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
-                    new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png")),
+                    new ImageIcon(getClass().getResource("/Vistas_Iconos/actualizar.png")),
                     new Object[]{"Sí", "No"},
                     "No"
             );
 
             if (option == JOptionPane.YES_OPTION) {
                 // Crear objeto Clase_Cliente con los datos obtenidos
-                Clase_Cliente cliente = new Clase_Cliente(idCliente, nombre1, nombre2, apellido1, apellido2, celular, direccion);
+                Clase_Cliente cliente = new Clase_Cliente(idCliente, cedula, nombre1, nombre2, apellido1, apellido2, celular, Gmail, direccion);
 
                 // Llamar al método "actualizar" de CRUD_Cliente
                 CRUD_Cliente clienteCRUD = new CRUD_Cliente();
@@ -759,7 +726,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 panel.add(messageLabel, BorderLayout.CENTER);
 
-                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"));
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/actualizar.png"));
                 JLabel iconLabel = new JLabel(icon);
                 iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 panel.add(iconLabel, BorderLayout.WEST);
@@ -767,7 +734,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, panel, "Actualización Exitosa", JOptionPane.PLAIN_MESSAGE);
             }
         }
-
         CRUD_Cliente clienteCRUD = new CRUD_Cliente();
         clienteCRUD.mostrarDatos();
         limpiar();
@@ -893,62 +859,65 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextArea_DirrecionKeyTyped
 
     private void jButton_ReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReportMouseClicked
+         Conexion con = new Conexion();
+        Connection cn = (Connection) con.conectar();
 
-    try {
-        // Establecer la conexión JDBC
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=Farmacia_Rosales_DB;TrustServerCertificate=True";
-        String usuario = "sa";
-        String contraseña = "1234";
-        Connection conexion = DriverManager.getConnection(url, usuario, contraseña);
+ 
+        String path = "C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\report1.jrxml";
+        JasperReport jr;
+        try {
+            jr = JasperCompileManager.compileReport(path);
+            JasperPrint mostrarReporte = JasperFillManager.fillReport(jr, null, cn);
+            JasperViewer.viewReport(mostrarReporte,false);
 
-        // Cargar el archivo del informe desde el paquete Vistas
-        JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResourceAsStream("/Vistas/report1.jasper"));
-
-        // Establecer los parámetros del informe, si los hay
-        Map<String, Object> parametros = new HashMap<>();
-        // parametros.put("parametro1", valor1);
-        // parametros.put("parametro2", valor2);
-
-        // Generar el informe
-        JasperPrint print = JasperFillManager.fillReport(report, parametros, conexion);
-
-        // Mostrar el informe en un visor
-        JasperViewer viewer = new JasperViewer(print, false);
-        viewer.setVisible(true);
-
-        // Cerrar la conexión JDBC
-        conexion.close();
-    } catch (JRException | SQLException e) {
-        e.printStackTrace();
-    }
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
 
     }//GEN-LAST:event_jButton_ReportMouseClicked
 
+    private void JtextFiel_Cedula(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextFiel_Cedula
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JtextFiel_Cedula
+
+    private void JtextFiel_CedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JtextFiel_CedulaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JtextFiel_CedulaKeyTyped
+
+    private void JtextFiel_gmail(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextFiel_gmail
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JtextFiel_gmail
+
+    private void JtextFiel_gmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JtextFiel_gmailKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JtextFiel_gmailKeyTyped
+
+    private void jTextField_Id_Ciente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Id_Ciente
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_Id_Ciente
+
+    private void jButton_ReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ReportActionPerformed
+      
+    }//GEN-LAST:event_jButton_ReportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField JtextFiel_Cedula;
     private javax.swing.JTextField JtextFiel_Nombre_1;
     private javax.swing.JTextField JtextFiel_Nombre_2;
+    private javax.swing.JTextField JtextFiel_gmail;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton_Actualizar1;
     private javax.swing.JButton jButton_Borrar;
     private javax.swing.JButton jButton_Editar;
     private javax.swing.JButton jButton_Report;
     private javax.swing.JFormattedTextField jFormattedTextFieldTelefono;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable_Cliente;
     private javax.swing.JTextArea jTextArea_Dirrecion;
     private javax.swing.JTextField jTextBuscar;

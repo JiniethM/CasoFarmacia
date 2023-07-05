@@ -1,8 +1,8 @@
 
 package Vistas;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+
+import javax.swing.JFrame;
 
 /**
  *
@@ -14,40 +14,40 @@ public class JFrame_Espera extends javax.swing.JFrame {
     public JFrame_Espera() {
         
         initComponents();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setVisible(true);
+        cargarProyecto();
         
         
     
-
-   
-        jLabel1 = new javax.swing.JLabel();
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Imagenes/Fondo logo.png")));
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        pack();
     }
-    private static void centerEspera(JFrame_Espera EsperaForm) {
-        // Obtener el tamaño de la pantalla
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private void cargarProyecto() {
+        // Crear un hilo separado para la simulación de carga del proyecto
+        Thread cargaThread = new Thread(new Runnable() {
+            public void run() {
+                // Simulación de carga del proyecto (sustituir con la lógica real de carga)
+                try {
+                    Thread.sleep(3000); // Espera de 3 segundos
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
 
-        // Obtener el tamaño del formulario de inicio de sesión
-        Dimension loginFormSize = EsperaForm.getSize();
+                // Después de la carga, mostrar el formulario de inicio de sesión y cerrar el formulario de espera
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        Login_Form loginForm = new Login_Form();
+                        loginForm.setLocationRelativeTo(null);
+                        loginForm.setVisible(true);
+                        dispose(); // Cerrar el formulario de espera
+                    }
+                });
+            }
+        });
 
-        // Calcular la posición para centrar el formulario
-        int x = (screenSize.width - loginFormSize.width) / 2;
-        int y = (screenSize.height - loginFormSize.height) / 2;
-
-        // Establecer la posición del formulario en el centro de la pantalla
-        EsperaForm.setLocation(x, y);
+        cargaThread.start(); // Iniciar el hilo de carga
     }
+
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -77,7 +77,8 @@ public class JFrame_Espera extends javax.swing.JFrame {
     public static void main(String args[]) {        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrame_Espera().setVisible(true);
+                JFrame_Espera frameEspera = new JFrame_Espera();
+                frameEspera.setVisible(true);
             }
         });
     }

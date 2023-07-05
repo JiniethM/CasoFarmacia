@@ -2,25 +2,28 @@ package Vistas;
 
 import Controlador.CRUD_Venta;
 import Controlador.CRUD_Venta_Producto;
+import Modelo.Clase_Cliente;
+import Modelo.Clase_Empleado;
+import Vistas.JInternalFrame_Venta;
+
 import Modelo.Clase_Producto;
 import Modelo.Clase_Venta;
-import Modelo.Class_Venta_Producto;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.HeadlessException;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+
 import java.math.BigDecimal;
+import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
@@ -34,31 +37,26 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
 
     public JInternalFrame_Venta_Producto() {
         initComponents();
+        jButton_guardar_venta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_guardar_venta(evt);
+            }
+        });
+
         mostrarFechaHora();
         iniciarTimer();
         jTextField_Fecha_Hora.setEditable(false);
         jSlider_Descuanto.setMinimum(0);
         jSlider_Descuanto.setMaximum(100);
+        llenarComboEmpleados(jComboEmpleado);
 
     }
 
     public void limpiarCampos() {
         jTextField_Venta.setText("");
-        jTextField_Id_Empleado.setText("");
-        jTextField_Id_Cliente.setText("");
-    }
-
-    public void mostrar() {
-        try {
-            DefaultTableModel modelo;
-            CRUD_Venta cli = new CRUD_Venta();
-            modelo = cli.mostrarDatosVenta();
-            jTable_Venta.setModel(modelo);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-
+        jComboCliente.setSelectedIndex(-1);
+        jComboEmpleado.setSelectedIndex(-1);
+        jTextField_BuscarCliente.setText("");
     }
 
     private void iniciarTimer() {
@@ -83,6 +81,25 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         for (Clase_Producto producto : listaProductos) {
             jComboBox_Producto.addItem(producto);
         }
+    }
+
+    public void llenarComboEmpleados(JComboBox<Clase_Empleado> jComboEmpleado) {
+        CRUD_Venta_Producto gr = new CRUD_Venta_Producto();
+        ArrayList<Clase_Empleado> empleados = gr.obtenerEmpleados();
+        jComboEmpleado.removeAllItems(); // Limpiar el JComboBox
+        for (Clase_Empleado empleado : empleados) {
+            jComboEmpleado.addItem(empleado);
+        }
+    }
+
+    public void llenarComboClientes(JComboBox<Clase_Cliente> jComboCliente, String busqueda) {
+        CRUD_Venta_Producto gr = new CRUD_Venta_Producto();
+        ArrayList<Clase_Cliente> clientes = gr.obtenerNombresApellidosCliente();
+        jComboCliente.removeAllItems(); // Limpiar el JComboBox
+        for (Clase_Cliente cliente : clientes) {
+            jComboCliente.addItem(cliente);
+        }
+
     }
 
     public void agregarProductoATabla() {
@@ -123,17 +140,71 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         jTextField_Total.setText(totalActual.toString());
     }
 
-    public void guardarventa() {
-        CRUD_Venta cc = new CRUD_Venta();
-        int idemplead = Integer.parseInt(jTextField_Id_Empleado.getText());
-        int idcliente = Integer.parseInt(jTextField_Id_Cliente.getText());
+    public void guardarVentaProducto() {
+        CRUD_Venta_Producto ventaProductoDAO = new CRUD_Venta_Producto();
 
-        String fechahoraString = jTextField_Fecha_Hora.getText().trim();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-        LocalDateTime fechahora = LocalDateTime.parse(fechahoraString, formatter);
+        LocalDateTime fechaHora = LocalDateTime.parse(jTextField_Fecha_Hora.getText().trim(), formatter);
 
-        Clase_Venta cl = new Clase_Venta(idemplead, idcliente, fechahora);
-        cc.insertarVenta(cl);
+        Clase_Cliente clienteSeleccionado = (Clase_Cliente) jComboCliente.getSelectedItem();
+        if (clienteSeleccionado == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente válido.");
+            return;
+        }
+        int idCliente = clienteSeleccionado.getId_Cliente();
+
+        Clase_Empleado empleadoSeleccionado = (Clase_Empleado) jComboEmpleado.getSelectedItem();
+        if (empleadoSeleccionado == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un empleado válido.");
+            return;
+        }
+        int idEmpleado = empleadoSeleccionado.getId_Empleado();
+        System.out.println(idEmpleado);
+
+        String descuentoStr = jTextField_Descuento.getText().trim();
+        descuentoStr = descuentoStr.replace("%", "");
+        BigDecimal descuento;
+
+        try {
+            descuento = new BigDecimal(descuentoStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Por favor, introduce un número válido para el descuento.");
+            return;
+        }
+
+        for (int i = 0; i < jTable_Producto.getRowCount(); i++) {
+            int idProducto = 0;
+            int cantidad = 0;
+
+            Object idProductoObj = jTable_Producto.getValueAt(i, 0);
+            Object cantidadObj = jTable_Producto.getValueAt(i, 3);
+
+            if (idProductoObj != null && cantidadObj != null) {
+                idProducto = Integer.parseInt(idProductoObj.toString());
+                cantidad = Integer.parseInt(cantidadObj.toString());
+
+                Clase_Venta venta = new Clase_Venta(fechaHora, idCliente, idEmpleado, cantidad, descuento, idProducto);
+                ventaProductoDAO.agregarVentaYProducto(venta);
+            }
+        }
+
+        this.dispose();
+        Container container = getParent();
+        if (container instanceof JDesktopPane) {
+            JDesktopPane desktopPane = (JDesktopPane) container;
+
+            JInternalFrame_Venta ventaForm = new JInternalFrame_Venta();
+            desktopPane.add(ventaForm);
+            ventaForm.setVisible(true);
+
+            try {
+
+                ventaForm.setSelected(true);
+            } catch (java.beans.PropertyVetoException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -141,59 +212,33 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField11 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField_Id_Empleado = new javax.swing.JTextField();
-        jButton_guardar_venta = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jTextField_Id_Cliente = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        jTextField_BuscarCliente = new javax.swing.JTextField();
         jTextField_Venta = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         jTextField_Fecha_Hora = new javax.swing.JTextField();
+        jComboEmpleado = new javax.swing.JComboBox<>();
+        jComboCliente = new javax.swing.JComboBox<>();
+        jButton_Aplicar_Descuento = new javax.swing.JButton();
+        jButton_guardar_venta = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jSlider_Descuanto = new javax.swing.JSlider();
+        jTextField_Descuento = new javax.swing.JTextField();
+        jTextField_Total = new javax.swing.JTextField();
+        jTextField_Pago = new javax.swing.JTextField();
+        jButton_ver_Formulario_venta = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Producto = new javax.swing.JTable();
-        jComboBox_Producto = new javax.swing.JComboBox<>();
         jTextField_Busqueda_Combo = new javax.swing.JTextField();
+        jSpinner_Cantidad_Producto = new javax.swing.JSpinner();
+        jComboBox_Producto = new javax.swing.JComboBox<>();
         jButton_Agregar = new javax.swing.JButton();
         jButton_Borrar_p = new javax.swing.JButton();
-        jSpinner_Cantidad_Producto = new javax.swing.JSpinner();
-        jButton_Aplicar_Descuento = new javax.swing.JButton();
-        jSlider_Descuanto = new javax.swing.JSlider();
-        jTextField_Descuento = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable_Venta = new javax.swing.JTable();
-        jTextField_Total = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jTextField11.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField11.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField11.setText("Buscar");
-        jTextField11.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField11.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 250, 30));
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel5.setText("Buscar");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -207,8 +252,8 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 887, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 173, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 951, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 109, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,41 +265,62 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1060, 40));
 
-        jTable2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Id Producto", "Depcripcion", "Cantidad ", "Precio Venta", "Id Cliente", "Empleado", "Fecha y hora", "Descuento", "Total"
-            }
-        ));
-        jTable2.setGridColor(new java.awt.Color(0, 153, 153));
-        jTable2.setShowGrid(true);
-        jScrollPane2.setViewportView(jTable2);
-
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 550, 120));
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel9.setText("Id Empleado");
-
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel10.setText("Id Cliente");
-
-        jTextField_Id_Empleado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Id_Empleado.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField_Id_Empleado.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_Id_Empleado.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_BuscarCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_BuscarCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_BuscarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_BuscarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Id_EmpleadoActionPerformed(evt);
+                jTextField_BuscarCliente(evt);
+            }
+        });
+        jTextField_BuscarCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField_BuscarClienteKeyReleased(evt);
+            }
+        });
+
+        jTextField_Venta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Venta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ID de Venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Venta.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Venta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_Venta(evt);
+            }
+        });
+
+        jTextField_Fecha_Hora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Fecha_Hora.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha y Hora", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Fecha_Hora.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Fecha_Hora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_Fecha_Hora(evt);
+            }
+        });
+
+        jComboEmpleado.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jComboEmpleado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jComboEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboEmpleadoActionPerformed(evt);
+            }
+        });
+
+        jComboCliente.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jComboCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jComboCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboClienteActionPerformed(evt);
+            }
+        });
+
+        jButton_Aplicar_Descuento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/mas (1).png"))); // NOI18N
+        jButton_Aplicar_Descuento.setBorder(null);
+        jButton_Aplicar_Descuento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Aplicar_Descuento(evt);
             }
         });
 
@@ -269,22 +335,6 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 102, 102));
-        jButton4.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Eliminar");
-        jButton4.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-
-        jButton6.setBackground(new java.awt.Color(255, 255, 102));
-        jButton6.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton6.setText("Editar");
-        jButton6.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
         jButton9.setBackground(new java.awt.Color(102, 204, 255));
         jButton9.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton9.setForeground(new java.awt.Color(255, 255, 255));
@@ -296,38 +346,66 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField_Id_Cliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Id_Cliente.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField_Id_Cliente.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_Id_Cliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Id_Cliente(evt);
+        jSlider_Descuanto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Descuento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jSlider_Descuanto.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jSlider_Descuanto(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jSlider_Descuanto.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider_DescuantoStateChanged(evt);
+            }
+        });
+        jSlider_Descuanto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jSlider_DescuantoMouseReleased(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel2.setText("Id Venta");
-
-        jTextField_Venta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Venta.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField_Venta.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_Venta.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_Descuento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Descuento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "%", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Descuento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Descuento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Venta(evt);
+                jTextField_Descuento(evt);
+            }
+        });
+        jTextField_Descuento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_DescuentoKeyTyped(evt);
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel6.setText("Fecha y hora");
-
-        jTextField_Fecha_Hora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Fecha_Hora.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField_Fecha_Hora.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_Fecha_Hora.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_Total.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Total.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Total.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Total.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Fecha_Hora(evt);
+                jTextField_Total(evt);
+            }
+        });
+
+        jTextField_Pago.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Pago.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pago", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Pago.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Pago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_Pago(evt);
+            }
+        });
+
+        jButton_ver_Formulario_venta.setBackground(new java.awt.Color(255, 255, 204));
+        jButton_ver_Formulario_venta.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_ver_Formulario_venta.setText("Ver Productos");
+        jButton_ver_Formulario_venta.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton_ver_Formulario_venta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ver_Formulario_ventaActionPerformed(evt);
             }
         });
 
@@ -336,64 +414,74 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jButton_guardar_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jSlider_Descuanto, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField_Descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton_Aplicar_Descuento))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jButton_guardar_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton_ver_Formulario_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField_Pago, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_Id_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_Venta, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_Id_Empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_Fecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                            .addComponent(jTextField_Venta, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField_BuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField_Fecha_Hora)
+                            .addComponent(jComboCliente, 0, 246, Short.MAX_VALUE))))
+                .addContainerGap(17, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(jComboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(21, 21, 21)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_Id_Empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField_Venta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                    .addComponent(jTextField_Venta, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Fecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_Id_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_Fecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(87, 87, 87)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_guardar_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                    .addComponent(jTextField_BuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jSlider_Descuanto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField_Descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton_Aplicar_Descuento)
+                    .addComponent(jTextField_Pago, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton_guardar_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_ver_Formulario_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 520, 260));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 490, 420));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -423,15 +511,8 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTable_Producto);
 
-        jComboBox_Producto.setBorder(javax.swing.BorderFactory.createTitledBorder("Producto"));
-        jComboBox_Producto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_Producto(evt);
-            }
-        });
-
         jTextField_Busqueda_Combo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Busqueda_Combo.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
+        jTextField_Busqueda_Combo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         jTextField_Busqueda_Combo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Busqueda_Combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -441,6 +522,26 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         jTextField_Busqueda_Combo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField_Busqueda_ComboKeyReleased(evt);
+            }
+        });
+
+        jSpinner_Cantidad_Producto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cantidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jSpinner_Cantidad_Producto.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jSpinner_Cantidad_Producto(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        jComboBox_Producto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jComboBox_Producto.setMinimumSize(new java.awt.Dimension(72, 45));
+        jComboBox_Producto.setPreferredSize(new java.awt.Dimension(72, 4));
+        jComboBox_Producto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_Producto(evt);
             }
         });
 
@@ -466,215 +567,93 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
             }
         });
 
-        jSpinner_Cantidad_Producto.setBorder(javax.swing.BorderFactory.createTitledBorder("Cantidad"));
-        jSpinner_Cantidad_Producto.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jSpinner_Cantidad_Producto(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jComboBox_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jSpinner_Cantidad_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jTextField_Busqueda_Combo, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton_Borrar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 19, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField_Busqueda_Combo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton_Borrar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addGap(14, 14, 14)
+                        .addComponent(jComboBox_Producto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinner_Cantidad_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner_Cantidad_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox_Producto))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField_Busqueda_Combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Busqueda_Combo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Borrar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox_Producto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSpinner_Cantidad_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 430, 260));
-
-        jButton_Aplicar_Descuento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/mas (1).png"))); // NOI18N
-        jButton_Aplicar_Descuento.setBorder(null);
-        jButton_Aplicar_Descuento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Aplicar_Descuento(evt);
-            }
-        });
-        jPanel1.add(jButton_Aplicar_Descuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 320, -1, -1));
-
-        jSlider_Descuanto.setBorder(javax.swing.BorderFactory.createTitledBorder("Descuento"));
-        jSlider_Descuanto.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jSlider_Descuanto(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jSlider_Descuanto.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSlider_DescuantoStateChanged(evt);
-            }
-        });
-        jSlider_Descuanto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jSlider_DescuantoMouseReleased(evt);
-            }
-        });
-        jPanel1.add(jSlider_Descuanto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, 142, -1));
-
-        jTextField_Descuento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Descuento.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTextField_Descuento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_Descuento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Descuento(evt);
-            }
-        });
-        jTextField_Descuento.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField_DescuentoKeyTyped(evt);
-            }
-        });
-        jPanel1.add(jTextField_Descuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 320, 50, 30));
-
-        jTable_Venta.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jTable_Venta.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Id Venta", "Fecha y Hora", "Id Cliente", "Id Empleado"
-            }
-        ));
-        jTable_Venta.setGridColor(new java.awt.Color(0, 153, 153));
-        jTable_Venta.setShowGrid(true);
-        jTable_Venta.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTable_Venta(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jScrollPane3.setViewportView(jTable_Venta);
-
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(606, 380, 320, 96));
-
-        jTextField_Total.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Total.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
-        jTextField_Total.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_Total.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Total(evt);
-            }
-        });
-        jPanel1.add(jTextField_Total, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 320, 153, 40));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 530, 420));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 953, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1026, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
+    private void jButton_guardar_venta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardar_venta
+        guardarVentaProducto();
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+        JInternalFrame_Venta ventaForm = new JInternalFrame_Venta();
+
+        JDesktopPane desktopPane = getDesktopPane();
+
+        desktopPane.add(ventaForm);
+        ventaForm.setVisible(true);
+
+        try {
+            ventaForm.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
+
+
+    }//GEN-LAST:event_jButton_guardar_venta
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jButton_guardar_venta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardar_venta
-        CRUD_Venta cl = new CRUD_Venta();
-        try {
-            if (jTextField_Id_Empleado.getText().isEmpty() || jTextField_Fecha_Hora.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
+    private void jTextField_BuscarCliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_BuscarCliente
 
-            } else {
-                int option = JOptionPane.showOptionDialog(
-                        null,
-                        "¿Desea guardar esta venta?",
-                        "Confirmar Guardado",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png")),
-                        new Object[]{"Sí", "No"},
-                        "No"
-                );
-
-                if (option == JOptionPane.YES_OPTION) {
-                    guardarventa();
-                    limpiarCampos();
-
-                    JPanel panel = new JPanel();
-                    panel.setLayout(new BorderLayout());
-
-                    JLabel messageLabel = new JLabel("Venta Guardada Correctamente");
-                    messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
-                    messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                    panel.add(messageLabel, BorderLayout.CENTER);
-
-                    ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png"));
-                    JLabel iconLabel = new JLabel(icon);
-                    iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                    panel.add(iconLabel, BorderLayout.WEST);
-
-                    JOptionPane.showMessageDialog(null, panel, "Guardado Exitoso", JOptionPane.PLAIN_MESSAGE);
-
-                    mostrar();
-                }
-            }
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e);
-        }
-    }//GEN-LAST:event_jButton_guardar_venta
-
-    private void jComboBox_Producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Producto
-
-    }//GEN-LAST:event_jComboBox_Producto
+    }//GEN-LAST:event_jTextField_BuscarCliente
 
     private void jTextField_Venta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Venta
         // TODO add your handling code here:
@@ -684,26 +663,66 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         mostrarFechaHora();
     }//GEN-LAST:event_jTextField_Fecha_Hora
 
-    private void jTextField_Id_EmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Id_EmpleadoActionPerformed
+    private void jTable_Producto(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable_Producto
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_Id_EmpleadoActionPerformed
+    }//GEN-LAST:event_jTable_Producto
 
-    private void jTextField_Total(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Total
-        calcularTotalTabla();
-    }//GEN-LAST:event_jTextField_Total
+    private void jComboBox_Producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Producto
 
-    private void jTextField_Descuento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Descuento
-
-
-    }//GEN-LAST:event_jTextField_Descuento
+    }//GEN-LAST:event_jComboBox_Producto
 
     private void jTextField_Busqueda_Combo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Busqueda_Combo
 
     }//GEN-LAST:event_jTextField_Busqueda_Combo
 
-    private void jTextField_Id_Cliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Id_Cliente
+    private void jTextField_Busqueda_ComboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_Busqueda_ComboKeyReleased
+        String busqueda = jTextField_Busqueda_Combo.getText(); // Obtener el texto ingresado en el campo de búsqueda
+
+        CRUD_Venta_Producto gr = new CRUD_Venta_Producto();
+        ArrayList<Clase_Producto> listaProductos = gr.mostrarDatosCombo(busqueda);
+        jComboBox_Producto.removeAllItems();
+        for (Clase_Producto producto : listaProductos) {
+            jComboBox_Producto.addItem(producto);
+        }
+    }//GEN-LAST:event_jTextField_Busqueda_ComboKeyReleased
+
+    private void jButton_Agregar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Agregar
+        agregarProductoATabla();
+    }//GEN-LAST:event_jButton_Agregar
+
+    private void jButton_Borrar_p(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Borrar_p
+        int filaSeleccionada = jTable_Producto.getSelectedRow();
+        if (filaSeleccionada == -1) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila para borrar.");
+            return;
+        }
+
+        DefaultTableModel modelo = (DefaultTableModel) jTable_Producto.getModel();
+
+        modelo.removeRow(filaSeleccionada);
+
+        jTable_Producto.setModel(modelo);
+    }//GEN-LAST:event_jButton_Borrar_p
+
+    private void jSpinner_Cantidad_Producto(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSpinner_Cantidad_Producto
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_Id_Cliente
+    }//GEN-LAST:event_jSpinner_Cantidad_Producto
+
+    private void jButton_Aplicar_Descuento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Aplicar_Descuento
+        try {
+            double total = Double.parseDouble(jTextField_Total.getText());
+            int descuento = jSlider_Descuanto.getValue();
+            double descuentoPorcentaje = descuento / 100.0;
+            double totalConDescuento = total - (total * descuentoPorcentaje);
+            jTextField_Total.setText(String.valueOf(totalConDescuento));
+        } catch (NumberFormatException ex) {
+            // Manejar el caso en el que se ingrese un valor no válido en el total
+            // Puedes mostrar un mensaje de error o realizar una acción adecuada
+            System.out.println("El valor ingresado en el total es inválido.");
+        }
+
+    }//GEN-LAST:event_jButton_Aplicar_Descuento
 
     private void jSlider_Descuanto(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSlider_Descuanto
         jTextField_Descuento.getDocument().addDocumentListener(new DocumentListener() {
@@ -743,16 +762,7 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
             }
         });
 
-
     }//GEN-LAST:event_jSlider_Descuanto
-
-    private void jSpinner_Cantidad_Producto(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSpinner_Cantidad_Producto
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSpinner_Cantidad_Producto
-
-    private void jSlider_DescuantoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider_DescuantoMouseReleased
-
-    }//GEN-LAST:event_jSlider_DescuantoMouseReleased
 
     private void jSlider_DescuantoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider_DescuantoStateChanged
         jSlider_Descuanto.addChangeListener(e -> {
@@ -761,102 +771,88 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
                 jTextField_Descuento.setText(descuento + "%");
             });
         });
-
     }//GEN-LAST:event_jSlider_DescuantoStateChanged
+
+    private void jSlider_DescuantoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider_DescuantoMouseReleased
+
+    }//GEN-LAST:event_jSlider_DescuantoMouseReleased
+
+    private void jTextField_Descuento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Descuento
+
+    }//GEN-LAST:event_jTextField_Descuento
 
     private void jTextField_DescuentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_DescuentoKeyTyped
 
     }//GEN-LAST:event_jTextField_DescuentoKeyTyped
 
-    private void jTable_Producto(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable_Producto
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable_Producto
+    private void jTextField_Total(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Total
+        calcularTotalTabla();
+    }//GEN-LAST:event_jTextField_Total
 
-    private void jTextField_Busqueda_ComboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_Busqueda_ComboKeyReleased
-        String busqueda = jTextField_Busqueda_Combo.getText(); // Obtener el texto ingresado en el campo de búsqueda
+    private void jComboEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboEmpleadoActionPerformed
+
+
+    }//GEN-LAST:event_jComboEmpleadoActionPerformed
+
+    private void jComboClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboClienteActionPerformed
+
+    private void jTextField_BuscarClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_BuscarClienteKeyReleased
+        String busqueda = jTextField_BuscarCliente.getText();
 
         CRUD_Venta_Producto gr = new CRUD_Venta_Producto();
-        ArrayList<Clase_Producto> listaProductos = gr.mostrarDatosCombo(busqueda);
-        jComboBox_Producto.removeAllItems();
-        for (Clase_Producto producto : listaProductos) {
-            jComboBox_Producto.addItem(producto);
+        ArrayList<Clase_Cliente> listaClientes = gr.buscarClientes(busqueda);
+        jComboCliente.removeAllItems();
+        for (Clase_Cliente cliente : listaClientes) {
+            jComboCliente.addItem(cliente);
         }
-    }//GEN-LAST:event_jTextField_Busqueda_ComboKeyReleased
+    }//GEN-LAST:event_jTextField_BuscarClienteKeyReleased
 
-    private void jButton_Agregar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Agregar
-        agregarProductoATabla();
-    }//GEN-LAST:event_jButton_Agregar
-
-    private void jButton_Borrar_p(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Borrar_p
-        int filaSeleccionada = jTable_Producto.getSelectedRow();
-        if (filaSeleccionada == -1) {
-
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila para borrar.");
-            return;
-        }
-
-        DefaultTableModel modelo = (DefaultTableModel) jTable_Producto.getModel();
-
-        modelo.removeRow(filaSeleccionada);
-
-        jTable_Producto.setModel(modelo);
-
-    }//GEN-LAST:event_jButton_Borrar_p
-
-    private void jTable_Venta(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable_Venta
+    private void jTextField_Pago(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Pago
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable_Venta
+    }//GEN-LAST:event_jTextField_Pago
 
-    private void jButton_Aplicar_Descuento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Aplicar_Descuento
-        try {
-            double total = Double.parseDouble(jTextField_Total.getText());
-            int descuento = jSlider_Descuanto.getValue();
-            double descuentoPorcentaje = descuento / 100.0;
-            double totalConDescuento = total - (total * descuentoPorcentaje);
-            jTextField_Total.setText(String.valueOf(totalConDescuento));
-        } catch (NumberFormatException ex) {
-            // Manejar el caso en el que se ingrese un valor no válido en el total
-            // Puedes mostrar un mensaje de error o realizar una acción adecuada
-            System.out.println("El valor ingresado en el total es inválido.");
-        }
+    private void jButton_ver_Formulario_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ver_Formulario_ventaActionPerformed
+        JInternalFrame_Venta ventaForm = new JInternalFrame_Venta();
+        JDesktopPane desktopPane = getDesktopPane();
 
+        // Centrar el formulario en el JDesktopPane
+        int x = (desktopPane.getWidth() - ventaForm.getWidth()) / 2;
+        int y = (desktopPane.getHeight() - ventaForm.getHeight()) / 2;
+        ventaForm.setLocation(x, y);
 
-    }//GEN-LAST:event_jButton_Aplicar_Descuento
+        desktopPane.add(ventaForm);
+        ventaForm.setVisible(true);
+
+        JInternalFrame_Venta_Producto.this.dispose();
+    }//GEN-LAST:event_jButton_ver_Formulario_ventaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton9;
     private javax.swing.JButton jButton_Agregar;
     private javax.swing.JButton jButton_Aplicar_Descuento;
     private javax.swing.JButton jButton_Borrar_p;
-    private javax.swing.JButton jButton_guardar_venta;
-    private javax.swing.JComboBox<Clase_Producto> jComboBox_Producto;
+    public static javax.swing.JButton jButton_guardar_venta;
+    public static javax.swing.JButton jButton_ver_Formulario_venta;
+    public static javax.swing.JComboBox<Clase_Producto> jComboBox_Producto;
+    public static javax.swing.JComboBox<Clase_Cliente> jComboCliente;
+    public javax.swing.JComboBox<Clase_Empleado> jComboEmpleado;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSlider jSlider_Descuanto;
     private javax.swing.JSpinner jSpinner_Cantidad_Producto;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable_Producto;
-    private javax.swing.JTable jTable_Venta;
-    private javax.swing.JTextField jTextField11;
+    public static javax.swing.JTable jTable_Producto;
+    private javax.swing.JTextField jTextField_BuscarCliente;
     private javax.swing.JTextField jTextField_Busqueda_Combo;
-    private javax.swing.JTextField jTextField_Descuento;
+    public static javax.swing.JTextField jTextField_Descuento;
     private javax.swing.JTextField jTextField_Fecha_Hora;
-    private javax.swing.JTextField jTextField_Id_Cliente;
-    private javax.swing.JTextField jTextField_Id_Empleado;
+    private javax.swing.JTextField jTextField_Pago;
     private javax.swing.JTextField jTextField_Total;
     private javax.swing.JTextField jTextField_Venta;
     // End of variables declaration//GEN-END:variables

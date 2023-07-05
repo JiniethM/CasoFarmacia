@@ -19,11 +19,30 @@ public class CRUD_Cliente {
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
 
+    public void Guardar(Clase_Cliente cl) {
+        try {
+            CallableStatement cbst = cn.prepareCall("{call InsertarCliente(?,?,?,?,?,?,?,?)}");
+            cbst.setString(1, cl.getCedula());
+            cbst.setString(2, cl.getNombre_1());
+            cbst.setString(3, cl.getNombre_2());
+            cbst.setString(4, cl.getApellido_1());
+            cbst.setString(5, cl.getApellido_2());
+            cbst.setString(6, cl.getNumero_Celular());
+            cbst.setString(7, cl.getGmail());
+            cbst.setString(8, cl.getDireccion());
+            cbst.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+            System.out.println(e);
+        }
+
+    }
+
     public DefaultTableModel mostrarDatos() {
         ResultSet rs;
         DefaultTableModel modelo;
-        String[] titulos = {"Id_Cliente", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2", "Numero_Celular", "Direccion"};
-        String[] registro = new String[7];
+        String[] titulos = {"Id_Cliente", "Cedula", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2", "Numero_Celular", "Gmail", "Direccion"};
+        String[] registro = new String[9];
 
         modelo = new DefaultTableModel(null, titulos);
 
@@ -33,12 +52,14 @@ public class CRUD_Cliente {
 
             while (rs.next()) {
                 registro[0] = rs.getString("Id_Cliente");
-                registro[1] = rs.getString("Nombre_1");
-                registro[2] = rs.getString("Nombre_2");
-                registro[3] = rs.getString("Apellido_1");
-                registro[4] = rs.getString("Apellido_2");
-                registro[5] = rs.getString("Numero_Celular");
-                registro[6] = rs.getString("Direccion");
+                registro[1] = rs.getString("Cedula");
+                registro[2] = rs.getString("Nombre_1");
+                registro[3] = rs.getString("Nombre_2");
+                registro[4] = rs.getString("Apellido_1");
+                registro[5] = rs.getString("Apellido_2");
+                registro[6] = rs.getString("Numero_Celular");
+                registro[7] = rs.getString("Gmail");
+                registro[8] = rs.getString("Direccion");
 
                 modelo.addRow(registro);
             }
@@ -47,15 +68,13 @@ public class CRUD_Cliente {
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
-
     }
 
     public DefaultTableModel BuscarCliente(String textoBusqueda) {
         ResultSet rs;
         DefaultTableModel modelo;
-
-        String[] titulos = {"Id_Cliente", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2","Numero_Celular","Direccion"};
-        String[] registro = new String[7];
+        String[] titulos = {"Id_Cliente", "Cedula", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2", "Numero_Celular", "Gmail", "Direccion"};
+        String[] registro = new String[9];
 
         modelo = new DefaultTableModel(null, titulos);
 
@@ -66,21 +85,22 @@ public class CRUD_Cliente {
 
             while (rs.next()) {
                 registro[0] = rs.getString("Id_Cliente");
-                registro[1] = rs.getString("Nombre_1");
-                registro[2] = rs.getString("Nombre_2");
-                registro[3] = rs.getString("Apellido_1");
-                registro[4] = rs.getString("Apellido_2");
-                registro[5] = rs.getString("Numero_Celular");
-                registro[6] = rs.getString("Direccion");
+                registro[1] = rs.getString("Cedula");
+                registro[2] = rs.getString("Nombre_1");
+                registro[3] = rs.getString("Nombre_2");
+                registro[4] = rs.getString("Apellido_1");
+                registro[5] = rs.getString("Apellido_2");
+                registro[6] = rs.getString("Numero_Celular");
+                registro[7] = rs.getString("Gmail");
+                registro[8] = rs.getString("Direccion");
 
                 modelo.addRow(registro);
             }
             return modelo;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
-    
     }
 
     public boolean verificarDatos(String dato) {
@@ -97,38 +117,22 @@ public class CRUD_Cliente {
             JOptionPane.showMessageDialog(null, e);
             return false;
         }
-
-    }
-
-    public void Guardar(Clase_Cliente cl) {
-        try {
-            CallableStatement cbst = cn.prepareCall("{call InsertarCliente(?,?,?,?,?,?)}");
-            cbst.setString(1, cl.getNombre_1());
-            cbst.setString(2, cl.getNombre_2());
-            cbst.setString(3, cl.getApellido_1());
-            cbst.setString(4, cl.getApellido_2());
-            cbst.setString(5, cl.getNumero_Celular());
-            cbst.setString(6, cl.getDireccion());
-            cbst.executeUpdate();
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-            System.out.println(e);
-        }
     }
 
     public void actualizar(Clase_Cliente cl) {
         try {
-            CallableStatement cbst = cn.prepareCall("{call ActualizarCliente(?,?,?,?,?,?,?)}");
+            CallableStatement cbst = cn.prepareCall("{call ActualizarCliente(?,?,?,?,?,?,?,?,?)}");
             cbst.setInt(1, cl.getId_Cliente());
-            cbst.setString(2, cl.getNombre_1());
-            cbst.setString(3, cl.getNombre_2());
-            cbst.setString(4, cl.getApellido_1());
-            cbst.setString(5, cl.getApellido_2());
-            cbst.setString(6, cl.getNumero_Celular());
-            cbst.setString(7, cl.getDireccion());
-            cbst.executeUpdate();
+            cbst.setString(2, cl.getCedula());
+            cbst.setString(3, cl.getNombre_1());
+            cbst.setString(4, cl.getNombre_2());
+            cbst.setString(5, cl.getApellido_1());
+            cbst.setString(6, cl.getApellido_2());
+            cbst.setString(7, cl.getNumero_Celular());
+            cbst.setString(8, cl.getGmail());
+            cbst.setString(9, cl.getDireccion());  // Agregar este parámetro
 
+            cbst.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }

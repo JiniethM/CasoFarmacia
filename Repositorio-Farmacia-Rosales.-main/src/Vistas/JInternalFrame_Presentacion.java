@@ -422,7 +422,7 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
                             "Agregar Presentacion",
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE,
-                            new ImageIcon(getClass().getResource("/Vistas_Iconos/Agregar.png")),
+                            new ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png")),
                             new Object[]{"Sí", "No"},
                             "No"
                     );
@@ -440,7 +440,7 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
                         messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                         panel.add(messageLabel, BorderLayout.CENTER);
 
-                        ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png"));
+                        ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"));
                         JLabel iconLabel = new JLabel(icon);
                         iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                         panel.add(iconLabel, BorderLayout.WEST);
@@ -489,7 +489,7 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
                 "Confirmar Actualización",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
-                new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png")),
+                new ImageIcon(getClass().getResource("/Vistas_Iconos/actualizar.png")),
                 new Object[]{"Sí", "No"},
                 "No"
         );
@@ -507,7 +507,7 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
             messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(messageLabel, BorderLayout.CENTER);
 
-            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"));
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/actualizar.png"));
             JLabel iconLabel = new JLabel(icon);
             iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(iconLabel, BorderLayout.WEST);
@@ -521,7 +521,7 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
     private void jButton_Eliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Eliminar
         int selectedRow = jTable_Presentacion.getSelectedRow();
         if (selectedRow != -1) {
-            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"));
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png"));
             int option = JOptionPane.showOptionDialog(
                     null,
                     "Se eliminará el registro, ¿desea continuar?",

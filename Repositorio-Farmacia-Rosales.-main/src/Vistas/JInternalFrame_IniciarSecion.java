@@ -2,8 +2,10 @@ package Vistas;
 
 import Modelo.Login;
 import Controlador_Conexion_DB.Conexion;
-import Modelo_MDI1.MDI_Farmacia1;
-import Modelo_MDI1.MDI_Farmacia11;
+import Modelo_MDI1.MDIMenu;
+import Modelo_MDI1.MDIMenu1;
+
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -299,18 +301,18 @@ public class JInternalFrame_IniciarSecion extends javax.swing.JInternalFrame {
             if (Login.validarCredenciales(cn, usuario, contraseña)) {
                 String rol = Login.obtenerRol(cn, usuario);
                 if (rol.equals("Gerente")) {
-                    // Redirigir al MDI_Farmacia1
-                    MDI_Farmacia1 mdiFarmacia1 = new MDI_Farmacia1();
+                   
+                    MDIMenu mdiFarmacia1 = new MDIMenu();
                     mdiFarmacia1.setVisible(true);
                 } else if (rol.equals("Vendedor")) {
-                    // Redirigir al MDI_Farmacia11
-                    MDI_Farmacia11 mdiFarmacia11 = new MDI_Farmacia11();
+                   
+                    MDIMenu1 mdiFarmacia11 = new MDIMenu1();
                     mdiFarmacia11.setVisible(true);
                 }
-                // Cerrar la ventana actual de inicio de sesión
+              
                 dispose();
             } else {
-                // Mostrar mensaje de error
+               
                 JOptionPane.showMessageDialog(this, "Credenciales inválidas. Por favor, inténtalo de nuevo.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
             }
             

@@ -1,46 +1,33 @@
-
 package Modelo;
 
 /**
  *
  * @author diedr
  */
-public class Clase_Cliente {
+public class Clase_Cliente extends Clase_Persona {
+
     int Id_Cliente;
-    String Nombre_1;
-    String Nombre_2;
-    String Apellido_1;
-    String Apellido_2;
-    String Numero_Celular;
-    String Direccion;
-    String textoBusqueda;
 
-    public Clase_Cliente(String textoBusqueda) {
-        this.textoBusqueda = textoBusqueda;
-    }
-   
-
-   public Clase_Cliente(String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Direccion) {
-        this.Nombre_1 = Nombre_1;
-        this.Nombre_2 = Nombre_2;
-        this.Apellido_1 = Apellido_1;
-        this.Apellido_2 = Apellido_2;
-        this.Numero_Celular = Numero_Celular;
-        this.Direccion = Direccion;
-        
-    }
-    
-    public Clase_Cliente(int Id_Cliente, String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Direccion) {
+    public Clase_Cliente(int Id_Cliente, String Nombre_1, String Apellido_1) {
+        super(Nombre_1, Apellido_1);
         this.Id_Cliente = Id_Cliente;
-        this.Nombre_1 = Nombre_1;
-        this.Nombre_2 = Nombre_2;
-        this.Apellido_1 = Apellido_1;
-        this.Apellido_2 = Apellido_2;
-        this.Numero_Celular = Numero_Celular;
-        this.Direccion = Direccion;
     }
-     
+
     
+    public Clase_Cliente(int Id_Cliente, String Cedula, String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Gmail, String Direccion) {
+        super(Cedula, Nombre_1, Nombre_2, Apellido_1, Apellido_2, Numero_Celular, Gmail, Direccion);
+        this.Id_Cliente = Id_Cliente;
+    }
+
+    public Clase_Cliente(String Cedula, String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Gmail, String Direccion) {
+        super(Cedula, Nombre_1, Nombre_2, Apellido_1, Apellido_2, Numero_Celular, Gmail, Direccion);
+
+    }
+
+    public Clase_Cliente(int Id_Cliente, int Id_Persona, String Cedula, String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Gmail, String Direccion) {
+        super(Id_Persona, Cedula, Nombre_1, Nombre_2, Apellido_1, Apellido_2, Numero_Celular, Gmail, Direccion);
+        this.Id_Cliente = Id_Cliente;
+    }
 
     public int getId_Cliente() {
         return Id_Cliente;
@@ -50,54 +37,20 @@ public class Clase_Cliente {
         this.Id_Cliente = Id_Cliente;
     }
 
-    public String getNombre_1() {
-        return Nombre_1;
+    public String getNombreCompleto() {
+        return getNombre_1() + " " + getApellido_1();
     }
 
-    public void setNombre_1(String Nombre_1) {
-        this.Nombre_1 = Nombre_1;
+   public String getRepresentacion1() {
+        return "Clase_Cliente{" +
+            "Id_Cliente=" + Id_Cliente +
+            "} " + super.toString();
     }
 
-    public String getNombre_2() {
-        return Nombre_2;
+    @Override
+    public String toString() {
+        return getNombreCompleto();
     }
 
-    public void setNombre_2(String Nombre_2) {
-        this.Nombre_2 = Nombre_2;
-    }
 
-    public String getApellido_1() {
-        return Apellido_1;
-    }
-
-    public void setApellido_1(String Apellido_1) {
-        this.Apellido_1 = Apellido_1;
-    }
-
-    public String getApellido_2() {
-        return Apellido_2;
-    }
-
-    public void setApellido_2(String Apellido_2) {
-        this.Apellido_2 = Apellido_2;
-    }
-
-    public String getNumero_Celular() {
-        return Numero_Celular;
-    }
-
-    public void setNumero_Celular(String Numero_Celular) {
-        this.Numero_Celular = Numero_Celular;
-    }
-
-    public String getDireccion() {
-        return Direccion;
-    }
-
-    public void setDireccion(String Direccion) {
-        this.Direccion = Direccion;
-    }
-    
-    
-    
 }

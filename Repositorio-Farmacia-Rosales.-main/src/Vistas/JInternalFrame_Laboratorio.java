@@ -341,7 +341,7 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
                             "Agregar Laboratorio",
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE,
-                            new ImageIcon(getClass().getResource("/Vistas_Iconos/Agregar.png")),
+                            new ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png")),
                             new Object[]{"Sí", "No"},
                             "No"
                     );
@@ -359,7 +359,7 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
                         messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                         panel.add(messageLabel, BorderLayout.CENTER);
 
-                        ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png"));
+                        ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"));
                         JLabel iconLabel = new JLabel(icon);
                         iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                         panel.add(iconLabel, BorderLayout.WEST);
@@ -402,7 +402,7 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
                 "Confirmar Actualización",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
-                new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png")),
+                new ImageIcon(getClass().getResource("/Vistas_Iconos/actualizar.png")),
                 new Object[]{"Sí", "No"},
                 "No"
         );
@@ -420,7 +420,7 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
             messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(messageLabel, BorderLayout.CENTER);
 
-            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"));
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/actualizar.png"));
             JLabel iconLabel = new JLabel(icon);
             iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(iconLabel, BorderLayout.WEST);
@@ -440,7 +440,7 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
                     "Eliminar Registro",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE,
-                    new ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar.png")),
+                    new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png")),
                     new Object[]{"Sí", "No"},
                     "No"
             );
@@ -458,7 +458,7 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
                         "Laboratorio eliminado correctamente",
                         "Eliminación Exitosa",
                         JOptionPane.PLAIN_MESSAGE,
-                        new ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar.png"))
+                        new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png"))
                 );
             } else {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar la fila");

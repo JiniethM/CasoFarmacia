@@ -6,7 +6,7 @@ import java.sql.Date;
  *
  * @author diedr
  */
-public class Clase_Producto {
+public class Clase_Producto extends Clase_Proveedor {
 
     int Id_Producto;
     String Nombre;
@@ -20,17 +20,8 @@ public class Clase_Producto {
     int Id_Presentacion;
     int Id_Laboratorio;
 
-    public Clase_Producto(int Id_Producto, String Nombre,float Precio_Venta) {
-        this.Id_Producto = Id_Producto;
-        this.Nombre = Nombre;
-        this.Precio_Venta = Precio_Venta;
-    }
-    @Override
-     public String toString() {
-        return "ID: " + Id_Producto + ", Nombre: " + Nombre + ", Precio: " + String.valueOf(Precio_Venta);
-    }
-
-    public Clase_Producto(int Id_Producto, String Nombre, String Descripcion, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, byte[] Imagen_Producto, Date Fecha_Caducidad, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio) {
+    public Clase_Producto(int Id_Producto, String Nombre, String Descripcion, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, byte[] Imagen_Producto, Date Fecha_Caducidad, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio, int Id_Proveedor) {
+        super(Id_Proveedor);
         this.Id_Producto = Id_Producto;
         this.Nombre = Nombre;
         this.Descripcion = Descripcion;
@@ -42,6 +33,38 @@ public class Clase_Producto {
         this.Id_Categoria = Id_Categoria;
         this.Id_Presentacion = Id_Presentacion;
         this.Id_Laboratorio = Id_Laboratorio;
+    }
+
+    public Clase_Producto(String Nombre, String Descripcion, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, byte[] Imagen_Producto, Date Fecha_Caducidad, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio, int Id_Proveedor) {
+        super(Id_Proveedor);
+        this.Nombre = Nombre;
+        this.Descripcion = Descripcion;
+        this.Cantidad_Producto = Cantidad_Producto;
+        this.Precio_Compra = Precio_Compra;
+        this.Precio_Venta = Precio_Venta;
+        this.Imagen_Producto = Imagen_Producto;
+        this.Fecha_Caducidad = Fecha_Caducidad;
+        this.Id_Categoria = Id_Categoria;
+        this.Id_Presentacion = Id_Presentacion;
+        this.Id_Laboratorio = Id_Laboratorio;
+    }
+
+    public Clase_Producto(int Id_Producto) {
+        this.Id_Producto = Id_Producto;
+    }
+
+    public Clase_Producto() {
+    }
+
+    public Clase_Producto(int Id_Producto, String Nombre, float Precio_Venta) {
+        this.Id_Producto = Id_Producto;
+        this.Nombre = Nombre;
+        this.Precio_Venta = Precio_Venta;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + Id_Producto + ", Nombre: " + Nombre + ", Precio: " + String.valueOf(Precio_Venta);
     }
 
     public int getId_Producto() {

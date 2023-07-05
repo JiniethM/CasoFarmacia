@@ -8,18 +8,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
-import java.sql.CallableStatement;
+import java.sql.Time;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.math.BigDecimal;
 
 /**
  *
@@ -53,6 +51,9 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
     }
 
     public void limpiar() {
+        jTextIdEmpleado.setText("");
+        jText_Cedula.setText("");
+        jText_Salario.setText("");
         jTextNombre1.setText("");
         jTextNombre2.setText("");
         jTextApellido1.setText("");
@@ -66,18 +67,41 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
 
     public void guardarEmpleado() {
         CRUD_Empleado cl = new CRUD_Empleado();
+        String Cedula = jText_Cedula.getText();
         String Nombre1 = jTextNombre1.getText();
         String Nombre2 = jTextNombre2.getText();
         String Apellido1 = jTextApellido1.getText();
         String Apellido2 = jTextApellido2.getText();
+        String salarioStr = jText_Salario.getText();
         String NumeroCelular = jFormattedTextField_Telefono.getText();
         String gmail = jTextGmail.getText();
         String direccion = jTextADirecion.getText();
         String horaEntradaStr = jTexthoraentra.getText();
         String horaSalidaStr = jTexthorasal.getText();
 
-        Clase_Empleado Empleado = new Clase_Empleado(Nombre1, Nombre2, Apellido1, Apellido2, NumeroCelular, gmail, direccion, horaEntradaStr, horaSalidaStr);
-        cl.Guardar(Empleado);
+        // Verificar que los campos no estén vacíos
+        if (Cedula.isEmpty() || Nombre1.isEmpty() || salarioStr.isEmpty() || horaEntradaStr.isEmpty() || horaSalidaStr.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
+            return;
+        }
+
+        try {
+            // Convertir las variables String a BigDecimal y Time
+            BigDecimal salarioValue = new BigDecimal(salarioStr);
+            Time horaEntrada = Time.valueOf(horaEntradaStr);
+            Time horaSalida = Time.valueOf(horaSalidaStr);
+
+            // Crear objeto Clase_Empleado con los datos obtenidos
+            Clase_Empleado empleado = new Clase_Empleado(salarioValue, horaEntrada, horaSalida, Cedula, Nombre1, Nombre2, Apellido1, Apellido2, NumeroCelular, gmail, direccion);
+
+            cl.Guardar(empleado);
+
+            mostrar();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Error: Formato de número incorrecto");
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, "Error: Formato de hora incorrecto");
+        }
     }
 
     public void mostrar() {
@@ -93,21 +117,61 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
     }
 
     public void editarCliente() {
+    CRUD_Empleado cc = new CRUD_Empleado();
 
-        CRUD_Empleado cc = new CRUD_Empleado();
+    String salarioStr = jText_Salario.getText().replace(',', '.'); // Reemplazar coma por punto para formato decimal
 
-        Clase_Empleado cl = new Clase_Empleado(jTextNombre1.getText(),
-                jTextNombre2.getText(),
-                jTextApellido1.getText(),
-                jTextApellido2.getText(),
-                jFormattedTextField_Telefono.getText(),
-                jTextGmail.getText(),
-                jTextADirecion.getText(),
-                jTexthoraentra.getText(),
-                jTexthorasal.getText());
-        cc.actualizar(cl);
-
+    if (salarioStr.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo de salario está vacío.");
+        return; // Salir del método si el campo está vacío
     }
+
+    BigDecimal salario;
+
+    try {
+        salario = new BigDecimal(salarioStr);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "El campo de salario contiene un valor inválido.");
+        return; // Salir del método si el valor no es numérico
+    }
+
+    String horaEntradaStr = jTexthoraentra.getText();
+    String horaSalidaStr = jTexthorasal.getText();
+
+    // Verificar que los campos de hora no estén vacíos
+    if (horaEntradaStr.isEmpty() || horaSalidaStr.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Los campos de hora están vacíos.");
+        return; // Salir del método si alguno de los campos de hora está vacío
+    }
+
+    Time horaEntrada;
+    Time horaSalida;
+
+    try {
+        horaEntrada = Time.valueOf(horaEntradaStr);
+        horaSalida = Time.valueOf(horaSalidaStr);
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(null, "Formato de hora incorrecto.");
+        return; // Salir del método si el formato de hora es incorrecto
+    }
+
+    Clase_Empleado cl = new Clase_Empleado(
+            salario,
+            horaEntrada,
+            horaSalida,
+            jText_Cedula.getText(),
+            jTextNombre1.getText(),
+            jTextNombre2.getText(),
+            jTextApellido1.getText(),
+            jTextApellido2.getText(),
+            jFormattedTextField_Telefono.getText(),
+            jTextGmail.getText(),
+            jTextADirecion.getText()
+    );
+
+    cc.actualizar(cl);
+}
+
 
     public void BuscarEmpleado() {
         try {
@@ -162,6 +226,8 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
         Actualizar = new javax.swing.JButton();
         Borrar = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
+        jText_Cedula = new javax.swing.JTextField();
+        jText_Salario = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
 
@@ -579,6 +645,34 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
         jLabel14.setText("Buscar");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
 
+        jText_Cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jText_Cedula.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        jText_Cedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_Cedulanombre_1TextField(evt);
+            }
+        });
+        jText_Cedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_CedulaKeyTyped(evt);
+            }
+        });
+        jPanel1.add(jText_Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 28, 230, -1));
+
+        jText_Salario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jText_Salario.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Salario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        jText_Salario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_Salarionombre_1TextField(evt);
+            }
+        });
+        jText_Salario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_SalarioKeyTyped(evt);
+            }
+        });
+        jPanel1.add(jText_Salario, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 160, 40));
+
         jPanel9.setBackground(new java.awt.Color(0, 153, 153));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -653,7 +747,6 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_hora_Salida_TextField
 
     private void guardar_empleado(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardar_empleado
-        CRUD_Empleado cl = new CRUD_Empleado();
         try {
             if (jTextNombre1.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
@@ -664,7 +757,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
                         "Confirmar Guardado",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE,
-                        new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png")),
+                        new ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png")),
                         new Object[]{"Sí", "No"},
                         "No"
                 );
@@ -681,7 +774,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
                     messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                     panel.add(messageLabel, BorderLayout.CENTER);
 
-                    ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Guardar.png"));
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"));
                     JLabel iconLabel = new JLabel(icon);
                     iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                     panel.add(iconLabel, BorderLayout.WEST);
@@ -712,60 +805,81 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
 
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         String idempleadoText = jTextIdEmpleado.getText();
-        int idempleado = Integer.parseInt(idempleadoText);
-        String Nombre1 = jTextNombre1.getText();
-        String Nombre2 = jTextNombre2.getText();
-        String Apellido1 = jTextApellido1.getText();
-        String Apellido2 = jTextApellido2.getText();
-        String NumeroCelular = jFormattedTextField_Telefono.getText();
-        String gmail = jTextGmail.getText();
-        String direccion = jTextADirecion.getText();
-        String horaEntradaStr = jTexthoraentra.getText();
-        String horaSalidaStr = jTexthorasal.getText();
+    int idempleado = Integer.parseInt(idempleadoText);
+    String Cedula = jText_Cedula.getText();
+    String Nombre1 = jTextNombre1.getText();
+    String Nombre2 = jTextNombre2.getText();
+    String Apellido1 = jTextApellido1.getText();
+    String Apellido2 = jTextApellido2.getText();
+    String salario = jText_Salario.getText();
+    String NumeroCelular = jFormattedTextField_Telefono.getText();
+    String gmail = jTextGmail.getText();
+    String direccion = jTextADirecion.getText();
+    String horaEntradaStr = jTexthoraentra.getText();
+    String horaSalidaStr = jTexthorasal.getText();
 
-        if (jTextIdEmpleado.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
-        } else {
-            int option = JOptionPane.showOptionDialog(
-                    null,
-                    "¿Desea actualizar el Empleado?",
-                    "Confirmar Actualización",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png")),
-                    new Object[]{"Sí", "No"},
-                    "No"
-            );
+    if (jTextIdEmpleado.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Tiene datos vacíos");
+    } else {
+        int option = JOptionPane.showOptionDialog(
+                null,
+                "¿Desea actualizar el Empleado?",
+                "Confirmar Actualización",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                new ImageIcon(getClass().getResource("/Vistas_Iconos/actualizar.png")),
+                new Object[]{"Sí", "No"},
+                "No"
+        );
 
-            if (option == JOptionPane.YES_OPTION) {
-                // Crear objeto Clase_Empleado con los datos obtenidos
-                Clase_Empleado empleado = new Clase_Empleado(idempleado, Nombre1, Nombre2, Apellido1, Apellido2, NumeroCelular, gmail, direccion, horaEntradaStr, horaSalidaStr);
-
-                // Llamar al método "actualizar" de CRUD_Empleado
-                CRUD_Empleado EmpleadoCRUD = new CRUD_Empleado();
-                EmpleadoCRUD.actualizar(empleado);
-
-                JPanel panel = new JPanel();
-                panel.setLayout(new BorderLayout());
-
-                JLabel messageLabel = new JLabel("Cliente actualizado exitosamente.");
-                messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
-                messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                panel.add(messageLabel, BorderLayout.CENTER);
-
-                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"));
-                JLabel iconLabel = new JLabel(icon);
-                iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                panel.add(iconLabel, BorderLayout.WEST);
-
-                JOptionPane.showMessageDialog(null, panel, "Actualización Exitosa", JOptionPane.PLAIN_MESSAGE);
+        if (option == JOptionPane.YES_OPTION) {
+            // Crear objeto Clase_Empleado con los datos obtenidos
+            BigDecimal salarioValue;
+            try {
+                salarioValue = new BigDecimal(salario);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "El campo de salario contiene un valor inválido.");
+                return;
             }
-        }
 
-        CRUD_Empleado empleadoCRUD = new CRUD_Empleado();
-        empleadoCRUD.mostrarDatos();
-        limpiar();
-        mostrar();
+            Time horaEntrada;
+            Time horaSalida;
+            try {
+                horaEntrada = Time.valueOf(horaEntradaStr);
+                horaSalida = Time.valueOf(horaSalidaStr);
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(null, "Formato de hora incorrecto.");
+                return;
+            }
+
+            Clase_Empleado empleado = new Clase_Empleado(salarioValue, horaEntrada, horaSalida, idempleado,
+                    Cedula, Nombre1, Nombre2, Apellido1, Apellido2, NumeroCelular, gmail, direccion);
+
+            // Llamar al método "actualizar" de CRUD_Empleado
+            CRUD_Empleado EmpleadoCRUD = new CRUD_Empleado();
+            EmpleadoCRUD.actualizar(empleado);
+
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+
+            JLabel messageLabel = new JLabel("Empleado actualizado exitosamente.");
+            messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(messageLabel, BorderLayout.CENTER);
+
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/actualizar.png"));
+            JLabel iconLabel = new JLabel(icon);
+            iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(iconLabel, BorderLayout.WEST);
+
+            JOptionPane.showMessageDialog(null, panel, "Actualización Exitosa", JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+
+    CRUD_Empleado empleadoCRUD = new CRUD_Empleado();
+    empleadoCRUD.mostrarDatos();
+    limpiar();
+    mostrar();
 
     }//GEN-LAST:event_ActualizarActionPerformed
 
@@ -778,7 +892,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
                     "Eliminar Registro",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE,
-                    new ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar.png")),
+                    new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png")),
                     new Object[]{"Sí", "No"},
                     "No"
             );
@@ -800,7 +914,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
                 messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 panel.add(messageLabel, BorderLayout.CENTER);
 
-                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Eliminar.png"));
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png"));
                 JLabel iconLabel = new JLabel(icon);
                 iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 panel.add(iconLabel, BorderLayout.WEST);
@@ -816,7 +930,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
             messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(messageLabel, BorderLayout.CENTER);
 
-            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/Advertencia.png"));
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/abvertencia.png"));
             JLabel iconLabel = new JLabel(icon);
             iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(iconLabel, BorderLayout.WEST);
@@ -826,35 +940,39 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BorrarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        int filaSelecion = jTable_Empleado.getSelectedRow();
-        if (filaSelecion == -1) {
+        int filaSeleccionada = jTable_Empleado.getSelectedRow();
+        if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla para editar");
         } else {
-            String Id_Empleado = jTable_Empleado.getValueAt(filaSelecion, 0) != null ? jTable_Empleado.getValueAt(filaSelecion, 0).toString() : "";
+            String Id_Empleado = jTable_Empleado.getValueAt(filaSeleccionada, 0) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 0).toString() : "";
+            String Cedula = jTable_Empleado.getValueAt(filaSeleccionada, 1) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 1).toString() : "";
 
-            String Nombre_1 = jTable_Empleado.getValueAt(filaSelecion, 1) != null ? jTable_Empleado.getValueAt(filaSelecion, 1).toString() : "";
-            String Nombre_2 = jTable_Empleado.getValueAt(filaSelecion, 2) != null ? jTable_Empleado.getValueAt(filaSelecion, 2).toString() : "";
-            String Apellido_1 = jTable_Empleado.getValueAt(filaSelecion, 3) != null ? jTable_Empleado.getValueAt(filaSelecion, 3).toString() : "";
-            String Apellido_2 = jTable_Empleado.getValueAt(filaSelecion, 4) != null ? jTable_Empleado.getValueAt(filaSelecion, 4).toString() : "";
-            String Numero_Celular = jTable_Empleado.getValueAt(filaSelecion, 5) != null ? jTable_Empleado.getValueAt(filaSelecion, 5).toString() : "";
-            String Gmail = jTable_Empleado.getValueAt(filaSelecion, 6) != null ? jTable_Empleado.getValueAt(filaSelecion, 6).toString() : "";
-            String Direccion = jTable_Empleado.getValueAt(filaSelecion, 7) != null ? jTable_Empleado.getValueAt(filaSelecion, 7).toString() : "";
-            String horaEntradaStr = jTable_Empleado.getValueAt(filaSelecion, 8) != null ? jTable_Empleado.getValueAt(filaSelecion, 8).toString() : "";
-            String horaSalidaStr = jTable_Empleado.getValueAt(filaSelecion, 9) != null ? jTable_Empleado.getValueAt(filaSelecion, 9).toString() : "";
+            String Nombre_1 = jTable_Empleado.getValueAt(filaSeleccionada, 2) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 2).toString() : "";
+            String Nombre_2 = jTable_Empleado.getValueAt(filaSeleccionada, 3) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 3).toString() : "";
+            String Apellido_1 = jTable_Empleado.getValueAt(filaSeleccionada, 4) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 4).toString() : "";
+            String Apellido_2 = jTable_Empleado.getValueAt(filaSeleccionada, 5) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 5).toString() : "";
+            String salario = jTable_Empleado.getValueAt(filaSeleccionada, 6) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 6).toString() : "";
+             String horaEntradaStr = jTable_Empleado.getValueAt(filaSeleccionada, 7) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 7).toString() : "";
+            String horaSalidaStr = jTable_Empleado.getValueAt(filaSeleccionada, 8) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 8).toString() : "";
 
+            String Numero_Celular = jTable_Empleado.getValueAt(filaSeleccionada, 9) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 9).toString() : "";
+            String Gmail = jTable_Empleado.getValueAt(filaSeleccionada, 10) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 10).toString() : "";
+            String Direccion = jTable_Empleado.getValueAt(filaSeleccionada, 11) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 11).toString() : "";
+           
             jTextIdEmpleado.setText(Id_Empleado);
+            jText_Cedula.setText(Cedula);
             jTextNombre1.setText(Nombre_1);
             jTextNombre2.setText(Nombre_2);
             jTextApellido1.setText(Apellido_1);
             jTextApellido2.setText(Apellido_2);
+            jText_Salario.setText(salario);
             jFormattedTextField_Telefono.setText(Numero_Celular);
             jTextGmail.setText(Gmail);
             jTextADirecion.setText(Direccion);
             jTexthoraentra.setText(horaEntradaStr);
             jTexthorasal.setText(horaSalidaStr);
 
-            jTextIdEmpleado.setEditable(true);
-
+            jTextIdEmpleado.setEditable(false); // Deshabilitar la edición del ID
         }
 
     }//GEN-LAST:event_EditarActionPerformed
@@ -1001,13 +1119,29 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTexthorasalKeyTyped
 
     private void jTextBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextBuscarMouseClicked
-       jTextBuscar.setText("");
-       jTextBuscar.setForeground(Color.black);
+        jTextBuscar.setText("");
+        jTextBuscar.setForeground(Color.black);
     }//GEN-LAST:event_jTextBuscarMouseClicked
 
     private void jTextBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextBuscarKeyReleased
         BuscarEmpleado();
     }//GEN-LAST:event_jTextBuscarKeyReleased
+
+    private void jText_Cedulanombre_1TextField(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_Cedulanombre_1TextField
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_Cedulanombre_1TextField
+
+    private void jText_CedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_CedulaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_CedulaKeyTyped
+
+    private void jText_Salarionombre_1TextField(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_Salarionombre_1TextField
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_Salarionombre_1TextField
+
+    private void jText_SalarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_SalarioKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_SalarioKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1044,6 +1178,8 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextIdEmpleado;
     private javax.swing.JTextField jTextNombre1;
     private javax.swing.JTextField jTextNombre2;
+    private javax.swing.JTextField jText_Cedula;
+    private javax.swing.JTextField jText_Salario;
     private javax.swing.JTextField jTexthoraentra;
     private javax.swing.JTextField jTexthorasal;
     // End of variables declaration//GEN-END:variables

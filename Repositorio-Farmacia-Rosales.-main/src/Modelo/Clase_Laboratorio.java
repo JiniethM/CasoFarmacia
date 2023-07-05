@@ -13,6 +13,9 @@ public class Clase_Laboratorio {
         this.Id_Laboratorio = Id_Laboratorio;
         this.Nombre = Nombre;
     }
+     public String toString() {
+        return Id_Laboratorio + " - " + Nombre;
+    }
      public Clase_Laboratorio(String Nombre) {
         this.Nombre = Nombre;
     }
