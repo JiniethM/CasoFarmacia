@@ -68,17 +68,19 @@ public class Clase_Empleado extends Clase_Persona {
         this.Hora_Salida = Hora_Salida;
     }
 
-   @Override
+ @Override
 public String toString() {
     if (Id_Empleado != 0) {
         return "Clase_Empleado{" +
                 "Id_Empleado=" + Id_Empleado +
+                ", Nombre_1='" + getNombre_1() + '\'' +
+                ", Apellido_1='" + getApellido_1() + '\'' +
                 ", Salario=" + Salario +
                 ", Hora_Entrada=" + Hora_Entrada +
                 ", Hora_Salida=" + Hora_Salida +
-                "} " + super.toString();
+                '}';
     } else {
-        return getNombre_1() + " " + getApellido_1();
+        return Id_Empleado + " - " + getNombre_1() + " " + getApellido_1();
     }
 }
 

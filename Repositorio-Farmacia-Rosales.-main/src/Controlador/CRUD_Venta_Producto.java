@@ -32,24 +32,30 @@ public class CRUD_Venta_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
-    
-    public DefaultTableModel buscarVentaYProducto(String textoBusqueda) {
+
+    public DefaultTableModel mostrarDatosVenta() {
     ResultSet rs;
     DefaultTableModel modelo;
-    String[] titulos = {"Id_Venta", "Fecha_Hora", "Id_Cliente"};
-    String[] registro = new String[3];
+
+    String[] titulos = {"Id_Venta", "Producto", "Cantidad", "Descuento", "Cliente", "Empleado", "Fecha_Hora", "Total", "TotalGeneral"};
+    String[] registro = new String[9];
 
     modelo = new DefaultTableModel(null, titulos);
 
     try {
-        CallableStatement call = cn.prepareCall("{call BuscarVentaYProducto(?)}");
-        call.setString(1, textoBusqueda);
+        CallableStatement call = cn.prepareCall("{call MostrarVentaYProducto}");
         rs = call.executeQuery();
 
         while (rs.next()) {
             registro[0] = rs.getString("Id_Venta");
-            registro[1] = rs.getString("Fecha_Hora");
-            registro[2] = rs.getString("Id_Cliente");
+            registro[1] = rs.getString("Producto");
+            registro[2] = rs.getString("Cantidad");
+            registro[3] = rs.getString("Descuento");
+            registro[4] = rs.getString("Cliente");
+            registro[5] = rs.getString("Empleado");
+            registro[6] = rs.getString("Fecha_Hora");
+            registro[7] = String.valueOf(rs.getDouble("Total"));
+            registro[8] = String.valueOf(rs.getDouble("TotalGeneral"));
 
             modelo.addRow(registro);
         }
@@ -61,6 +67,56 @@ public class CRUD_Venta_Producto {
 }
 
 
+   
+
+
+
+    public void eliminarVentaYProducto(int idVenta) {
+        String sql = "{CALL EliminarVentaYProducto(?)}";
+
+        try (CallableStatement stmt = cn.prepareCall(sql)) {
+            stmt.setInt(1, idVenta);
+            stmt.execute();
+
+            // Confirmar la transacción
+            cn.commit();
+
+            // Cerrar el CallableStatement y la Connection
+            stmt.close();
+            cn.close();
+        } catch (SQLException e) {
+            // Imprimir el seguimiento de la pila y el mensaje de la excepción
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public DefaultTableModel buscarVentaYProducto(String textoBusqueda) {
+        ResultSet rs;
+        DefaultTableModel modelo;
+        String[] titulos = {"Id_Venta", "Fecha_Hora", "Id_Cliente"};
+        String[] registro = new String[3];
+
+        modelo = new DefaultTableModel(null, titulos);
+
+        try {
+            CallableStatement call = cn.prepareCall("{call BuscarVentaYProducto(?)}");
+            call.setString(1, textoBusqueda);
+            rs = call.executeQuery();
+
+            while (rs.next()) {
+                registro[0] = rs.getString("Id_Venta");
+                registro[1] = rs.getString("Fecha_Hora");
+                registro[2] = rs.getString("Id_Cliente");
+
+                modelo.addRow(registro);
+            }
+            return modelo;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    }
 
     public void agregarVentaYProducto(Clase_Venta venta) {
         String sql = "{CALL AgregarVentaYProducto(?, ?, ?, ?, ?, ?)}";
@@ -93,30 +149,30 @@ public class CRUD_Venta_Producto {
     }
 
     public ArrayList<Clase_Empleado> obtenerEmpleados() {
-    ArrayList<Clase_Empleado> empleados = new ArrayList<>();
-    try {
-        String query = "{ call ObtenerEmpleados }";
-        CallableStatement stmt = cn.prepareCall(query);
-        ResultSet resultSet = stmt.executeQuery();
+        ArrayList<Clase_Empleado> empleados = new ArrayList<>();
+        try {
+            String query = "{ call ObtenerEmpleados }";
+            CallableStatement stmt = cn.prepareCall(query);
+            ResultSet resultSet = stmt.executeQuery();
 
-        while (resultSet.next()) {
-            int idEmpleado = resultSet.getInt("Id_Empleado");
-            String nombreCompleto = resultSet.getString("NombreCompleto");
-            String[] nombres = nombreCompleto.split(" ");
-            String nombre = nombres[0];
-            String apellido = nombres[1];
-            Clase_Empleado empleado = new Clase_Empleado(idEmpleado, nombre, apellido);
-            empleados.add(empleado);
+            while (resultSet.next()) {
+                int idEmpleado = resultSet.getInt("Id_Empleado");
+                String nombreCompleto = resultSet.getString("NombreCompleto");
+                String[] nombres = nombreCompleto.split(" ");
+                String nombre = nombres[0];
+                String apellido = nombres[1];
+                Clase_Empleado empleado = new Clase_Empleado(idEmpleado, nombre, apellido);
+                empleados.add(empleado);
+            }
+
+            resultSet.close();
+            stmt.close();
+            cn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        resultSet.close();
-        stmt.close();
-        cn.close();
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return empleados;
     }
-    return empleados;
-}
 
     private void actualizarCantidadProducto(int idProducto, int cantidad) {
         try {
@@ -157,8 +213,6 @@ public class CRUD_Venta_Producto {
             return null;
         }
     }
-
-    
 
     public boolean verificarVentaProducto(String dato) {
         ResultSet rs;
@@ -240,31 +294,29 @@ public class CRUD_Venta_Producto {
     }
 
     public ArrayList<Clase_Cliente> obtenerNombresApellidosCliente() {
-    ArrayList<Clase_Cliente> clientes = new ArrayList<>();
-    try {
-        String query = "{ call ObtenerNombreApellidoCliente }";
-        CallableStatement cstmt = cn.prepareCall(query);
-        ResultSet rs = cstmt.executeQuery();
+        ArrayList<Clase_Cliente> clientes = new ArrayList<>();
+        try {
+            String query = "{ call ObtenerNombreApellidoCliente }";
+            CallableStatement cstmt = cn.prepareCall(query);
+            ResultSet rs = cstmt.executeQuery();
 
-        while (rs.next()) {
-            int idCliente = rs.getInt("Id_Cliente");
-            String nombreCompleto = rs.getString("NombreCompleto");
-            String[] nombres = nombreCompleto.split(" ");
-            String nombre = nombres[0];
-            String apellido = nombres[1];
-            Clase_Cliente cliente = new Clase_Cliente(idCliente, nombre, apellido);
-            clientes.add(cliente);
+            while (rs.next()) {
+                int idCliente = rs.getInt("Id_Cliente");
+                String nombreCompleto = rs.getString("NombreCompleto");
+                String[] nombres = nombreCompleto.split(" ");
+                String nombre = nombres[0];
+                String apellido = nombres[1];
+                Clase_Cliente cliente = new Clase_Cliente(idCliente, nombre, apellido);
+                clientes.add(cliente);
+            }
+
+            rs.close();
+            cstmt.close();
+            cn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        rs.close();
-        cstmt.close();
-        cn.close();
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return clientes;
     }
-    return clientes;
-}
 
-
-    
 }

@@ -1,5 +1,6 @@
 package Vistas;
 
+import Controlador.CRUD_Categoria;
 import Controlador.CRUD_Producto;
 import Controlador.CRUD_Producto_Proveedor;
 import Controlador_Conexion_DB.Conexion;
@@ -11,12 +12,14 @@ import Modelo.Clase_Proveedor;
 import Modelo.Class_Producto_Proveedor;
 import static Modelo_MDI1.MDIMenu.jDesktopPane;
 import static Vistas.JInternalFrame_Gestionar_Producto.jTable_Producto1;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
@@ -33,8 +36,11 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
@@ -96,6 +102,42 @@ public class JInternalFrame_Producto extends javax.swing.JInternalFrame {
                 llenarComboBoxProveedor(jTextField_Buscar_Id_Proveedor.getText());
             }
         });
+        
+        jComboBox_Categoria.setBackground(Color.WHITE);
+        jComboBox_Id_Proveedor.setBackground(Color.WHITE);
+        jComboBox_Presentacion.setBackground(Color.WHITE);
+        jComboBox_Laboratorio.setBackground(Color.WHITE);
+        jSpinner_Cantidad.setBackground(Color.WHITE);
+        jButton_buscar_imagen.setBackground(Color.WHITE);
+        jButton_Eliminar_imagen.setBackground(Color.WHITE);
+        jButton_Agregar_tabla_Categoria.setBackground(Color.WHITE);
+        jButton_Eliminar_tabla_Categoria.setBackground(Color.WHITE);
+        jButton_Agregar_tabla_laboratorio.setBackground(Color.WHITE);
+        jButton_Eliminar_tabla_laboratorio.setBackground(Color.WHITE);
+        jButton_Agregar_tabla_Proveedor.setBackground(Color.WHITE);
+        jButton_Eliminar_tabla_Proveedor.setBackground(Color.WHITE);
+        jButton_Agregar_tabla_Presentacion.setBackground(Color.WHITE);
+        jButton_Eliminar_tabla_Presentacion.setBackground(Color.WHITE);
+        // Configurar el aspecto del jSlider_Descuanto
+        UIManager.put("Slider.background", Color.WHITE);
+        UIManager.put("Slider.foreground", Color.BLUE);
+        UIManager.put("Slider.track", Color.LIGHT_GRAY);
+        UIManager.put("Slider.thumb", Color.DARK_GRAY);
+        ajustarAlturaFilasTabla(jTable_Categoria);
+        centrarRegistrosTabla(jTable_Categoria);
+        personalizarTitulosTabla(jTable_Categoria);
+
+        ajustarAlturaFilasTabla(jTable_Laboratorio);
+        centrarRegistrosTabla(jTable_Laboratorio);
+        personalizarTitulosTabla(jTable_Laboratorio);
+
+        ajustarAlturaFilasTabla(jTable_Proveedor);
+        centrarRegistrosTabla(jTable_Proveedor);
+        personalizarTitulosTabla(jTable_Proveedor);
+
+        ajustarAlturaFilasTabla(jTable_Presentacion);
+        centrarRegistrosTabla(jTable_Presentacion);
+        personalizarTitulosTabla(jTable_Presentacion);
 
     }
 
@@ -372,39 +414,59 @@ public class JInternalFrame_Producto extends javax.swing.JInternalFrame {
 
         return proveedor;
     }
-    
+
     private byte[] obtenerBytesDesdeImagen() {
-    // Aquí debes implementar la lógica para obtener los bytes de la imagen
-    // y retornarlos como un arreglo de bytes (byte[])
+        // Aquí debes implementar la lógica para obtener los bytes de la imagen
+        // y retornarlos como un arreglo de bytes (byte[])
 
-    // Por ejemplo:
-    File imagenFile = new File("ruta/de/la/imagen.jpg");
-    try {
-        BufferedImage imagen = ImageIO.read(imagenFile);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(imagen, "jpg", baos);
-        return baos.toByteArray();
-    } catch (IOException e) {
-        e.printStackTrace();
+        // Por ejemplo:
+        File imagenFile = new File("ruta/de/la/imagen.jpg");
+        try {
+            BufferedImage imagen = ImageIO.read(imagenFile);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(imagen, "jpg", baos);
+            return baos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    return null;
-}
 
-private java.sql.Date obtenerFechaCaducidad() {
-    // Aquí debes implementar la lógica para obtener la fecha de caducidad
-    // y retornarla como un objeto java.sql.Date
+    private java.sql.Date obtenerFechaCaducidad() {
+        // Aquí debes implementar la lógica para obtener la fecha de caducidad
+        // y retornarla como un objeto java.sql.Date
 
-    // Por ejemplo:
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    String fechaString = "2023-12-31";
-    try {
-        java.util.Date fechaUtil = dateFormat.parse(fechaString);
-        return new java.sql.Date(fechaUtil.getTime());
-    } catch (ParseException e) {
-        e.printStackTrace();
+        // Por ejemplo:
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaString = "2023-12-31";
+        try {
+            java.util.Date fechaUtil = dateFormat.parse(fechaString);
+            return new java.sql.Date(fechaUtil.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    return null;
-}
+
+    private void ajustarAlturaFilasTabla(JTable jTable) {
+        jTable.setRowHeight(25); // Ajusta aquí la altura deseada en píxeles
+    }
+
+    private void centrarRegistrosTabla(JTable jTable) {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        jTable.setDefaultRenderer(Object.class, centerRenderer);
+    }
+
+    private void personalizarTitulosTabla(JTable jTable) {
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) jTable.getTableHeader().getDefaultRenderer();
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        jTable.getTableHeader().setDefaultRenderer(headerRenderer);
+        jTable.getTableHeader().setBackground(new Color(0, 153, 153));
+        jTable.getTableHeader().setForeground(Color.WHITE);
+        jTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        jTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -431,6 +493,7 @@ private java.sql.Date obtenerFechaCaducidad() {
         jTextField_Buscar_Categoria = new javax.swing.JTextField();
         jButton_Agregar_tabla_Categoria = new javax.swing.JButton();
         jButton_Eliminar_tabla_Categoria = new javax.swing.JButton();
+        jButton_Agregar_Categoria = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable_Presentacion = new javax.swing.JTable();
@@ -438,6 +501,7 @@ private java.sql.Date obtenerFechaCaducidad() {
         jTextField_Buscar_Presentacion = new javax.swing.JTextField();
         jButton_Agregar_tabla_Presentacion = new javax.swing.JButton();
         jButton_Eliminar_tabla_Presentacion = new javax.swing.JButton();
+        jButton_Agregar_Presentacion = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable_Laboratorio = new javax.swing.JTable();
@@ -445,6 +509,7 @@ private java.sql.Date obtenerFechaCaducidad() {
         jTextField_Buscar_Laboratorio = new javax.swing.JTextField();
         jButton_Agregar_tabla_laboratorio = new javax.swing.JButton();
         jButton_Eliminar_tabla_laboratorio = new javax.swing.JButton();
+        jButton_Agregar_Laboratorio = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable_Proveedor = new javax.swing.JTable();
@@ -452,9 +517,6 @@ private java.sql.Date obtenerFechaCaducidad() {
         jTextField_Buscar_Id_Proveedor = new javax.swing.JTextField();
         jButton_Agregar_tabla_Proveedor = new javax.swing.JButton();
         jButton_Eliminar_tabla_Proveedor = new javax.swing.JButton();
-        jTextField_Total_Compra = new javax.swing.JTextField();
-        jTextField_Total_Venta = new javax.swing.JTextField();
-        jTextField_Total_Producto = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jButton_buscar_imagen = new javax.swing.JButton();
         jButton_Eliminar_imagen = new javax.swing.JButton();
@@ -476,6 +538,7 @@ private java.sql.Date obtenerFechaCaducidad() {
         jPasswordField1.setText("jPasswordField1");
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setClosable(true);
         setMaximizable(true);
         setResizable(true);
         setName("Producto"); // NOI18N
@@ -503,6 +566,7 @@ private java.sql.Date obtenerFechaCaducidad() {
 
         jTextField_nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField_nombre.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        jTextField_nombre.setPreferredSize(new java.awt.Dimension(64, 45));
         jTextField_nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_nombre(evt);
@@ -548,22 +612,19 @@ private java.sql.Date obtenerFechaCaducidad() {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 15, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_precio_compra, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSpinner_Cantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                    .addComponent(jTextField_precio_venta))
+                    .addComponent(jTextField_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_precio_compra, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(jFormattedTextField_fecha_de_caducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(389, 389, 389))
+                    .addComponent(jSpinner_Cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_precio_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(79, 79, 79)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jFormattedTextField_fecha_de_caducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(91, 91, 91))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -572,17 +633,15 @@ private java.sql.Date obtenerFechaCaducidad() {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField_fecha_de_caducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jSpinner_Cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_precio_compra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_precio_venta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jFormattedTextField_fecha_de_caducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField_precio_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField_precio_compra, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jSpinner_Cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -643,7 +702,7 @@ private java.sql.Date obtenerFechaCaducidad() {
             }
         });
 
-        jButton_Eliminar_tabla_Categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Menos.png"))); // NOI18N
+        jButton_Eliminar_tabla_Categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/menos.png"))); // NOI18N
         jButton_Eliminar_tabla_Categoria.setBorderPainted(false);
         jButton_Eliminar_tabla_Categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -651,24 +710,41 @@ private java.sql.Date obtenerFechaCaducidad() {
             }
         });
 
+        jButton_Agregar_Categoria.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Agregar_Categoria.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Agregar_Categoria.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Agregar_Categoria.setText("Nueva Categoria");
+        jButton_Agregar_Categoria.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar_Categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Agregar_Categoria(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField_Buscar_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton_Agregar_tabla_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton_Eliminar_tabla_Categoria)
-                .addGap(74, 74, 74))
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jTextField_Buscar_Categoria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton_Agregar_tabla_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton_Eliminar_tabla_Categoria))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jButton_Agregar_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 16, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -679,12 +755,13 @@ private java.sql.Date obtenerFechaCaducidad() {
                     .addComponent(jComboBox_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton_Eliminar_tabla_Categoria)
-                            .addComponent(jButton_Agregar_tabla_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton_Agregar_tabla_Categoria)
+                            .addComponent(jButton_Eliminar_tabla_Categoria))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton_Agregar_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35))
         );
 
@@ -743,11 +820,22 @@ private java.sql.Date obtenerFechaCaducidad() {
             }
         });
 
-        jButton_Eliminar_tabla_Presentacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Menos.png"))); // NOI18N
+        jButton_Eliminar_tabla_Presentacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/menos.png"))); // NOI18N
         jButton_Eliminar_tabla_Presentacion.setBorderPainted(false);
         jButton_Eliminar_tabla_Presentacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Eliminar_tabla_PresentacionActionPerformed(evt);
+            }
+        });
+
+        jButton_Agregar_Presentacion.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Agregar_Presentacion.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Agregar_Presentacion.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Agregar_Presentacion.setText("Nueva");
+        jButton_Agregar_Presentacion.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar_Presentacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Agregar_Presentacion(evt);
             }
         });
 
@@ -762,33 +850,36 @@ private java.sql.Date obtenerFechaCaducidad() {
                         .addComponent(jTextField_Buscar_Presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
                         .addComponent(jComboBox_Presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton_Agregar_tabla_Presentacion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton_Eliminar_tabla_Presentacion)
-                        .addGap(21, 21, 21))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jButton_Agregar_tabla_Presentacion)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton_Eliminar_tabla_Presentacion)
+                                .addGap(27, 27, 27))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                                .addComponent(jButton_Agregar_Presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox_Presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_Buscar_Presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton_Agregar_tabla_Presentacion)
+                            .addComponent(jButton_Eliminar_tabla_Presentacion))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 10, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton_Eliminar_tabla_Presentacion)
-                            .addComponent(jButton_Agregar_tabla_Presentacion))
-                        .addGap(26, 26, 26))))
+                        .addComponent(jButton_Agregar_Presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
@@ -846,11 +937,22 @@ private java.sql.Date obtenerFechaCaducidad() {
             }
         });
 
-        jButton_Eliminar_tabla_laboratorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Menos.png"))); // NOI18N
+        jButton_Eliminar_tabla_laboratorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/menos.png"))); // NOI18N
         jButton_Eliminar_tabla_laboratorio.setBorderPainted(false);
         jButton_Eliminar_tabla_laboratorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Eliminar_tabla_laboratorioActionPerformed(evt);
+            }
+        });
+
+        jButton_Agregar_Laboratorio.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Agregar_Laboratorio.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton_Agregar_Laboratorio.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Agregar_Laboratorio.setText("Nuevo");
+        jButton_Agregar_Laboratorio.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar_Laboratorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Agregar_Laboratorio(evt);
             }
         });
 
@@ -859,19 +961,26 @@ private java.sql.Date obtenerFechaCaducidad() {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jTextField_Buscar_Laboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField_Buscar_Laboratorio)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox_Laboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jComboBox_Laboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton_Agregar_tabla_laboratorio)
-                        .addGap(35, 35, 35)
-                        .addComponent(jButton_Eliminar_tabla_laboratorio)))
-                .addGap(10, 10, 10))
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addGap(0, 39, Short.MAX_VALUE)
+                                .addComponent(jButton_Agregar_Laboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jButton_Agregar_tabla_laboratorio)
+                                .addGap(28, 28, 28)
+                                .addComponent(jButton_Eliminar_tabla_laboratorio)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6))))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -880,17 +989,16 @@ private java.sql.Date obtenerFechaCaducidad() {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox_Laboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_Buscar_Laboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton_Eliminar_tabla_laboratorio)
-                            .addComponent(jButton_Agregar_tabla_laboratorio))
-                        .addGap(26, 26, 26))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton_Agregar_tabla_laboratorio)
+                            .addComponent(jButton_Eliminar_tabla_laboratorio))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_Agregar_Laboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
@@ -950,7 +1058,7 @@ private java.sql.Date obtenerFechaCaducidad() {
             }
         });
 
-        jButton_Eliminar_tabla_Proveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Menos.png"))); // NOI18N
+        jButton_Eliminar_tabla_Proveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/menos.png"))); // NOI18N
         jButton_Eliminar_tabla_Proveedor.setBorderPainted(false);
         jButton_Eliminar_tabla_Proveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -966,17 +1074,17 @@ private java.sql.Date obtenerFechaCaducidad() {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField_Buscar_Id_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox_Id_Proveedor, 0, 266, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton_Agregar_tabla_Proveedor)
-                        .addGap(77, 77, 77)
+                        .addGap(37, 37, 37)
                         .addComponent(jButton_Eliminar_tabla_Proveedor)
-                        .addContainerGap(91, Short.MAX_VALUE))
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jTextField_Buscar_Id_Proveedor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox_Id_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63))))
+                        .addGap(42, 42, 42))))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -984,41 +1092,19 @@ private java.sql.Date obtenerFechaCaducidad() {
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField_Buscar_Id_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox_Id_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jComboBox_Id_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton_Agregar_tabla_Proveedor)
-                            .addComponent(jButton_Eliminar_tabla_Proveedor))
-                        .addGap(0, 37, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton_Eliminar_tabla_Proveedor)
+                            .addComponent(jButton_Agregar_tabla_Proveedor))
+                        .addContainerGap(44, Short.MAX_VALUE))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
-
-        jTextField_Total_Compra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Total_Compra.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tota Compra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
-        jTextField_Total_Compra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Total_Compra(evt);
-            }
-        });
-
-        jTextField_Total_Venta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Total_Venta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Total Venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
-        jTextField_Total_Venta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Total_Venta(evt);
-            }
-        });
-
-        jTextField_Total_Producto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Total_Producto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tota Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
-        jTextField_Total_Producto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Total_Producto(evt);
-            }
-        });
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -1054,22 +1140,21 @@ private java.sql.Date obtenerFechaCaducidad() {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton_buscar_imagen)
-                        .addGap(51, 51, 51)
-                        .addComponent(jButton_Eliminar_imagen))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel_Mostrar_Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jButton_buscar_imagen)
+                .addGap(51, 51, 51)
+                .addComponent(jButton_Eliminar_imagen)
                 .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel_Mostrar_Imagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel_Mostrar_Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(jLabel_Mostrar_Imagen, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_buscar_imagen)
                     .addComponent(jButton_Eliminar_imagen))
@@ -1112,78 +1197,61 @@ private java.sql.Date obtenerFechaCaducidad() {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jButton_Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(jButton_Ver_Producto)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(jTextField_Total_Compra, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(51, 51, 51)
-                                .addComponent(jTextField_Total_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(jTextField_Total_Venta, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(63, 63, 63)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(jButton_Ver_Producto)
-                .addGap(246, 246, 246)
-                .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton_Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(158, 158, 158))
+                            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField_Total_Compra, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_Total_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_Total_Venta, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_Ver_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton_Ver_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -1228,59 +1296,59 @@ private java.sql.Date obtenerFechaCaducidad() {
     }//GEN-LAST:event_jTextField_precio_venta
 
     private void jButton_Guardar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Guardar
-         // Obtener los índices seleccionados de las tablas
-    int selectedCategoriaIndex = jTable_Categoria.getSelectedRow();
-    int selectedLaboratorioIndex = jTable_Laboratorio.getSelectedRow();
-    int selectedPresentacionIndex = jTable_Presentacion.getSelectedRow();
-    int selectedProveedorIndex = jTable_Proveedor.getSelectedRow();
+        // Obtener los índices seleccionados de las tablas
+        int selectedCategoriaIndex = jTable_Categoria.getSelectedRow();
+        int selectedLaboratorioIndex = jTable_Laboratorio.getSelectedRow();
+        int selectedPresentacionIndex = jTable_Presentacion.getSelectedRow();
+        int selectedProveedorIndex = jTable_Proveedor.getSelectedRow();
 
-    // Verificar que se haya seleccionado una fila en cada tabla
-    if (selectedCategoriaIndex == -1 || selectedLaboratorioIndex == -1 ||
-            selectedPresentacionIndex == -1 || selectedProveedorIndex == -1) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar un valor de cada tabla.",
-                "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        // Verificar que se haya seleccionado una fila en cada tabla
+        if (selectedCategoriaIndex == -1 || selectedLaboratorioIndex == -1
+                || selectedPresentacionIndex == -1 || selectedProveedorIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un valor de cada tabla.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    // Obtener los valores seleccionados de las tablas
-    int idCategoria = (int) jTable_Categoria.getValueAt(selectedCategoriaIndex, 0);
-    int idLaboratorio = (int) jTable_Laboratorio.getValueAt(selectedLaboratorioIndex, 0);
-    int idPresentacion = (int) jTable_Presentacion.getValueAt(selectedPresentacionIndex, 0);
-    int idProveedor = (int) jTable_Proveedor.getValueAt(selectedProveedorIndex, 0);
+        // Obtener los valores seleccionados de las tablas
+        int idCategoria = (int) jTable_Categoria.getValueAt(selectedCategoriaIndex, 0);
+        int idLaboratorio = (int) jTable_Laboratorio.getValueAt(selectedLaboratorioIndex, 0);
+        int idPresentacion = (int) jTable_Presentacion.getValueAt(selectedPresentacionIndex, 0);
+        int idProveedor = (int) jTable_Proveedor.getValueAt(selectedProveedorIndex, 0);
 
-    // Crear el objeto Clase_Producto con los datos del formulario y las selecciones de las tablas
-    Clase_Producto producto = new Clase_Producto();
-    producto.setNombre(jTextField_nombre.getText());
-    producto.setDescripcion(jTextArea_descripcion.getText());
-    producto.setCantidad_Producto((int) jSpinner_Cantidad.getValue());
-    producto.setPrecio_Compra(Float.parseFloat(jTextField_precio_compra.getText()));
-    producto.setPrecio_Venta(Float.parseFloat(jTextField_precio_venta.getText()));
-    producto.setImagen_Producto(obtenerBytesDesdeImagen()); // Obtener bytes de la imagen
-    producto.setFecha_Caducidad(obtenerFechaCaducidad()); // Obtener fecha de caducidad
-    producto.setId_Categoria(idCategoria);
-    producto.setId_Presentacion(idPresentacion);
-    producto.setId_Laboratorio(idLaboratorio);
-    producto.setId_Proveedor(idProveedor);
+        // Crear el objeto Clase_Producto con los datos del formulario y las selecciones de las tablas
+        Clase_Producto producto = new Clase_Producto();
+        producto.setNombre(jTextField_nombre.getText());
+        producto.setDescripcion(jTextArea_descripcion.getText());
+        producto.setCantidad_Producto((int) jSpinner_Cantidad.getValue());
+        producto.setPrecio_Compra(Float.parseFloat(jTextField_precio_compra.getText()));
+        producto.setPrecio_Venta(Float.parseFloat(jTextField_precio_venta.getText()));
+        producto.setImagen_Producto(obtenerBytesDesdeImagen()); // Obtener bytes de la imagen
+        producto.setFecha_Caducidad(obtenerFechaCaducidad()); // Obtener fecha de caducidad
+        producto.setId_Categoria(idCategoria);
+        producto.setId_Presentacion(idPresentacion);
+        producto.setId_Laboratorio(idLaboratorio);
+        producto.setId_Proveedor(idProveedor);
 
-    // Llamar al método insertarProductoConProveedor para guardar el producto
-    CRUD_Producto crudProducto = new CRUD_Producto();
-    crudProducto.insertarProductoConProveedor(producto);
+        // Llamar al método insertarProductoConProveedor para guardar el producto
+        CRUD_Producto crudProducto = new CRUD_Producto();
+        crudProducto.insertarProductoConProveedor(producto);
 
-    // Mostrar mensaje de éxito
-    JOptionPane.showMessageDialog(this, "Producto insertado correctamente.",
-            "Éxito", JOptionPane.INFORMATION_MESSAGE);
-    
-     this.dispose();
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Producto insertado correctamente.",
+                "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-    // Mostrar el formulario JInternalFrame_Gestionar_Producto
-    JInternalFrame_Gestionar_Producto gestionarProducto = new JInternalFrame_Gestionar_Producto();
-    gestionarProducto.setVisible(true);
-    getParent().add(gestionarProducto);
-    try {
-        gestionarProducto.setSelected(true);
-    } catch (java.beans.PropertyVetoException e) {
-        e.printStackTrace();
-    }
+        this.dispose();
+
+        // Mostrar el formulario JInternalFrame_Gestionar_Producto
+        JInternalFrame_Gestionar_Producto gestionarProducto = new JInternalFrame_Gestionar_Producto();
+        gestionarProducto.setVisible(true);
+        getParent().add(gestionarProducto);
+        try {
+            gestionarProducto.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButton_Guardar
 
     private void jButton_Actualizar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar
@@ -1358,18 +1426,6 @@ private java.sql.Date obtenerFechaCaducidad() {
     private void jTextField_Buscar_Id_Proveedor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Buscar_Id_Proveedor
 
     }//GEN-LAST:event_jTextField_Buscar_Id_Proveedor
-
-    private void jTextField_Total_Compra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Total_Compra
-
-    }//GEN-LAST:event_jTextField_Total_Compra
-
-    private void jTextField_Total_Venta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Total_Venta
-
-    }//GEN-LAST:event_jTextField_Total_Venta
-
-    private void jTextField_Total_Producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Total_Producto
-
-    }//GEN-LAST:event_jTextField_Total_Producto
 
     private void jButton_Eliminar_tabla_CategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Eliminar_tabla_CategoriaActionPerformed
         jButton_Agregar_tabla_Categoria.setEnabled(true);
@@ -1490,9 +1546,86 @@ private java.sql.Date obtenerFechaCaducidad() {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField_fecha_de_caducidad
 
+    private void jButton_Agregar_Laboratorio(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Agregar_Laboratorio
+        // Crear una nueva instancia de JInternalFrame_Laboratorio
+        JInternalFrame_Laboratorio internalFrame_Laboratorio = new JInternalFrame_Laboratorio();
+
+        // Calcular las coordenadas para centrar el JInternalFrame
+        int x = (jDesktopPane.getWidth() - internalFrame_Laboratorio.getWidth()) / 2;
+        int y = (jDesktopPane.getHeight() - internalFrame_Laboratorio.getHeight()) / 2;
+
+        // Configurar la posición del JInternalFrame
+        internalFrame_Laboratorio.setLocation(x, y);
+
+        // Agregar la instancia al jDesktopPane
+        jDesktopPane.add(internalFrame_Laboratorio);
+
+        // Hacer la instancia visible
+        internalFrame_Laboratorio.setVisible(true);
+
+        try {
+            // Traer al frente en el jDesktopPane
+            internalFrame_Laboratorio.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton_Agregar_Laboratorio
+
+    private void jButton_Agregar_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Agregar_Categoria
+        JInternalFrame_Categoria internalFrame_categoria = new JInternalFrame_Categoria();
+
+        // Calcular las coordenadas para centrar el JInternalFrame
+        int x = (jDesktopPane.getWidth() - internalFrame_categoria.getWidth()) / 2;
+        int y = (jDesktopPane.getHeight() - internalFrame_categoria.getHeight()) / 2;
+
+        // Configurar la posición del JInternalFrame
+        internalFrame_categoria.setLocation(x, y);
+
+        // Agregar la instancia al jDesktopPane
+        jDesktopPane.add(internalFrame_categoria);
+
+        // Hacer la instancia visible
+        internalFrame_categoria.setVisible(true);
+
+        try {
+            // Traer al frente en el jDesktopPane
+            internalFrame_categoria.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jButton_Agregar_Categoria
+
+    private void jButton_Agregar_Presentacion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Agregar_Presentacion
+        JInternalFrame_Presentacion internalFrame_presentacion = new JInternalFrame_Presentacion();
+
+        // Calcular las coordenadas para centrar el JInternalFrame
+        int x = (jDesktopPane.getWidth() - internalFrame_presentacion.getWidth()) / 2;
+        int y = (jDesktopPane.getHeight() - internalFrame_presentacion.getHeight()) / 2;
+
+        // Configurar la posición del JInternalFrame
+        internalFrame_presentacion.setLocation(x, y);
+
+        // Agregar la instancia al jDesktopPane
+        jDesktopPane.add(internalFrame_presentacion);
+
+        // Hacer la instancia visible
+        internalFrame_presentacion.setVisible(true);
+
+        try {
+            // Traer al frente en el jDesktopPane
+            internalFrame_presentacion.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton_Agregar_Presentacion
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton jButton_Actualizar;
+    private javax.swing.JButton jButton_Agregar_Categoria;
+    private javax.swing.JButton jButton_Agregar_Laboratorio;
+    private javax.swing.JButton jButton_Agregar_Presentacion;
     private javax.swing.JButton jButton_Agregar_tabla_Categoria;
     private javax.swing.JButton jButton_Agregar_tabla_Presentacion;
     private javax.swing.JButton jButton_Agregar_tabla_Proveedor;
@@ -1538,9 +1671,6 @@ private java.sql.Date obtenerFechaCaducidad() {
     private javax.swing.JTextField jTextField_Buscar_Id_Proveedor;
     private javax.swing.JTextField jTextField_Buscar_Laboratorio;
     private javax.swing.JTextField jTextField_Buscar_Presentacion;
-    private javax.swing.JTextField jTextField_Total_Compra;
-    private javax.swing.JTextField jTextField_Total_Producto;
-    private javax.swing.JTextField jTextField_Total_Venta;
     private javax.swing.JTextField jTextField_nombre;
     private javax.swing.JTextField jTextField_precio_compra;
     private javax.swing.JTextField jTextField_precio_venta;

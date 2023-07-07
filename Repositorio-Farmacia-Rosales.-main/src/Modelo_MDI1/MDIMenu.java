@@ -14,29 +14,45 @@ import Vistas.JInternalFrame_Laboratorio;
 import Vistas.JInternalFrame_Presentacion;
 import Vistas.JInternalFrame_Producto;
 import Vistas.JInternalFrame_Proveedor;
+import Vistas.JInternalFrame_Venta;
 import Vistas.JInternalFrame_Venta_Producto;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 /**
  *
  * @author Usuario
  */
 public class MDIMenu extends javax.swing.JFrame {
-   
+
+    private JDesktopPane desktopPane;
 
     public MDIMenu() {
         initComponents();
        
-        
 
     }
+
     public JDesktopPane getDesktopPane() {
         return jDesktopPane;
     }
+    public void mostrarFormularioVenta() {
+    JInternalFrame_Venta ventaForm = new JInternalFrame_Venta();
+    jDesktopPane.add(ventaForm);
+    ventaForm.setVisible(true);
+    try {
+        ventaForm.setSelected(true);
+    } catch (java.beans.PropertyVetoException e) {
+        e.printStackTrace();
+    }
+}
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -56,9 +72,6 @@ public class MDIMenu extends javax.swing.JFrame {
         jButton_Producto_Proveedor = new javax.swing.JButton();
         jButton_Venta_Producto = new javax.swing.JButton();
         jButton_Compra_producto = new javax.swing.JButton();
-        jButton_Presentacion = new javax.swing.JButton();
-        jButton_Laboratorio = new javax.swing.JButton();
-        jButton_Categoria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -293,57 +306,6 @@ public class MDIMenu extends javax.swing.JFrame {
             }
         });
 
-        jButton_Presentacion.setBackground(new java.awt.Color(0, 153, 153));
-        jButton_Presentacion.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jButton_Presentacion.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Presentacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_presentacion.png"))); // NOI18N
-        jButton_Presentacion.setText("Presentacion");
-        jButton_Presentacion.setToolTipText("Nuevo Cliente");
-        jButton_Presentacion.setBorder(null);
-        jButton_Presentacion.setFocusable(false);
-        jButton_Presentacion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_Presentacion.setPreferredSize(new java.awt.Dimension(90, 92));
-        jButton_Presentacion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_Presentacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Presentacion(evt);
-            }
-        });
-
-        jButton_Laboratorio.setBackground(new java.awt.Color(0, 153, 153));
-        jButton_Laboratorio.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jButton_Laboratorio.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Laboratorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_laboratorio.png"))); // NOI18N
-        jButton_Laboratorio.setText("Laboratorio");
-        jButton_Laboratorio.setToolTipText("Nuevo Cliente");
-        jButton_Laboratorio.setBorder(null);
-        jButton_Laboratorio.setFocusable(false);
-        jButton_Laboratorio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_Laboratorio.setPreferredSize(new java.awt.Dimension(90, 92));
-        jButton_Laboratorio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_Laboratorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Laboratorio(evt);
-            }
-        });
-
-        jButton_Categoria.setBackground(new java.awt.Color(0, 153, 153));
-        jButton_Categoria.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jButton_Categoria.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_Categoria.png"))); // NOI18N
-        jButton_Categoria.setText("Categoria");
-        jButton_Categoria.setToolTipText("Nuevo Cliente");
-        jButton_Categoria.setBorder(null);
-        jButton_Categoria.setFocusable(false);
-        jButton_Categoria.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_Categoria.setPreferredSize(new java.awt.Dimension(90, 92));
-        jButton_Categoria.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_Categoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Categoria(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -356,26 +318,17 @@ public class MDIMenu extends javax.swing.JFrame {
                 .addComponent(jButton_Compra_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_Producto_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_Presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_Laboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(501, Short.MAX_VALUE))
+                .addContainerGap(844, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton_Laboratorio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton_Presentacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                    .addComponent(jButton_Venta_Producto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jButton_Venta_Producto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                     .addComponent(jButton_Producto_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jButton_Compra_producto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jButton_Inicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-            .addComponent(jButton_Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1420, 70));
@@ -392,12 +345,19 @@ public class MDIMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_Producto_Proveedor
 
     private void jButton_Venta_Producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Venta_Producto
-        JInternalFrame_Venta_Producto est = new JInternalFrame_Venta_Producto();
-        int x = (jDesktopPane.getWidth() / 2) - est.getWidth() / 2;
-        int y = (jDesktopPane.getHeight() / 2) - est.getHeight() / 2;
-        est.setLocation(x, y);
-        jDesktopPane.add(est);
-        est.setVisible(true);
+      JInternalFrame_Venta_Producto ventaProductoForm = new JInternalFrame_Venta_Producto();
+    int x = (jDesktopPane.getWidth() / 2) - ventaProductoForm.getWidth() / 2;
+    int y = (jDesktopPane.getHeight() / 2) - ventaProductoForm.getHeight() / 2;
+    ventaProductoForm.setLocation(x, y);
+    jDesktopPane.add(ventaProductoForm);
+    ventaProductoForm.setVisible(true);
+    ventaProductoForm.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE); // Configurar el cierre del formulario
+    ventaProductoForm.addInternalFrameListener(new InternalFrameAdapter() {
+        @Override
+        public void internalFrameClosed(InternalFrameEvent e) {
+            mostrarFormularioVenta(); // Mostrar el formulario JInternalFrame_Venta al cerrar JInternalFrame_Venta_Producto
+        }
+    });
     }//GEN-LAST:event_jButton_Venta_Producto
 
     private void jButton_Cliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Cliente
@@ -420,22 +380,20 @@ public class MDIMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_Compra_producto
 
     private void jButton_Producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Producto
-                                
-    JInternalFrame_Producto vistaProducto = new JInternalFrame_Producto();
-    vistaProducto.setSize(1200, 666);
-    vistaProducto.setLocation(0, 0);
-    vistaProducto.setVisible(true);
-    vistaProducto.mostrar();
-    
-    
-    jDesktopPane.removeAll();
-    jDesktopPane.add(vistaProducto);
-    try {
-        vistaProducto.setSelected(true);
-    } catch (java.beans.PropertyVetoException e) {
-        e.printStackTrace();
-    }
 
+        JInternalFrame_Producto vistaProducto = new JInternalFrame_Producto();
+        vistaProducto.setSize(1224, 583);
+        vistaProducto.setLocation(0, 0);
+        vistaProducto.setVisible(true);
+        vistaProducto.mostrar();
+
+        jDesktopPane.removeAll();
+        jDesktopPane.add(vistaProducto);
+        try {
+            vistaProducto.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
 
 
     }//GEN-LAST:event_jButton_Producto
@@ -463,37 +421,6 @@ public class MDIMenu extends javax.swing.JFrame {
     private void jButton_Inicio8(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Inicio8
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_Inicio8
-
-    private void jButton_Laboratorio(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Laboratorio
-        JInternalFrame_Laboratorio est = new JInternalFrame_Laboratorio();
-        int x = (jDesktopPane.getWidth() / 2) - est.getWidth() / 2;
-        int y = (jDesktopPane.getHeight() / 2) - est.getHeight() / 2;
-        est.setLocation(x, y);
-        jDesktopPane.add(est);
-        est.setVisible(true);
-        est.mostrar();
-    }//GEN-LAST:event_jButton_Laboratorio
-
-    private void jButton_Presentacion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Presentacion
-        JInternalFrame_Presentacion est = new JInternalFrame_Presentacion();
-        int x = (jDesktopPane.getWidth() / 2) - est.getWidth() / 2;
-        int y = (jDesktopPane.getHeight() / 2) - est.getHeight() / 2;
-        est.setLocation(x, y);
-        jDesktopPane.add(est);
-        est.setVisible(true);
-        est.mostrar();
-    }//GEN-LAST:event_jButton_Presentacion
-
-    private void jButton_Categoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Categoria
-        JInternalFrame_Categoria est = new JInternalFrame_Categoria();
-        int x = (jDesktopPane.getWidth() / 2) - est.getWidth() / 2;
-        int y = (jDesktopPane.getHeight() / 2) - est.getHeight() / 2;
-        est.setLocation(x, y);
-        est.mostrar();
-        jDesktopPane.add(est);
-        est.setVisible(true);
-        est.mostrar();
-    }//GEN-LAST:event_jButton_Categoria
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -571,14 +498,11 @@ public class MDIMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton_Categoria;
     private javax.swing.JButton jButton_Cliente;
     private javax.swing.JButton jButton_Compra_producto;
     private javax.swing.JButton jButton_Empleado;
     private javax.swing.JButton jButton_Inicio;
     private javax.swing.JButton jButton_Inicio8;
-    private javax.swing.JButton jButton_Laboratorio;
-    private javax.swing.JButton jButton_Presentacion;
     private javax.swing.JButton jButton_Producto;
     private javax.swing.JButton jButton_Producto_Proveedor;
     private javax.swing.JButton jButton_Proveedor;
