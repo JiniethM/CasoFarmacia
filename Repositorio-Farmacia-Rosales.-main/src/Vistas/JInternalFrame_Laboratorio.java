@@ -193,23 +193,19 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 610, 120));
 
-        jButton_Agregar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Agregar.setBackground(new java.awt.Color(153, 255, 153));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Agregar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"))); // NOI18N
         jButton_Agregar.setText("Agregar");
-        jButton_Agregar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createTitledBorder(""), javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         jButton_Agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Agregar(evt);
             }
         });
-        jPanel1.add(jButton_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 93, -1));
+        jPanel1.add(jButton_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 70, 30));
 
-        jButton_Editar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Editar.setBackground(new java.awt.Color(255, 255, 51));
         jButton_Editar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Editar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/editar.png"))); // NOI18N
         jButton_Editar.setText("Editar");
         jButton_Editar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Editar.addActionListener(new java.awt.event.ActionListener() {
@@ -217,12 +213,10 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
                 jButton_Editar(evt);
             }
         });
-        jPanel1.add(jButton_Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 93, -1));
+        jPanel1.add(jButton_Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 80, 30));
 
-        jButton_Actualizar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Actualizar.setBackground(new java.awt.Color(51, 204, 255));
         jButton_Actualizar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Actualizar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"))); // NOI18N
         jButton_Actualizar.setText("Actualizar");
         jButton_Actualizar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -230,12 +224,10 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
                 jButton_Actualizar(evt);
             }
         });
-        jPanel1.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
+        jPanel1.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 90, 80, 30));
 
-        jButton_Eliminar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Eliminar.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Eliminar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Eliminar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"))); // NOI18N
         jButton_Eliminar.setText("Eliminar");
         jButton_Eliminar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -243,7 +235,7 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
                 jButton_Eliminar(evt);
             }
         });
-        jPanel1.add(jButton_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, 94, 43));
+        jPanel1.add(jButton_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, 70, 30));
 
         jPanel7.setBackground(new java.awt.Color(0, 153, 153));
 

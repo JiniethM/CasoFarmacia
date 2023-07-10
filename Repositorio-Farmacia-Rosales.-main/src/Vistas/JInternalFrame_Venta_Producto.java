@@ -148,8 +148,10 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
     }
 
     public void Limpiar() {
-        jTextField_Busqueda_Combo.setText("");
-    }
+    jTextField_Busqueda_Combo.setText("");
+    jSpinner_Cantidad_Producto.setValue(0);
+}
+
 
     private void iniciarTimer() {
         int intervaloActualizacion = 1000;
@@ -427,9 +429,8 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_guardar_venta.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_guardar_venta.setBackground(new java.awt.Color(153, 255, 153));
         jButton_guardar_venta.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_guardar_venta.setForeground(new java.awt.Color(51, 51, 51));
         jButton_guardar_venta.setText("Guardar");
         jButton_guardar_venta.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jButton_guardar_venta.addActionListener(new java.awt.event.ActionListener() {
@@ -561,10 +562,8 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
                             .addComponent(jTextField_Fecha_Hora)
                             .addComponent(jComboCliente, 0, 246, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jButton_guardar_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73)
-                        .addComponent(jButton_ver_Formulario_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(77, 77, 77)
+                        .addComponent(jButton_guardar_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -580,9 +579,11 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
                                 .addComponent(jTextField_Cambio, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 58, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton_ver_Formulario_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -604,7 +605,7 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField_Pago, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_Cambio, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -640,7 +641,7 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Id Producto", "Nombre", "Precio Venta", "Cantidad", "total"
+                "ID", "Nombre", "Precio Venta", "Cantidad", "total"
             }
         ));
         jTable_Producto.setGridColor(new java.awt.Color(0, 0, 0));
@@ -690,7 +691,7 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Agregar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Agregar.setBackground(new java.awt.Color(153, 255, 153));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Agregar.setForeground(new java.awt.Color(51, 51, 51));
         jButton_Agregar.setText("Agregar");
@@ -703,7 +704,6 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
 
         jButton_Borrar_p.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Borrar_p.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Borrar_p.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Borrar_p.setText("Eliminar");
         jButton_Borrar_p.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Borrar_p.addActionListener(new java.awt.event.ActionListener() {

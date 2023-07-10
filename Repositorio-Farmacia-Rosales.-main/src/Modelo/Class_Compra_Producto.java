@@ -5,8 +5,16 @@ package Modelo;
  */
 public class Class_Compra_Producto {
    int Id_Compra_Producto;
+   int Cantidad;
    int Id_Compra;
    int Id_Producto;
+
+    public Class_Compra_Producto(int Cantidad, int Id_Producto) {
+        this.Cantidad = Cantidad;
+        this.Id_Producto = Id_Producto;
+    }
+
+    
 
     public Class_Compra_Producto(int Id_Compra_Producto, int Id_Compra, int Id_Producto) {
         this.Id_Compra_Producto = Id_Compra_Producto;

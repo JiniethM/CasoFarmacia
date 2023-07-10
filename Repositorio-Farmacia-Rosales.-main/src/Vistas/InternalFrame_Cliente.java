@@ -332,9 +332,8 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jTextBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 270, 40));
 
-        jButton6.setBackground(new java.awt.Color(0, 153, 153));
+        jButton6.setBackground(new java.awt.Color(153, 255, 153));
         jButton6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Agregar");
         jButton6.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -357,7 +356,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
         jButton_Borrar.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Borrar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton_Borrar.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Borrar.setText("Eliminar");
         jButton_Borrar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton_Borrar.setMaximumSize(new java.awt.Dimension(80, 30));
@@ -372,7 +370,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
         jButton_Actualizar1.setBackground(new java.awt.Color(102, 204, 255));
         jButton_Actualizar1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton_Actualizar1.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Actualizar1.setText("Actualizar");
         jButton_Actualizar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton_Actualizar1.addActionListener(new java.awt.event.ActionListener() {
@@ -393,7 +390,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                 jButton_ReportActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton_Report, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 190, -1, -1));
+        jPanel1.add(jButton_Report, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 190, -1, -1));
 
         jTextField_Id_Ciente.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTextField_Id_Ciente.setHorizontalAlignment(javax.swing.JTextField.CENTER);

@@ -413,7 +413,7 @@ public class MDIMenu1 extends javax.swing.JFrame {
         // Agregar el JInternalFrame_Producto al JDesktopPane
         jDesktopPane.add(est);
         est.setVisible(true);
-        est.mostrar();
+    
     }//GEN-LAST:event_jButton_Producto
 
     private void jButton_Proveedor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Proveedor

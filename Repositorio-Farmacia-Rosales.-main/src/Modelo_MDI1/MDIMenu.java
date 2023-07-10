@@ -9,6 +9,7 @@ import Vistas.InternalFrame_Cliente;
 import Vistas.JFrame_Espera;
 
 import Vistas.JInternalFrame_Categoria;
+import Vistas.JInternalFrame_Compra_Producto;
 import Vistas.JInternalFrame_Empleado;
 import Vistas.JInternalFrame_Laboratorio;
 import Vistas.JInternalFrame_Presentacion;
@@ -59,19 +60,15 @@ public class MDIMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jDesktopPane = new javax.swing.JDesktopPane();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jButton_Inicio = new javax.swing.JButton();
+        jButton_Venta_Producto = new javax.swing.JButton();
+        jButton_Compra_producto = new javax.swing.JButton();
         jButton_Producto = new javax.swing.JButton();
         jButton_Cliente = new javax.swing.JButton();
         jButton_Proveedor = new javax.swing.JButton();
         jButton_Empleado = new javax.swing.JButton();
-        jButton_Inicio8 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jButton_Inicio = new javax.swing.JButton();
-        jButton_Producto_Proveedor = new javax.swing.JButton();
-        jButton_Venta_Producto = new javax.swing.JButton();
-        jButton_Compra_producto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -81,16 +78,67 @@ public class MDIMenu extends javax.swing.JFrame {
         jDesktopPane.setLayout(jDesktopPaneLayout);
         jDesktopPaneLayout.setHorizontalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
+            .addGap(0, 1360, Short.MAX_VALUE)
         );
         jDesktopPaneLayout.setVerticalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 700, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jDesktopPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 1280, 700));
+        getContentPane().add(jDesktopPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1360, 700));
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+
+        jButton_Inicio.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Inicio.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jButton_Inicio.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Inicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_Inicio.png"))); // NOI18N
+        jButton_Inicio.setText("Inicio");
+        jButton_Inicio.setToolTipText("Nuevo Cliente");
+        jButton_Inicio.setBorder(null);
+        jButton_Inicio.setFocusable(false);
+        jButton_Inicio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_Inicio.setPreferredSize(new java.awt.Dimension(90, 92));
+        jButton_Inicio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_Inicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Inicio(evt);
+            }
+        });
+
+        jButton_Venta_Producto.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Venta_Producto.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jButton_Venta_Producto.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Venta_Producto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_Venta_Producto.png"))); // NOI18N
+        jButton_Venta_Producto.setText("Venta de producto");
+        jButton_Venta_Producto.setToolTipText("Nuevo Cliente");
+        jButton_Venta_Producto.setBorder(null);
+        jButton_Venta_Producto.setFocusable(false);
+        jButton_Venta_Producto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_Venta_Producto.setPreferredSize(new java.awt.Dimension(90, 92));
+        jButton_Venta_Producto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_Venta_Producto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Venta_Producto(evt);
+            }
+        });
+
+        jButton_Compra_producto.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Compra_producto.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jButton_Compra_producto.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Compra_producto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_Compra_Producto.png"))); // NOI18N
+        jButton_Compra_producto.setText("Compra de producto");
+        jButton_Compra_producto.setToolTipText("Nuevo Cliente");
+        jButton_Compra_producto.setBorder(null);
+        jButton_Compra_producto.setFocusable(false);
+        jButton_Compra_producto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_Compra_producto.setPreferredSize(new java.awt.Dimension(90, 92));
+        jButton_Compra_producto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_Compra_producto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Compra_producto(evt);
+            }
+        });
 
         jButton_Producto.setBackground(new java.awt.Color(0, 153, 153));
         jButton_Producto.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -160,149 +208,10 @@ public class MDIMenu extends javax.swing.JFrame {
             }
         });
 
-        jButton_Inicio8.setBackground(new java.awt.Color(0, 153, 153));
-        jButton_Inicio8.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jButton_Inicio8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Inicio8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_Inicio.png"))); // NOI18N
-        jButton_Inicio8.setText("Empleado");
-        jButton_Inicio8.setToolTipText("Nuevo Cliente");
-        jButton_Inicio8.setBorder(null);
-        jButton_Inicio8.setFocusable(false);
-        jButton_Inicio8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_Inicio8.setPreferredSize(new java.awt.Dimension(90, 92));
-        jButton_Inicio8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_Inicio8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Inicio8(evt);
-            }
-        });
-
-        jButton3.setText("Cerrar Seción");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jButton4.setText("Salir");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton_Cliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton_Producto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton_Proveedor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton_Empleado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                    .addComponent(jButton_Inicio8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jButton_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton_Empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_Inicio8, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(30, 30, 30)
-                .addComponent(jButton4)
-                .addGap(102, 102, 102))
-        );
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 120, 700));
-
-        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
-
-        jButton_Inicio.setBackground(new java.awt.Color(0, 153, 153));
-        jButton_Inicio.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jButton_Inicio.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Inicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_Inicio.png"))); // NOI18N
-        jButton_Inicio.setText("Inicio");
-        jButton_Inicio.setToolTipText("Nuevo Cliente");
-        jButton_Inicio.setBorder(null);
-        jButton_Inicio.setFocusable(false);
-        jButton_Inicio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_Inicio.setPreferredSize(new java.awt.Dimension(90, 92));
-        jButton_Inicio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_Inicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Inicio(evt);
-            }
-        });
-
-        jButton_Producto_Proveedor.setBackground(new java.awt.Color(0, 153, 153));
-        jButton_Producto_Proveedor.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jButton_Producto_Proveedor.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Producto_Proveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_Producto_Proveedor.png"))); // NOI18N
-        jButton_Producto_Proveedor.setText("Productos de Proveedores");
-        jButton_Producto_Proveedor.setToolTipText("Nuevo Cliente");
-        jButton_Producto_Proveedor.setBorder(null);
-        jButton_Producto_Proveedor.setFocusable(false);
-        jButton_Producto_Proveedor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_Producto_Proveedor.setPreferredSize(new java.awt.Dimension(90, 92));
-        jButton_Producto_Proveedor.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_Producto_Proveedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Producto_Proveedor(evt);
-            }
-        });
-
-        jButton_Venta_Producto.setBackground(new java.awt.Color(0, 153, 153));
-        jButton_Venta_Producto.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jButton_Venta_Producto.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Venta_Producto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_Venta_Producto.png"))); // NOI18N
-        jButton_Venta_Producto.setText("Venta de producto");
-        jButton_Venta_Producto.setToolTipText("Nuevo Cliente");
-        jButton_Venta_Producto.setBorder(null);
-        jButton_Venta_Producto.setFocusable(false);
-        jButton_Venta_Producto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_Venta_Producto.setPreferredSize(new java.awt.Dimension(90, 92));
-        jButton_Venta_Producto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_Venta_Producto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Venta_Producto(evt);
-            }
-        });
-
-        jButton_Compra_producto.setBackground(new java.awt.Color(0, 153, 153));
-        jButton_Compra_producto.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jButton_Compra_producto.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Compra_producto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Boton_Compra_Producto.png"))); // NOI18N
-        jButton_Compra_producto.setText("Compra de producto");
-        jButton_Compra_producto.setToolTipText("Nuevo Cliente");
-        jButton_Compra_producto.setBorder(null);
-        jButton_Compra_producto.setFocusable(false);
-        jButton_Compra_producto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_Compra_producto.setPreferredSize(new java.awt.Dimension(90, 92));
-        jButton_Compra_producto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_Compra_producto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Compra_producto(evt);
             }
         });
 
@@ -316,19 +225,34 @@ public class MDIMenu extends javax.swing.JFrame {
                 .addComponent(jButton_Venta_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_Compra_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_Producto_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(844, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton_Producto, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton_Empleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(410, 410, 410)
+                .addComponent(jButton4)
+                .addGap(129, 129, 129))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton_Venta_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Compra_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton_Venta_Producto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                    .addComponent(jButton_Producto_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jButton_Compra_producto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jButton_Inicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addComponent(jButton4)
+                .addGap(24, 24, 24))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1420, 70));
@@ -339,10 +263,6 @@ public class MDIMenu extends javax.swing.JFrame {
     private void jButton_Inicio(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Inicio
 
     }//GEN-LAST:event_jButton_Inicio
-
-    private void jButton_Producto_Proveedor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Producto_Proveedor
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_Producto_Proveedor
 
     private void jButton_Venta_Producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Venta_Producto
       JInternalFrame_Venta_Producto ventaProductoForm = new JInternalFrame_Venta_Producto();
@@ -376,16 +296,28 @@ public class MDIMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_Cliente
 
     private void jButton_Compra_producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Compra_producto
-        // TODO add your handling code here:
+       JInternalFrame_Compra_Producto compra = new JInternalFrame_Compra_Producto();
+        compra.setSize(1094, 578);
+        compra.setLocation(0, 0);
+        compra.setVisible(true);
+  
+
+        jDesktopPane.removeAll();
+        jDesktopPane.add(compra);
+        try {
+            compra.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButton_Compra_producto
 
     private void jButton_Producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Producto
 
         JInternalFrame_Producto vistaProducto = new JInternalFrame_Producto();
-        vistaProducto.setSize(1224, 583);
+        vistaProducto.setSize(1170, 612);
         vistaProducto.setLocation(0, 0);
         vistaProducto.setVisible(true);
-        vistaProducto.mostrar();
+
 
         jDesktopPane.removeAll();
         jDesktopPane.add(vistaProducto);
@@ -418,16 +350,8 @@ public class MDIMenu extends javax.swing.JFrame {
         est.setVisible(true);
     }//GEN-LAST:event_jButton_Empleado
 
-    private void jButton_Inicio8(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Inicio8
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_Inicio8
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        System.exit(0); 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -496,20 +420,16 @@ public class MDIMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton_Cliente;
     private javax.swing.JButton jButton_Compra_producto;
     private javax.swing.JButton jButton_Empleado;
     private javax.swing.JButton jButton_Inicio;
-    private javax.swing.JButton jButton_Inicio8;
     private javax.swing.JButton jButton_Producto;
-    private javax.swing.JButton jButton_Producto_Proveedor;
     private javax.swing.JButton jButton_Proveedor;
     private javax.swing.JButton jButton_Venta_Producto;
     public static javax.swing.JDesktopPane jDesktopPane;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 
 }

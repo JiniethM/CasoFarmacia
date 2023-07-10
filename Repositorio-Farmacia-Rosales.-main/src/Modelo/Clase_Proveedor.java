@@ -5,7 +5,7 @@ package Modelo;
  * @author diedr
  */
 public class Clase_Proveedor extends Clase_Persona {
-    int Id_Proveedor;
+   public int Id_Proveedor;
 
     public Clase_Proveedor(int Id_Proveedor) {
         this.Id_Proveedor = Id_Proveedor;
@@ -43,4 +43,7 @@ public class Clase_Proveedor extends Clase_Persona {
         return "ID: " + Id_Proveedor + " " + Nombre_1 + " " + Apellido_1;
     }
 
+    public String AtoString() {
+        return getId_Proveedor() + " - " + getNombre_1() + " " + getApellido_1();
+    }
 }

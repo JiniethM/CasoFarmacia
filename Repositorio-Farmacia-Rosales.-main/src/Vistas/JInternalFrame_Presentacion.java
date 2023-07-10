@@ -191,10 +191,8 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTextArea_Detalle);
 
-        jButton_Agregar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Agregar.setBackground(new java.awt.Color(153, 255, 153));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Agregar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/agregar.png"))); // NOI18N
         jButton_Agregar.setText("Agregar");
         jButton_Agregar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Agregar.addActionListener(new java.awt.event.ActionListener() {
@@ -203,10 +201,8 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Editar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Editar.setBackground(new java.awt.Color(255, 255, 51));
         jButton_Editar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Editar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/editar.png"))); // NOI18N
         jButton_Editar.setText("Editar");
         jButton_Editar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Editar.addActionListener(new java.awt.event.ActionListener() {
@@ -215,10 +211,8 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Actualizar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Actualizar.setBackground(new java.awt.Color(51, 204, 255));
         jButton_Actualizar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Actualizar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Actualizar.png"))); // NOI18N
         jButton_Actualizar.setText("Actualizar");
         jButton_Actualizar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -227,10 +221,8 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Eliminar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Eliminar.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Eliminar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Eliminar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar.png"))); // NOI18N
         jButton_Eliminar.setText("Eliminar");
         jButton_Eliminar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -254,14 +246,14 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton_Agregar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton_Actualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addComponent(jButton_Eliminar))
+                        .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -277,18 +269,16 @@ public class JInternalFrame_Presentacion extends javax.swing.JInternalFrame {
                                 .addComponent(jTextField_Nombre_Presentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton_Agregar))
-                        .addGap(23, 23, 23))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton_Editar)
-                            .addComponent(jButton_Actualizar)
-                            .addComponent(jButton_Eliminar))
-                        .addGap(21, 21, 21)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );

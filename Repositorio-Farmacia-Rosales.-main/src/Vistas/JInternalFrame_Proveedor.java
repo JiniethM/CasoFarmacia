@@ -425,9 +425,8 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 20, 20));
 
-        jButton_Agregar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Agregar.setBackground(new java.awt.Color(153, 255, 153));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Agregar.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Agregar.setText("Agregar");
         jButton_Agregar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Agregar.setPreferredSize(new java.awt.Dimension(80, 30));
@@ -438,9 +437,8 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jButton_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 90, 93, -1));
 
-        jButton_Actualizar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Actualizar.setBackground(new java.awt.Color(51, 204, 255));
         jButton_Actualizar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Actualizar.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Actualizar.setText("Actualizar");
         jButton_Actualizar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton_Actualizar.setPreferredSize(new java.awt.Dimension(80, 30));
@@ -449,11 +447,10 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
                 jButton_Actualizar(evt);
             }
         });
-        jPanel1.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 210, 100, 30));
+        jPanel1.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 200, 90, 30));
 
-        jButton_Editar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Editar.setBackground(new java.awt.Color(255, 255, 51));
         jButton_Editar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Editar.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Editar.setText("Editar");
         jButton_Editar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Editar.setPreferredSize(new java.awt.Dimension(80, 30));
@@ -475,7 +472,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
                 jButton_Eliminar(evt);
             }
         });
-        jPanel1.add(jButton_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, 80, 30));
+        jPanel1.add(jButton_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 250, 90, 30));
 
         jTextField_id_Proveedor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField_id_Proveedor1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -714,62 +711,6 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton_Actualizar
 
-    private void jButton_Eliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Eliminar
-        int selectedRow = jTable_Proveedor.getSelectedRow();
-        if (selectedRow != -1) {
-            int option = JOptionPane.showOptionDialog(
-                    rootPane,
-                    "Se eliminará el registro, ¿desea continuar?",
-                    "Eliminar Registro",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
-                    new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png")),
-                    new Object[]{"Sí", "No"},
-                    "No"
-            );
-
-            if (option == JOptionPane.YES_OPTION) {
-                String idClienteString = jTable_Proveedor.getValueAt(selectedRow, 0).toString();
-                int idProveedor = Integer.parseInt(idClienteString);
-
-                CRUD_Proveedor cli = new CRUD_Proveedor();
-                cli.eliminar(idProveedor);
-
-                mostrar();
-
-                JPanel panel = new JPanel();
-                panel.setLayout(new BorderLayout());
-
-                JLabel messageLabel = new JLabel("Proveedor eliminado correctamente");
-                messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
-                messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                panel.add(messageLabel, BorderLayout.CENTER);
-
-                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png"));
-                JLabel iconLabel = new JLabel(icon);
-                iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                panel.add(iconLabel, BorderLayout.WEST);
-
-                JOptionPane.showMessageDialog(null, panel, "Eliminación Exitosa", JOptionPane.PLAIN_MESSAGE);
-            }
-        } else {
-            JPanel panel = new JPanel();
-            panel.setLayout(new BorderLayout());
-
-            JLabel messageLabel = new JLabel("Debe seleccionar la fila");
-            messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
-            messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            panel.add(messageLabel, BorderLayout.CENTER);
-
-            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/abvertencia.png"));
-            JLabel iconLabel = new JLabel(icon);
-            iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            panel.add(iconLabel, BorderLayout.WEST);
-
-            JOptionPane.showMessageDialog(null, panel, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton_Eliminar
-
     private void jTextField_BuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_BuscarMouseClicked
         jTextField_Buscar.setText("");
         jTextField_Buscar.setForeground(Color.black);
@@ -911,6 +852,62 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
     private void jTextField_id_Proveedor1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_id_Proveedor1
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_id_Proveedor1
+
+    private void jButton_Eliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Eliminar
+        int selectedRow = jTable_Proveedor.getSelectedRow();
+        if (selectedRow != -1) {
+            int option = JOptionPane.showOptionDialog(
+                rootPane,
+                "Se eliminará el registro, ¿desea continuar?",
+                "Eliminar Registro",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png")),
+                new Object[]{"Sí", "No"},
+                "No"
+            );
+
+            if (option == JOptionPane.YES_OPTION) {
+                String idClienteString = jTable_Proveedor.getValueAt(selectedRow, 0).toString();
+                int idProveedor = Integer.parseInt(idClienteString);
+
+                CRUD_Proveedor cli = new CRUD_Proveedor();
+                cli.eliminar(idProveedor);
+
+                mostrar();
+
+                JPanel panel = new JPanel();
+                panel.setLayout(new BorderLayout());
+
+                JLabel messageLabel = new JLabel("Proveedor eliminado correctamente");
+                messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                panel.add(messageLabel, BorderLayout.CENTER);
+
+                ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/eliminar (2).png"));
+                JLabel iconLabel = new JLabel(icon);
+                iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                panel.add(iconLabel, BorderLayout.WEST);
+
+                JOptionPane.showMessageDialog(null, panel, "Eliminación Exitosa", JOptionPane.PLAIN_MESSAGE);
+            }
+        } else {
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+
+            JLabel messageLabel = new JLabel("Debe seleccionar la fila");
+            messageLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(messageLabel, BorderLayout.CENTER);
+
+            ImageIcon icon = new ImageIcon(getClass().getResource("/Vistas_Iconos/abvertencia.png"));
+            JLabel iconLabel = new JLabel(icon);
+            iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(iconLabel, BorderLayout.WEST);
+
+            JOptionPane.showMessageDialog(null, panel, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton_Eliminar
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

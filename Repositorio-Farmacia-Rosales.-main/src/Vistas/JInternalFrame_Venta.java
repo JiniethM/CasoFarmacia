@@ -2,6 +2,7 @@ package Vistas;
 
 import Controlador.CRUD_Venta;
 import Controlador.CRUD_Venta_Producto;
+import Controlador_Conexion_DB.Conexion;
 import Modelo.Clase_Venta;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,6 +11,7 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 
 import java.awt.HeadlessException;
+import java.sql.Connection;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -24,6 +26,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
 
@@ -99,6 +107,9 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
         jTextField_Buscar_GetionVenta = new javax.swing.JTextField();
         jButton_Agregar = new javax.swing.JButton();
         jButton_Eliminar = new javax.swing.JButton();
+        jButton_Reporte = new javax.swing.JButton();
+        jButton_Reportemes = new javax.swing.JButton();
+        jButton_Reportetoaventa = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -147,9 +158,8 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Agregar.setBackground(new java.awt.Color(0, 153, 153));
+        jButton_Agregar.setBackground(new java.awt.Color(153, 255, 153));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jButton_Agregar.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Agregar.setText("Agregar");
         jButton_Agregar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jButton_Agregar.addActionListener(new java.awt.event.ActionListener() {
@@ -169,6 +179,45 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton_Reporte.setBackground(new java.awt.Color(153, 153, 255));
+        jButton_Reporte.setText("Ultima Venta");
+        jButton_Reporte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_ReporteMouseClicked(evt);
+            }
+        });
+        jButton_Reporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ReporteActionPerformed(evt);
+            }
+        });
+
+        jButton_Reportemes.setBackground(new java.awt.Color(153, 153, 255));
+        jButton_Reportemes.setText("Ganancia Mensuales");
+        jButton_Reportemes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_ReportemesMouseClicked(evt);
+            }
+        });
+        jButton_Reportemes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ReportemesActionPerformed(evt);
+            }
+        });
+
+        jButton_Reportetoaventa.setBackground(new java.awt.Color(153, 153, 255));
+        jButton_Reportetoaventa.setText("Reporte de venta");
+        jButton_Reportetoaventa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_ReportetoaventaMouseClicked(evt);
+            }
+        });
+        jButton_Reportetoaventa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ReportetoaventaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -176,14 +225,20 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField_Buscar_GetionVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addComponent(jTextField_Buscar_GetionVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
                         .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(183, 183, 183)
-                        .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton_Reporte)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton_Reportemes)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton_Reportetoaventa)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,7 +247,10 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField_Buscar_GetionVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Reportemes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Reporte, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Reportetoaventa, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                 .addGap(25, 25, 25))
@@ -341,10 +399,73 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
         buscarVentaYProducto();
     }//GEN-LAST:event_jTextField_Buscar_GetionVentaKeyReleased
 
+    private void jButton_ReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReporteMouseClicked
+          Conexion con = new Conexion();
+        Connection cn = (Connection) con.conectar();
+        
+        String path = "C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\reportUltimaventaa.jrxml";
+        JasperReport jr;
+        try {
+            jr = JasperCompileManager.compileReport(path);
+            JasperPrint mostrarReporte = JasperFillManager.fillReport(jr, null, cn);
+            JasperViewer.viewReport(mostrarReporte,false);
+
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton_ReporteMouseClicked
+
+    private void jButton_ReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ReporteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_ReporteActionPerformed
+
+    private void jButton_ReportemesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReportemesMouseClicked
+          Conexion con = new Conexion();
+        Connection cn = (Connection) con.conectar();
+        
+        String path = "C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\reportganaciames.jrxml";
+        JasperReport jr;
+        try {
+            jr = JasperCompileManager.compileReport(path);
+            JasperPrint mostrarReporte = JasperFillManager.fillReport(jr, null, cn);
+            JasperViewer.viewReport(mostrarReporte,false);
+
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton_ReportemesMouseClicked
+
+    private void jButton_ReportemesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ReportemesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_ReportemesActionPerformed
+
+    private void jButton_ReportetoaventaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReportetoaventaMouseClicked
+          Conexion con = new Conexion();
+        Connection cn = (Connection) con.conectar();
+        
+        String path = "C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\reportReportedetodaventa.jrxml";
+        JasperReport jr;
+        try {
+            jr = JasperCompileManager.compileReport(path);
+            JasperPrint mostrarReporte = JasperFillManager.fillReport(jr, null, cn);
+            JasperViewer.viewReport(mostrarReporte,false);
+
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton_ReportetoaventaMouseClicked
+
+    private void jButton_ReportetoaventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ReportetoaventaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_ReportetoaventaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton jButton_Agregar;
     private javax.swing.JButton jButton_Eliminar;
+    private javax.swing.JButton jButton_Reporte;
+    private javax.swing.JButton jButton_Reportemes;
+    private javax.swing.JButton jButton_Reportetoaventa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel9;

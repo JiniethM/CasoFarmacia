@@ -86,31 +86,9 @@ public class CRUD_Compra {
         }
     }
 
-    public void guardarCompra(Class_Compra compra) {
-        try {
-            CallableStatement cbst = cn.prepareCall("{call InsertarCompra(?, ?, ?)}");
-            cbst.setInt(1, compra.getId_Compra());
-            cbst.setDate(2, compra.getFecha_Compra());
-            cbst.setInt(3, compra.getId_Proveedor());
-            cbst.executeUpdate();
+    
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
-    public void actualizarCompra(Class_Compra compra) {
-        try {
-            CallableStatement cbst = cn.prepareCall("{call ActualizarCompra(?, ?, ?)}");
-            cbst.setInt(1, compra.getId_Compra());
-            cbst.setDate(2, compra.getFecha_Compra());
-            cbst.setInt(3, compra.getId_Proveedor());
-            cbst.executeUpdate();
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
+   
 
     public void eliminarCompra(int Id_Compra) {
         try {
@@ -122,7 +100,6 @@ public class CRUD_Compra {
         }
     }
 
-    // ...
 }
 
 

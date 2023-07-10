@@ -8,6 +8,8 @@ import Modelo.Clase_Laboratorio;
 import Modelo.Clase_Presentacion;
 import Modelo.Clase_Proveedor;
 import Modelo.Class_Producto_Proveedor;
+import static Vistas.JInternalFrame_Gestionar_Producto.jTable_Producto1;
+import java.io.ByteArrayInputStream;
 import java.sql.Blob;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +21,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
+import javax.imageio.ImageIO;
 import javax.lang.model.util.Types;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -35,7 +39,22 @@ public class CRUD_Producto {
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
     
-    
+     public void borrarProductoYProveedor(int IdProducto) {
+        String sql = "{call BorrarProductoYProveedor(?)}";
+        try (CallableStatement stmt = cn.prepareCall(sql)) {
+            stmt.setInt(1, IdProducto);
+
+            boolean isResultSet = stmt.execute();
+            if (isResultSet) {
+                throw new SQLException("Error al borrar el producto y proveedor.");
+            }
+
+            System.out.println("Producto y proveedor borrados correctamente.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void insertarProductoConProveedor(Clase_Producto producto) {
         String sql = "{call InsertarProductoConProveedor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
         try (CallableStatement stmt = cn.prepareCall(sql)) {
@@ -50,57 +69,102 @@ public class CRUD_Producto {
             stmt.setInt(9, producto.getId_Presentacion());
             stmt.setInt(10, producto.getId_Laboratorio());
             stmt.setInt(11, producto.getId_Proveedor());
-            stmt.executeUpdate();
+
+            boolean isResultSet = stmt.execute();
+            if (isResultSet) {
+                throw new SQLException("Error al insertar el producto con proveedor.");
+            }
+
             System.out.println("Producto insertado correctamente.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+   
+
+    public void actualizarProductoYProveedor(Clase_Producto producto) {
+        String sql = "{call ActualizarProductoYProveedor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        try (CallableStatement stmt = cn.prepareCall(sql)) {
+            stmt.setInt(1, producto.getId_Producto());
+            stmt.setString(2, producto.getNombre());
+            stmt.setString(3, producto.getDescripcion());
+            stmt.setInt(4, producto.getCantidad_Producto());
+            stmt.setFloat(5, producto.getPrecio_Compra());
+            stmt.setFloat(6, producto.getPrecio_Venta());
+            stmt.setBytes(7, producto.getImagen_Producto());
+            stmt.setDate(8, producto.getFecha_Caducidad());
+            stmt.setInt(9, producto.getId_Categoria());
+            stmt.setInt(10, producto.getId_Presentacion());
+            stmt.setInt(11, producto.getId_Laboratorio());
+            stmt.setInt(12, producto.getId_Proveedor());
+
+            boolean isResultSet = stmt.execute();
+            if (isResultSet) {
+                throw new SQLException("Error al actualizar el producto y proveedor.");
+            }
+
+            System.out.println("Producto y proveedor actualizados correctamente.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void mostrarProductoConProveedor() {
+        DefaultTableModel model = (DefaultTableModel) jTable_Producto1.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de mostrar los nuevos datos
+
         String sql = "{call MostrarProductoConProveedor(?)}";
         try (CallableStatement stmt = cn.prepareCall(sql)) {
             stmt.setInt(1, -1); // Utilizamos un valor inválido para el IdProveedor para obtener todos los registros
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    int idProducto = rs.getInt("Id_Producto");
+                    int idProducto = rs.getInt("ID");
                     String nombre = rs.getString("Nombre");
                     String descripcion = rs.getString("Descripcion");
-                    int cantidad = rs.getInt("Cantidad_Producto");
+                    int cantidad = rs.getInt("Cantidad");
                     float precioCompra = rs.getFloat("Precio_Compra");
                     float precioVenta = rs.getFloat("Precio_Venta");
 
-                    // Obtener la imagen del campo Imagen_Producto
-                    byte[] imagenBytes = rs.getBytes("Imagen_Producto");
-                    String imagenBase64 = Base64.getEncoder().encodeToString(imagenBytes);
+                    // Obtener la imagen del campo Imagen
+                    byte[] imagenBytes = rs.getBytes("Imagen");
+                    ImageIcon imagenIcono;
+                    if (imagenBytes != null && imagenBytes.length > 0) {
+                        imagenIcono = new ImageIcon(imagenBytes);
+                    } else {
+                        // Si el campo de la imagen es nulo, asignar una imagen por defecto o dejar en blanco
+                        imagenIcono = new ImageIcon(); // O cualquier otra imagen por defecto
+                    }
 
                     Date fechaCaducidad = rs.getDate("Fecha_Caducidad");
-                    String categoria = rs.getString("Nombre_Categoria");
-                    String presentacion = rs.getString("Nombre_Presentacion");
-                    String laboratorio = rs.getString("Nombre_Laboratorio");
-                    String proveedor = rs.getString("Nombre_Proveedor");
+                    String categoria = rs.getString("Categoria");
+                    String presentacion = rs.getString("Presentacion");
+                    String laboratorio = rs.getString("Laboratorio");
+                    String proveedor = rs.getString("Proveedor");
 
-                    System.out.println("ID: " + idProducto);
-                    System.out.println("Nombre: " + nombre);
-                    System.out.println("Descripción: " + descripcion);
-                    System.out.println("Cantidad: " + cantidad);
-                    System.out.println("Precio de compra: " + precioCompra);
-                    System.out.println("Precio de venta: " + precioVenta);
-                    System.out.println("Imagen (Base64): " + imagenBase64);
-                    System.out.println("Fecha de caducidad: " + fechaCaducidad);
-                    System.out.println("Categoría: " + categoria);
-                    System.out.println("Presentación: " + presentacion);
-                    System.out.println("Laboratorio: " + laboratorio);
-                    System.out.println("Proveedor: " + proveedor);
-                    System.out.println();
+                    // Agregar los datos a la tabla
+                    Object[] row = new Object[]{
+                        idProducto,
+                        nombre,
+                        descripcion,
+                        cantidad,
+                        precioCompra,
+                        precioVenta,
+                        imagenIcono,
+                        fechaCaducidad,
+                        categoria,
+                        presentacion,
+                        laboratorio,
+                        proveedor
+                    };
+
+                    model.addRow(row);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-    
 
     public boolean verificarDatos(String dato) {
         try {

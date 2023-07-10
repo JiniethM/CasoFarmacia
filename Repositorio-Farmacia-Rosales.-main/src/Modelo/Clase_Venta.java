@@ -10,13 +10,15 @@ import java.time.LocalDateTime;
 public class Clase_Venta extends Class_Venta_Producto {
 
     int Id_Venta;
+     LocalDateTime Fecha_Hora;
+    int Id_Cliente;
+    int Id_Empleado;
+    
 
     public Clase_Venta(int Id_Venta) {
         this.Id_Venta = Id_Venta;
     }
-    LocalDateTime Fecha_Hora;
-    int Id_Cliente;
-    int Id_Empleado;
+   
 
     public Clase_Venta(int Id_Venta, LocalDateTime Fecha_Hora, int Id_Cliente) {
         this.Id_Venta = Id_Venta;

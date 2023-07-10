@@ -1,20 +1,31 @@
 
 package Modelo;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 /** @author diedr
  */
-public class Class_Compra {
+public class Class_Compra extends Class_Compra_Producto {
     int Id_Compra;
-    java.sql.Date Fecha_Compra;
+   LocalDate Fecha_Compra;
     int Id_Proveedor;
 
-    public Class_Compra(int Id_Compra, Date Fecha_Compra, int Id_Proveedor) {
-        this.Id_Compra = Id_Compra;
+    
+
+    public Class_Compra(LocalDate Fecha_Compra, int Id_Proveedor, int Cantidad, int Id_Producto) {
+        super(Cantidad, Id_Producto);
         this.Fecha_Compra = Fecha_Compra;
         this.Id_Proveedor = Id_Proveedor;
     }
+
+    public LocalDate getFecha_Compra() {
+        return Fecha_Compra;
+    }
+
+    public void setFecha_Compra(LocalDate Fecha_Compra) {
+        this.Fecha_Compra = Fecha_Compra;
+    }
+ 
 
     public int getId_Compra() {
         return Id_Compra;
@@ -24,12 +35,28 @@ public class Class_Compra {
         this.Id_Compra = Id_Compra;
     }
 
-    public Date getFecha_Compra() {
-        return Fecha_Compra;
+   public int getId_Compra_Producto() {
+        return Id_Compra_Producto;
     }
 
-    public void setFecha_Compra(Date Fecha_Compra) {
-        this.Fecha_Compra = Fecha_Compra;
+    public void setId_Compra_Producto(int Id_Compra_Producto) {
+        this.Id_Compra_Producto = Id_Compra_Producto;
+    }
+
+    public int getCantidad() {
+        return Cantidad;
+    }
+
+    public void setCantidad(int Cantidad) {
+        this.Cantidad = Cantidad;
+    }
+
+    public int getId_Producto() {
+        return Id_Producto;
+    }
+
+    public void setId_Producto(int Id_Producto) {
+        this.Id_Producto = Id_Producto;
     }
 
     public int getId_Proveedor() {
