@@ -5,6 +5,8 @@ import Controlador.CRUD_Venta_Producto;
 import Modelo.Clase_Cliente;
 import Modelo.Clase_Empleado;
 import Vistas.JInternalFrame_Venta;
+import java.util.List;
+
 
 import Modelo.Clase_Producto;
 import Modelo.Clase_Venta;
@@ -258,64 +260,72 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
     jComboEmpleado.setBackground(Color.WHITE);
 }
 
-    public void guardarVentaProducto() {
-        CRUD_Venta_Producto ventaProductoDAO = new CRUD_Venta_Producto();
+  public void guardarVentaProducto() {
+    CRUD_Venta_Producto ventaProductoDAO = new CRUD_Venta_Producto();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-        LocalDateTime fechaHora = LocalDateTime.parse(jTextField_Fecha_Hora.getText().trim(), formatter);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+    LocalDateTime fechaHora = LocalDateTime.parse(jTextField_Fecha_Hora.getText().trim(), formatter);
 
-        Clase_Cliente clienteSeleccionado = (Clase_Cliente) jComboCliente.getSelectedItem();
-        if (clienteSeleccionado == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente válido.");
-            return;
-        }
-        int idCliente = clienteSeleccionado.getId_Cliente();
-
-        Object itemEmpleado = jComboEmpleado.getSelectedItem();
-        System.out.println(itemEmpleado.getClass().getName());
-        Clase_Empleado empleadoSeleccionado = null;
-        try {
-            empleadoSeleccionado = (Clase_Empleado) itemEmpleado;
-        } catch (ClassCastException e) {
-            JOptionPane.showMessageDialog(null, "El item seleccionado no es una instancia de Clase_Empleado");
-            e.printStackTrace();
-            return;
-        }
-        if (empleadoSeleccionado == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un empleado válido.");
-            return;
-        }
-        int idEmpleado = empleadoSeleccionado.getId_Empleado();
-        System.out.println(idEmpleado);
-
-        String descuentoStr = jTextField_Descuento.getText().trim();
-        descuentoStr = descuentoStr.replace("%", "");
-        BigDecimal descuento;
-
-        try {
-            descuento = new BigDecimal(descuentoStr);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Por favor, introduce un número válido para el descuento.");
-            return;
-        }
-
-        for (int i = 0; i < jTable_Producto.getRowCount(); i++) {
-            int idProducto = 0;
-            int cantidad = 0;
-
-            Object idProductoObj = jTable_Producto.getValueAt(i, 0);
-            Object cantidadObj = jTable_Producto.getValueAt(i, 3);
-
-            if (idProductoObj != null && cantidadObj != null) {
-                idProducto = Integer.parseInt(idProductoObj.toString());
-                cantidad = Integer.parseInt(cantidadObj.toString());
-
-                Clase_Venta venta = new Clase_Venta(fechaHora, idCliente, idEmpleado, cantidad, descuento, idProducto);
-                ventaProductoDAO.agregarVentaYProducto(venta);
-            }
-        }
-
+    Clase_Cliente clienteSeleccionado = (Clase_Cliente) jComboCliente.getSelectedItem();
+    if (clienteSeleccionado == null) {
+        JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente válido.");
+        return;
     }
+    int idCliente = clienteSeleccionado.getId_Cliente();
+
+    Object itemEmpleado = jComboEmpleado.getSelectedItem();
+    Clase_Empleado empleadoSeleccionado = null;
+    try {
+        empleadoSeleccionado = (Clase_Empleado) itemEmpleado;
+    } catch (ClassCastException e) {
+        JOptionPane.showMessageDialog(null, "El item seleccionado no es una instancia de Clase_Empleado");
+        e.printStackTrace();
+        return;
+    }
+    if (empleadoSeleccionado == null) {
+        JOptionPane.showMessageDialog(null, "Debe seleccionar un empleado válido.");
+        return;
+    }
+    int idEmpleado = empleadoSeleccionado.getId_Empleado();
+
+    String descuentoStr = jTextField_Descuento.getText().trim();
+    descuentoStr = descuentoStr.replace("%", "");
+    BigDecimal descuento;
+
+    try {
+        descuento = new BigDecimal(descuentoStr);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Por favor, introduce un número válido para el descuento.");
+        return;
+    }
+
+    // Obtener el modelo de la tabla de productos
+    DefaultTableModel modelo = (DefaultTableModel) jTable_Producto.getModel();
+
+    List<Clase_Venta> ventas = new ArrayList<>();
+
+    for (int i = 0; i < modelo.getRowCount(); i++) {
+        int idProducto = 0;
+        int cantidad = 0;
+
+        Object idProductoObj = modelo.getValueAt(i, 0);
+        Object cantidadObj = modelo.getValueAt(i, 3);
+
+        if (idProductoObj != null && cantidadObj != null) {
+            idProducto = Integer.parseInt(idProductoObj.toString());
+            cantidad = Integer.parseInt(cantidadObj.toString());
+
+            Clase_Venta venta = new Clase_Venta(fechaHora, idCliente, idEmpleado, cantidad, descuento, idProducto);
+            ventas.add(venta);
+        }
+    }
+
+    // Agregar todas las ventas y productos en la base de datos
+    ventaProductoDAO.agregarVentasYProductos(ventas);
+}
+
+
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

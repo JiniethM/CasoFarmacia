@@ -194,5 +194,22 @@ public class Clase_Producto extends Clase_Proveedor {
     public void setId_Laboratorio(int Id_Laboratorio) {
         this.Id_Laboratorio = Id_Laboratorio;
     }
+   public String toDetailedString() {
+    return "Clase_Producto { " +
+        "Id_Producto=" + Id_Producto +
+        ", Nombre='" + Nombre + '\'' +
+        ", Descripcion='" + Descripcion + '\'' +
+        ", Cantidad_Producto=" + Cantidad_Producto +
+        ", Precio_Compra=" + Precio_Compra +
+        ", Precio_Venta=" + Precio_Venta +
+        // No se incluye Imagen_Producto porque es un array de bytes
+        ", Fecha_Caducidad=" + Fecha_Caducidad +
+        ", Id_Categoria=" + Id_Categoria +
+        ", Id_Presentacion=" + Id_Presentacion +
+        ", Id_Laboratorio=" + Id_Laboratorio +
+        " }";
+}
+
+
 
 }

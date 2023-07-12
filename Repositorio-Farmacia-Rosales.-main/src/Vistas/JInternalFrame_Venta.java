@@ -110,6 +110,7 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
         jButton_Reporte = new javax.swing.JButton();
         jButton_Reportemes = new javax.swing.JButton();
         jButton_Reportetoaventa = new javax.swing.JButton();
+        jButton_productosmasvendido = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -218,6 +219,19 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton_productosmasvendido.setBackground(new java.awt.Color(153, 153, 255));
+        jButton_productosmasvendido.setText("Producto mas vendido");
+        jButton_productosmasvendido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_productosmasvendidoMouseClicked(evt);
+            }
+        });
+        jButton_productosmasvendido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_productosmasvendidoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -227,17 +241,19 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField_Buscar_GetionVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
+                        .addComponent(jTextField_Buscar_GetionVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
                         .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
+                        .addGap(30, 30, 30)
                         .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
                         .addComponent(jButton_Reporte)
                         .addGap(18, 18, 18)
                         .addComponent(jButton_Reportemes)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton_Reportetoaventa)))
+                        .addComponent(jButton_Reportetoaventa)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton_productosmasvendido)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -250,7 +266,8 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
                     .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Reportemes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Reporte, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Reportetoaventa, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton_Reportetoaventa, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_productosmasvendido, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                 .addGap(25, 25, 25))
@@ -459,6 +476,26 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_ReportetoaventaActionPerformed
 
+    private void jButton_productosmasvendidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_productosmasvendidoMouseClicked
+         Conexion con = new Conexion();
+        Connection cn = (Connection) con.conectar();
+        
+        String path = "C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\reportProductomasvendido.jrxml";
+        JasperReport jr;
+        try {
+            jr = JasperCompileManager.compileReport(path);
+            JasperPrint mostrarReporte = JasperFillManager.fillReport(jr, null, cn);
+            JasperViewer.viewReport(mostrarReporte,false);
+
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton_productosmasvendidoMouseClicked
+
+    private void jButton_productosmasvendidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_productosmasvendidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_productosmasvendidoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton jButton_Agregar;
@@ -466,6 +503,7 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton_Reporte;
     private javax.swing.JButton jButton_Reportemes;
     private javax.swing.JButton jButton_Reportetoaventa;
+    private javax.swing.JButton jButton_productosmasvendido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel9;

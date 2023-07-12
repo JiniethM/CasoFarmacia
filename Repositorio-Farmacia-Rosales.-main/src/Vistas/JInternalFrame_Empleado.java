@@ -70,7 +70,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
 
     public void limpiar() {
         jTextIdEmpleado.setText("");
-        jText_Cedula.setText("");
+        jFormattedTextField_Cedula.setText("");
         jText_Salario.setText("");
         jTextNombre1.setText("");
         jTextNombre2.setText("");
@@ -85,7 +85,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
 
     public void guardarEmpleado() {
         CRUD_Empleado cl = new CRUD_Empleado();
-        String Cedula = jText_Cedula.getText();
+        String Cedula = jFormattedTextField_Cedula.getText();
         String Nombre1 = jTextNombre1.getText();
         String Nombre2 = jTextNombre2.getText();
         String Apellido1 = jTextApellido1.getText();
@@ -177,7 +177,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
             salario,
             horaEntrada,
             horaSalida,
-            jText_Cedula.getText(),
+            jFormattedTextField_Cedula.getText(),
             jTextNombre1.getText(),
             jTextNombre2.getText(),
             jTextApellido1.getText(),
@@ -235,8 +235,9 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
         Editar = new javax.swing.JButton();
         Actualizar = new javax.swing.JButton();
         Borrar = new javax.swing.JButton();
-        jText_Cedula = new javax.swing.JTextField();
         jText_Salario = new javax.swing.JTextField();
+        jFormattedTextField_Cedula = new javax.swing.JFormattedTextField();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -574,20 +575,6 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
         });
         jPanel1.add(Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 250, 80, 30));
 
-        jText_Cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jText_Cedula.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
-        jText_Cedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jText_Cedulanombre_1TextField(evt);
-            }
-        });
-        jText_Cedula.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jText_CedulaKeyTyped(evt);
-            }
-        });
-        jPanel1.add(jText_Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 330, 45));
-
         jText_Salario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jText_Salario.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Salario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         jText_Salario.addActionListener(new java.awt.event.ActionListener() {
@@ -601,6 +588,22 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(jText_Salario, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 130, 45));
+
+        jFormattedTextField_Cedula.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        try {
+            jFormattedTextField_Cedula.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-######-####U")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField_Cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel1.add(jFormattedTextField_Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 220, -1));
+
+        try {
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##:##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel1.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 32, 160, 30));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -729,7 +732,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         String idempleadoText = jTextIdEmpleado.getText();
     int idempleado = Integer.parseInt(idempleadoText);
-    String Cedula = jText_Cedula.getText();
+    String Cedula = jFormattedTextField_Cedula.getText();
     String Nombre1 = jTextNombre1.getText();
     String Nombre2 = jTextNombre2.getText();
     String Apellido1 = jTextApellido1.getText();
@@ -827,7 +830,7 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
             String Direccion = jTable_Empleado.getValueAt(filaSeleccionada, 11) != null ? jTable_Empleado.getValueAt(filaSeleccionada, 11).toString() : "";
            
             jTextIdEmpleado.setText(Id_Empleado);
-            jText_Cedula.setText(Cedula);
+            jFormattedTextField_Cedula.setText(Cedula);
             jTextNombre1.setText(Nombre_1);
             jTextNombre2.setText(Nombre_2);
             jTextApellido1.setText(Apellido_1);
@@ -994,14 +997,6 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
         BuscarEmpleado();
     }//GEN-LAST:event_jTextBuscarKeyReleased
 
-    private void jText_Cedulanombre_1TextField(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_Cedulanombre_1TextField
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jText_Cedulanombre_1TextField
-
-    private void jText_CedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_CedulaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jText_CedulaKeyTyped
-
     private void jText_Salarionombre_1TextField(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_Salarionombre_1TextField
         // TODO add your handling code here:
     }//GEN-LAST:event_jText_Salarionombre_1TextField
@@ -1072,6 +1067,8 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
     private javax.swing.JButton Borrar;
     private javax.swing.JButton Editar;
     private javax.swing.JButton jButton6;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField_Cedula;
     private javax.swing.JFormattedTextField jFormattedTextField_Telefono;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JPanel jPanel1;
@@ -1090,7 +1087,6 @@ public class JInternalFrame_Empleado extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextIdEmpleado;
     private javax.swing.JTextField jTextNombre1;
     private javax.swing.JTextField jTextNombre2;
-    private javax.swing.JTextField jText_Cedula;
     private javax.swing.JTextField jText_Salario;
     private javax.swing.JTextField jTexthoraentra;
     private javax.swing.JTextField jTexthorasal;

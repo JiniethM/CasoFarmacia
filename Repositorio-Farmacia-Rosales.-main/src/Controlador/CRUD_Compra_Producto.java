@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,6 +22,47 @@ public class CRUD_Compra_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
+    
+   public void agregarComprasYProductos(List<Class_Compra> compras) {
+        String sql = "{CALL AgregarCompraYProducto(?, ?, ?, ?)}";
+
+        try (CallableStatement stmt = cn.prepareCall(sql)) {
+            // Iniciar la transacción
+            cn.setAutoCommit(false);
+
+            for (Class_Compra compra : compras) {
+                stmt.setObject(1, compra.getFecha_Compra());
+                stmt.setInt(2, compra.getId_Proveedor());
+                stmt.setInt(3, compra.getId_Producto());
+                stmt.setInt(4, compra.getCantidad());
+
+                stmt.execute();
+            }
+
+            // Confirmar la transacción
+            cn.commit();
+        } catch (SQLException e) {
+            // Rollback en caso de error
+            try {
+                cn.rollback();
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            // Restaurar el modo de autocommit
+            try {
+                cn.setAutoCommit(true);
+            } catch (SQLException autoCommitException) {
+                autoCommitException.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+
 
     public DefaultTableModel mostrarDatosVenta() {
         ResultSet rs;
@@ -119,20 +161,7 @@ public class CRUD_Compra_Producto {
         return listaProductos;
     }
 
-    public void agregarCompraYProducto(Class_Compra compra) {
-       String sql = "{CALL AgregarCompraYProducto(?, ?, ?, ?)}";
-
-    try (CallableStatement stmt = cn.prepareCall(sql)) {
-        stmt.setObject(1, compra.getFecha_Compra());
-        stmt.setInt(2, compra.getId_Proveedor());
-        stmt.setInt(3, compra.getId_Producto());
-        stmt.setInt(4, compra.getCantidad());
-
-        stmt.execute();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
+   
 
     public boolean verificarCompraProducto(String dato) {
         ResultSet rs;

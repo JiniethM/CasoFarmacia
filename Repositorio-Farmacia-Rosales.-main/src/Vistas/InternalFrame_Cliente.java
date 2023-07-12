@@ -71,7 +71,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
     public void limpiar() {
         jTextField_Id_Ciente.setText("");
-        JtextFiel_Cedula.setText("");
+        jFormattedTextField_Cedula.setText("");
         JtextFiel_Nombre_1.setText("");
         JtextFiel_Nombre_2.setText("");
         jTextFiel_Apellido_1.setText("");
@@ -84,7 +84,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
     public void guardarCliente() {
         CRUD_Cliente cc = new CRUD_Cliente();
-        String Cedula = JtextFiel_Cedula.getText();
+        String Cedula = jFormattedTextField_Cedula.getText();
         String Nombre_1 = JtextFiel_Nombre_1.getText();
         String Nombre_2 = JtextFiel_Nombre_2.getText();
         String Apellido_1 = jTextFiel_Apellido_1.getText();
@@ -114,7 +114,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
         CRUD_Cliente cc = new CRUD_Cliente();
 
-        Clase_Cliente cl = new Clase_Cliente(JtextFiel_Cedula.getText(),
+        Clase_Cliente cl = new Clase_Cliente(jFormattedTextField_Cedula.getText(),
                 JtextFiel_Nombre_1.getText(),
                 JtextFiel_Nombre_2.getText(),
                 jTextFiel_Apellido_1.getText(),
@@ -151,9 +151,9 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea_Dirrecion = new javax.swing.JTextArea();
-        JtextFiel_Cedula = new javax.swing.JTextField();
         JtextFiel_gmail = new javax.swing.JTextField();
         jFormattedTextFieldTelefono = new javax.swing.JFormattedTextField();
+        jFormattedTextField_Cedula = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_Cliente = new javax.swing.JTable();
         jTextBuscar = new javax.swing.JTextField();
@@ -161,7 +161,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jButton_Editar = new javax.swing.JButton();
         jButton_Borrar = new javax.swing.JButton();
         jButton_Actualizar1 = new javax.swing.JButton();
-        jButton_Report = new javax.swing.JButton();
         jTextField_Id_Ciente = new javax.swing.JTextField();
         JtextFiel_Nombre_1 = new javax.swing.JTextField();
         JtextFiel_Nombre_2 = new javax.swing.JTextField();
@@ -201,20 +200,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTextArea_Dirrecion);
 
-        JtextFiel_Cedula.setForeground(new java.awt.Color(0, 153, 153));
-        JtextFiel_Cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        JtextFiel_Cedula.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
-        JtextFiel_Cedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JtextFiel_Cedula(evt);
-            }
-        });
-        JtextFiel_Cedula.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                JtextFiel_CedulaKeyTyped(evt);
-            }
-        });
-
         JtextFiel_gmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JtextFiel_gmail.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gmail", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         JtextFiel_gmail.addActionListener(new java.awt.event.ActionListener() {
@@ -241,18 +226,26 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
             }
         });
 
+        jFormattedTextField_Cedula.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        try {
+            jFormattedTextField_Cedula.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-######-####U")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField_Cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(JtextFiel_Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(14, 14, 14)
+                .addComponent(jFormattedTextField_Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(JtextFiel_gmail, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jFormattedTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -264,9 +257,9 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JtextFiel_Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JtextFiel_gmail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jFormattedTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jFormattedTextField_Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 25, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -379,19 +372,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jButton_Actualizar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 190, 80, 30));
 
-        jButton_Report.setText("Reporte");
-        jButton_Report.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton_ReportMouseClicked(evt);
-            }
-        });
-        jButton_Report.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ReportActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton_Report, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 190, -1, -1));
-
         jTextField_Id_Ciente.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTextField_Id_Ciente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField_Id_Ciente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ID Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
@@ -470,9 +450,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 875, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -580,7 +558,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
             String direccion = jTable_Cliente.getValueAt(filaSeleccionada, 8) != null ? jTable_Cliente.getValueAt(filaSeleccionada, 8).toString() : "";
 
             jTextField_Id_Ciente.setText(id);
-            JtextFiel_Cedula.setText(Cedula);
+            jFormattedTextField_Cedula.setText(Cedula);
             JtextFiel_Nombre_1.setText(nombre1);
             JtextFiel_Nombre_2.setText(nombre2);
             jTextFiel_Apellido_1.setText(apellido1);
@@ -684,7 +662,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     private void jButton_Actualizar1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Actualizar1
         String idClienteText = jTextField_Id_Ciente.getText();
         int idCliente = Integer.parseInt(idClienteText);
-        String cedula = JtextFiel_Cedula.getText();
+        String cedula = jFormattedTextField_Cedula.getText();
         String nombre1 = JtextFiel_Nombre_1.getText();
         String nombre2 = JtextFiel_Nombre_2.getText();
         String apellido1 = jTextFiel_Apellido_1.getText();
@@ -855,32 +833,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTextArea_DirrecionKeyTyped
 
-    private void jButton_ReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReportMouseClicked
-         Conexion con = new Conexion();
-        Connection cn = (Connection) con.conectar();
-
- 
-        String path = "C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\report1.jrxml";
-        JasperReport jr;
-        try {
-            jr = JasperCompileManager.compileReport(path);
-            JasperPrint mostrarReporte = JasperFillManager.fillReport(jr, null, cn);
-            JasperViewer.viewReport(mostrarReporte,false);
-
-        } catch (JRException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-
-    }//GEN-LAST:event_jButton_ReportMouseClicked
-
-    private void JtextFiel_Cedula(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextFiel_Cedula
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JtextFiel_Cedula
-
-    private void JtextFiel_CedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JtextFiel_CedulaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JtextFiel_CedulaKeyTyped
-
     private void JtextFiel_gmail(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextFiel_gmail
         // TODO add your handling code here:
     }//GEN-LAST:event_JtextFiel_gmail
@@ -893,13 +845,8 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_Id_Ciente
 
-    private void jButton_ReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ReportActionPerformed
-      
-    }//GEN-LAST:event_jButton_ReportActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField JtextFiel_Cedula;
     private javax.swing.JTextField JtextFiel_Nombre_1;
     private javax.swing.JTextField JtextFiel_Nombre_2;
     private javax.swing.JTextField JtextFiel_gmail;
@@ -907,8 +854,8 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton_Actualizar1;
     private javax.swing.JButton jButton_Borrar;
     private javax.swing.JButton jButton_Editar;
-    private javax.swing.JButton jButton_Report;
     private javax.swing.JFormattedTextField jFormattedTextFieldTelefono;
+    private javax.swing.JFormattedTextField jFormattedTextField_Cedula;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;

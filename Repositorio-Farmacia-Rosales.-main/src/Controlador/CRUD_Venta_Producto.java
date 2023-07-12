@@ -32,6 +32,48 @@ public class CRUD_Venta_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
+    
+    
+    public void agregarVentasYProductos(List<Clase_Venta> ventas) {
+    String sql = "{CALL AgregarVentaYProducto(?, ?, ?, ?, ?, ?)}";
+
+    try (CallableStatement stmt = cn.prepareCall(sql)) {
+        // Iniciar la transacción
+        cn.setAutoCommit(false);
+
+        for (Clase_Venta venta : ventas) {
+            stmt.setObject(1, venta.getFecha_Hora());
+            stmt.setInt(2, venta.getId_Cliente());
+            stmt.setInt(3, venta.getId_Empleado());
+            stmt.setBigDecimal(4, venta.getDescuento());
+            stmt.setInt(5, venta.getId_Producto());
+            stmt.setInt(6, venta.getCantidad());
+
+            stmt.execute();
+        }
+
+        // Confirmar la transacción
+        cn.commit();
+    } catch (SQLException e) {
+        // Rollback en caso de error
+        try {
+            cn.rollback();
+        } catch (SQLException rollbackException) {
+            rollbackException.printStackTrace();
+        }
+        e.printStackTrace();
+    } finally {
+        // Restaurar el modo de autocommit
+        try {
+            cn.setAutoCommit(true);
+        } catch (SQLException autoCommitException) {
+            autoCommitException.printStackTrace();
+        }
+    }
+}
+
+
+
 
     public DefaultTableModel mostrarDatosVenta() {
     ResultSet rs;
@@ -118,22 +160,9 @@ public class CRUD_Venta_Producto {
         }
     }
 
-    public void agregarVentaYProducto(Clase_Venta venta) {
-        String sql = "{CALL AgregarVentaYProducto(?, ?, ?, ?, ?, ?)}";
+ 
 
-        try (CallableStatement stmt = cn.prepareCall(sql)) {
-            stmt.setObject(1, venta.getFecha_Hora());
-            stmt.setInt(2, venta.getId_Cliente());
-            stmt.setInt(3, venta.getId_Empleado());
-            stmt.setBigDecimal(4, venta.getDescuento());
-            stmt.setInt(5, venta.getId_Producto());
-            stmt.setInt(6, venta.getCantidad());
 
-            stmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public ResultSet obtenerNombreApellidoCliente() throws SQLException {
         String query = "{CALL ObtenerNombreApellidoCliente()}";

@@ -314,7 +314,7 @@ public class MDIMenu extends javax.swing.JFrame {
     private void jButton_Producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Producto
 
         JInternalFrame_Producto vistaProducto = new JInternalFrame_Producto();
-        vistaProducto.setSize(1170, 612);
+        vistaProducto.setSize(1240, 612);
         vistaProducto.setLocation(0, 0);
         vistaProducto.setVisible(true);
 

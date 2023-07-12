@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
@@ -151,39 +152,53 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
         jComboProveedor.setBackground(Color.WHITE);
     }
 
-    public void guardarCompraProducto() {
-    CRUD_Compra_Producto compraProductoDAO = new CRUD_Compra_Producto();
+ public void guardarCompraProducto() {
+        CRUD_Compra_Producto compraProductoDAO = new CRUD_Compra_Producto();
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate fechaCompra = LocalDate.parse(jTextField_Fecha_Hora.getText().trim(), formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaCompra = LocalDate.parse(jTextField_Fecha_Hora.getText().trim(), formatter);
 
-    Clase_Proveedor proveedorSeleccionado = (Clase_Proveedor) jComboProveedor.getSelectedItem();
+        Clase_Proveedor proveedorSeleccionado = (Clase_Proveedor) jComboProveedor.getSelectedItem();
 
-    if (proveedorSeleccionado == null) {
-        JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor válido.");
-        return;
-    }
-
-    int idProveedor = proveedorSeleccionado.getId_Proveedor();
-
-    for (int i = 0; i < jTable_Producto.getRowCount(); i++) {
-        int idProducto = 0;
-        int cantidad = 0;
-
-        Object idProductoObj = jTable_Producto.getValueAt(i, 0);
-        Object cantidadObj = jTable_Producto.getValueAt(i, 3);
-
-        if (idProductoObj != null && cantidadObj != null) {
-            idProducto = Integer.parseInt(idProductoObj.toString());
-            cantidad = Integer.parseInt(cantidadObj.toString());
-
-            Class_Compra compra = new Class_Compra(fechaCompra, idProveedor, cantidad, idProducto);
-            compraProductoDAO.agregarCompraYProducto(compra);
+        if (proveedorSeleccionado == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor válido.");
+            return;
         }
+
+        int idProveedor = proveedorSeleccionado.getId_Proveedor();
+
+        // Obtener el modelo de la tabla de productos
+        DefaultTableModel modelo = (DefaultTableModel) jTable_Producto.getModel();
+
+        List<Class_Compra> compras = new ArrayList<>();
+
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            int idProducto = 0;
+            int cantidad = 0;
+
+            Object idProductoObj = modelo.getValueAt(i, 0);
+            Object cantidadObj = modelo.getValueAt(i, 3);
+
+            if (idProductoObj != null && cantidadObj != null) {
+                idProducto = Integer.parseInt(idProductoObj.toString());
+                cantidad = Integer.parseInt(cantidadObj.toString());
+
+                Class_Compra compra = new Class_Compra(fechaCompra, idProveedor, cantidad, idProducto);
+                compras.add(compra);
+            }
+        }
+
+        // Agregar todas las compras y productos en la base de datos
+        compraProductoDAO.agregarComprasYProductos(compras);
+
+        JOptionPane.showMessageDialog(null, "Se guardó correctamente la compra.");
+
+        // Resto del código para mostrar el formulario y realizar otras operaciones
+        // ...
     }
 
-    JOptionPane.showMessageDialog(null, "Se guardó correctamente la compra.");
-}
+
+
         
     
 

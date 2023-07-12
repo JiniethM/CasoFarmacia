@@ -27,7 +27,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
     public void limpiar() {
         jTextField_id_Proveedor1.setText("");
-        jTextField_Cedula.setText("");
+        jFormattedTextField_Cedula.setText("");
         jTextField_Nombre_1.setText("");
         jTextField_Nombre_2.setText("");
         jTextField_Apellido_1.setText("");
@@ -40,7 +40,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
     public void guardarProveedor() {
         CRUD_Proveedor cc = new CRUD_Proveedor();
-        String Cedula = jTextField_Cedula.getText();
+        String Cedula = jFormattedTextField_Cedula.getText();
         String Nombre1 = jTextField_Nombre_1.getText();
         String Nombre2 = jTextField_Nombre_2.getText();
         String Apellido1 = jTextField_Apellido_1.getText();
@@ -70,7 +70,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
         CRUD_Proveedor cc = new CRUD_Proveedor();
 
-        Clase_Proveedor cl = new Clase_Proveedor(jTextField_Cedula.getText(),
+        Clase_Proveedor cl = new Clase_Proveedor(jFormattedTextField_Cedula.getText(),
                 jTextField_Nombre_1.getText(),
                 jTextField_Nombre_2.getText(),
                 jTextField_Apellido_1.getText(),
@@ -103,34 +103,25 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField_Cedula = new javax.swing.JTextField();
         jTextField_Buscar = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jTextField_Nombre_1 = new javax.swing.JTextField();
         jTextField_Nombre_2 = new javax.swing.JTextField();
         jTextField_Apellido_1 = new javax.swing.JTextField();
         jTextField_Apellido_2 = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jTextField_Gmail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea_Direccion = new javax.swing.JTextArea();
         jFormattedTextField_Telefono = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_Proveedor = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
         jButton_Agregar = new javax.swing.JButton();
         jButton_Actualizar = new javax.swing.JButton();
         jButton_Editar = new javax.swing.JButton();
         jButton_Eliminar = new javax.swing.JButton();
         jTextField_id_Proveedor1 = new javax.swing.JTextField();
+        jFormattedTextField_Cedula = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -138,25 +129,9 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel2.setText("Id Proveedor");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, -1, -1));
-
-        jTextField_Cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Cedula.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
-        jTextField_Cedula.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_Cedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Cedula(evt);
-            }
-        });
-        jPanel1.add(jTextField_Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, 200, 40));
-
         jTextField_Buscar.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jTextField_Buscar.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField_Buscar.setText("Buscar");
-        jTextField_Buscar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_Buscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         jTextField_Buscar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Buscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -173,30 +148,14 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
                 jTextField_BuscarKeyReleased(evt);
             }
         });
-        jPanel1.add(jTextField_Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 160, 20));
+        jPanel1.add(jTextField_Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 280, 45));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel5.setOpaque(false);
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel3.setText("Nombre 1");
-
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel9.setText("Nombre 2");
-
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel7.setText("Apellido 1");
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel5.setText("Apellido 2");
-
         jTextField_Nombre_1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Nombre_1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_Nombre_1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Primer Nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         jTextField_Nombre_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Nombre_1(evt);
@@ -209,7 +168,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         });
 
         jTextField_Nombre_2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Nombre_2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_Nombre_2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Segundo Apellido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         jTextField_Nombre_2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Nombre_2(evt);
@@ -222,7 +181,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         });
 
         jTextField_Apellido_1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Apellido_1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_Apellido_1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Primer Apellido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         jTextField_Apellido_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Apellido_1(evt);
@@ -235,7 +194,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         });
 
         jTextField_Apellido_2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Apellido_2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_Apellido_2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Segundo Apellido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         jTextField_Apellido_2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Apellido_2(evt);
@@ -253,60 +212,34 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField_Nombre_1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField_Nombre_2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField_Apellido_1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField_Apellido_2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(80, 80, 80))
+                .addComponent(jTextField_Nombre_1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField_Nombre_2, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField_Apellido_1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField_Apellido_2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField_Nombre_1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_Nombre_2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_Apellido_1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_Apellido_2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jTextField_Nombre_1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Nombre_2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Apellido_1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Apellido_2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel6.setOpaque(false);
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel8.setText("Teléfono");
-
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel11.setText("Gmail");
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel6.setText("Dirección");
-
         jTextField_Gmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Gmail.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_Gmail.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gmail", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         jTextField_Gmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Gmail(evt);
@@ -320,7 +253,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
         jTextArea_Direccion.setColumns(20);
         jTextArea_Direccion.setRows(5);
-        jTextArea_Direccion.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextArea_Direccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dirrecion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         jTextArea_Direccion.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTextArea_Direccion(evt);
@@ -337,6 +270,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTextArea_Direccion);
 
+        jFormattedTextField_Telefono.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Telefono", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         try {
             jFormattedTextField_Telefono.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
         } catch (java.text.ParseException ex) {
@@ -355,37 +289,26 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jFormattedTextField_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField_Gmail, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jFormattedTextField_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(jTextField_Gmail, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField_Gmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jFormattedTextField_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                        .addComponent(jTextField_Gmail, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jFormattedTextField_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 740, -1));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 740, 80));
 
         jTable_Proveedor.setForeground(new java.awt.Color(0, 153, 153));
         jTable_Proveedor.setModel(new javax.swing.table.DefaultTableModel(
@@ -414,16 +337,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jTable_Proveedor);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 388, 870, 110));
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/Buscar.png"))); // NOI18N
-        jButton3.setBorder(null);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 20, 20));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 880, 150));
 
         jButton_Agregar.setBackground(new java.awt.Color(153, 255, 153));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
@@ -475,14 +389,23 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         jPanel1.add(jButton_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 250, 90, 30));
 
         jTextField_id_Proveedor1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_id_Proveedor1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTextField_id_Proveedor1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
         jTextField_id_Proveedor1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_id_Proveedor1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_id_Proveedor1(evt);
             }
         });
-        jPanel1.add(jTextField_id_Proveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 130, 20));
+        jPanel1.add(jTextField_id_Proveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 150, 45));
+
+        jFormattedTextField_Cedula.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        try {
+            jFormattedTextField_Cedula.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-######-####U")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField_Cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel1.add(jFormattedTextField_Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 260, 45));
 
         jPanel4.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -537,10 +460,6 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
         BuscarProveedor();
     }//GEN-LAST:event_jTextField_Buscar
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton_Editar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Editar
         int filaSeleccionada = jTable_Proveedor.getSelectedRow();
         if (filaSeleccionada == -1) {
@@ -558,7 +477,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
             
             jTextField_id_Proveedor1.setText(Id_provee);
-            jTextField_Cedula.setText(cedula);
+            jFormattedTextField_Cedula.setText(cedula);
             jTextField_Nombre_1.setText(nombre1);
             jTextField_Nombre_2.setText(nombre2);
             jTextField_Apellido_1.setText(apellido1);
@@ -572,10 +491,6 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
     private void jTextArea_Direccion(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTextArea_Direccion
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextArea_Direccion
-
-    private void jTextField_Cedula(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Cedula
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_Cedula
 
     private void jTextField_Nombre_1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Nombre_1
         // TODO add your handling code here:
@@ -654,7 +569,7 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
     } else {
         String idProveedorText = jTable_Proveedor.getValueAt(filaSeleccionada, 0).toString();
         int idProveedor = Integer.parseInt(idProveedorText);
-        String cedula = jTextField_Cedula.getText();
+        String cedula = jFormattedTextField_Cedula.getText();
         String nombre1 = jTextField_Nombre_1.getText();
         String nombre2 = jTextField_Nombre_2.getText();
         String apellido1 = jTextField_Apellido_1.getText();
@@ -911,21 +826,13 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton_Actualizar;
     private javax.swing.JButton jButton_Agregar;
     private javax.swing.JButton jButton_Editar;
     private javax.swing.JButton jButton_Eliminar;
+    private javax.swing.JFormattedTextField jFormattedTextField_Cedula;
     private javax.swing.JFormattedTextField jFormattedTextField_Telefono;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -937,7 +844,6 @@ public class JInternalFrame_Proveedor extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField_Apellido_1;
     private javax.swing.JTextField jTextField_Apellido_2;
     private javax.swing.JTextField jTextField_Buscar;
-    private javax.swing.JTextField jTextField_Cedula;
     private javax.swing.JTextField jTextField_Gmail;
     private javax.swing.JTextField jTextField_Nombre_1;
     private javax.swing.JTextField jTextField_Nombre_2;
