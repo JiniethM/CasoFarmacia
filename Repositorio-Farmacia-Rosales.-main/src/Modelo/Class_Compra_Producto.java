@@ -9,7 +9,7 @@ public class Class_Compra_Producto {
    int Id_Compra;
    int Id_Producto;
 
-    public Class_Compra_Producto(int Cantidad, int Id_Producto) {
+    public Class_Compra_Producto( int Id_Producto,int Cantidad) {
         this.Cantidad = Cantidad;
         this.Id_Producto = Id_Producto;
     }

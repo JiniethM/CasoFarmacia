@@ -68,7 +68,7 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
     try {
         DefaultTableModel modelo;
         CRUD_Compra_Producto ventaProductoDAO = new CRUD_Compra_Producto();
-        modelo = ventaProductoDAO.mostrarDatosVenta();
+        modelo = ventaProductoDAO.mostrarDatosCompra();
         jTable_Compra.setModel(modelo);
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, e);

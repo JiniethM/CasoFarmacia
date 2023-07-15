@@ -1,31 +1,30 @@
-
 package Modelo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-/** @author diedr
+/**
+ * @author diedr
  */
 public class Class_Compra extends Class_Compra_Producto {
+
     int Id_Compra;
-   LocalDate Fecha_Compra;
+    LocalDateTime Fecha_Compra;
     int Id_Proveedor;
 
-    
-
-    public Class_Compra(LocalDate Fecha_Compra, int Id_Proveedor, int Cantidad, int Id_Producto) {
-        super(Cantidad, Id_Producto);
+    public Class_Compra(LocalDateTime Fecha_Compra, int Id_Proveedor, int Id_Producto, int Cantidad) {
+        super( Id_Producto,Cantidad);
         this.Fecha_Compra = Fecha_Compra;
         this.Id_Proveedor = Id_Proveedor;
     }
 
-    public LocalDate getFecha_Compra() {
+    public LocalDateTime getFecha_Compra() {
         return Fecha_Compra;
     }
 
-    public void setFecha_Compra(LocalDate Fecha_Compra) {
+    public void setFecha_Compra(LocalDateTime Fecha_Compra) {
         this.Fecha_Compra = Fecha_Compra;
     }
- 
 
     public int getId_Compra() {
         return Id_Compra;
@@ -35,7 +34,7 @@ public class Class_Compra extends Class_Compra_Producto {
         this.Id_Compra = Id_Compra;
     }
 
-   public int getId_Compra_Producto() {
+    public int getId_Compra_Producto() {
         return Id_Compra_Producto;
     }
 

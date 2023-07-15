@@ -274,6 +274,8 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         jTextField_Buscar = new javax.swing.JTextField();
         jButton_Agregar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
         setPreferredSize(new java.awt.Dimension(1200, 579));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

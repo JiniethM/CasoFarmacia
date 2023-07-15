@@ -24,6 +24,18 @@ public class Clase_Producto extends Clase_Proveedor {
     public int Id_Presentacion;
     public int Id_Laboratorio;
 
+    public Clase_Producto(int Id_Producto, String Nombre, String Descripcion, float Precio_Venta, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio) {
+        this.Id_Producto = Id_Producto;
+        this.Nombre = Nombre;
+        this.Descripcion = Descripcion;
+        this.Precio_Venta = Precio_Venta;
+        this.Id_Categoria = Id_Categoria;
+        this.Id_Presentacion = Id_Presentacion;
+        this.Id_Laboratorio = Id_Laboratorio;
+    }
+
+  
+
    public Clase_Producto(int Id_Producto, String Nombre, String Descripcion, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, byte[] Imagen_Producto, java.util.Date Fecha_Caducidad, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio, int Id_Proveedor) {
     super(Id_Proveedor);
     this.Id_Producto = Id_Producto;
@@ -97,7 +109,7 @@ public class Clase_Producto extends Clase_Proveedor {
     this.Nombre = Nombre;
     this.Precio_Venta= Precio_Venta;
 }
-   
+  
 
 
 

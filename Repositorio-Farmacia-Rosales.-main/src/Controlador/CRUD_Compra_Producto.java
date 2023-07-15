@@ -5,6 +5,7 @@ import Controlador_Conexion_DB.Conexion;
 import Modelo.Clase_Producto;
 import Modelo.Clase_Proveedor;
 import Modelo.Class_Compra;
+import java.beans.Statement;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.CallableStatement;
@@ -12,6 +13,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,14 +29,13 @@ public class CRUD_Compra_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
-    
-   public void agregarComprasYProductos(List<Class_Compra> compras) {
+
+    public void agregarComprasYProductos(List<Class_Compra> compras) {
         String sql = "{CALL AgregarCompraYProducto(?, ?, ?, ?)}";
 
         try (CallableStatement stmt = cn.prepareCall(sql)) {
             // Iniciar la transacción
             cn.setAutoCommit(false);
-
             for (Class_Compra compra : compras) {
                 stmt.setObject(1, compra.getFecha_Compra());
                 stmt.setInt(2, compra.getId_Proveedor());
@@ -56,15 +62,11 @@ public class CRUD_Compra_Producto {
             } catch (SQLException autoCommitException) {
                 autoCommitException.printStackTrace();
             }
+
         }
     }
 
-
-
-
-
-
-    public DefaultTableModel mostrarDatosVenta() {
+    public DefaultTableModel mostrarDatosCompra() {
         ResultSet rs;
         DefaultTableModel modelo;
 
@@ -94,6 +96,7 @@ public class CRUD_Compra_Producto {
             return null;
         }
     }
+
     public void eliminarCompraYProducto(int idCompra) {
         String sql = "{CALL EliminarCompraYProducto(?)}";
 
@@ -160,8 +163,6 @@ public class CRUD_Compra_Producto {
         }
         return listaProductos;
     }
-
-   
 
     public boolean verificarCompraProducto(String dato) {
         ResultSet rs;

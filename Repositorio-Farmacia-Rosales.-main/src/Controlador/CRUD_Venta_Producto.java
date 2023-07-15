@@ -5,9 +5,12 @@ import Controlador_Conexion_DB.Conexion;
 import Modelo.Clase_Cliente;
 import Modelo.Clase_Empleado;
 import Modelo.Clase_Producto;
+import Modelo.Clase_Producto_Cargardatos;
 import Modelo.Clase_Venta;
 import java.math.BigDecimal;
 import java.security.Timestamp;
+import java.sql.Types;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.CallableStatement;
@@ -21,7 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.lang.model.util.Types;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -32,9 +35,8 @@ public class CRUD_Venta_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
-    
-    
-    public void agregarVentasYProductos(List<Clase_Venta> ventas) {
+
+   public void agregarVentasYProductos(List<Clase_Venta> ventas) {
     String sql = "{CALL AgregarVentaYProducto(?, ?, ?, ?, ?, ?)}";
 
     try (CallableStatement stmt = cn.prepareCall(sql)) {
@@ -43,9 +45,21 @@ public class CRUD_Venta_Producto {
 
         for (Clase_Venta venta : ventas) {
             stmt.setObject(1, venta.getFecha_Hora());
-            stmt.setInt(2, venta.getId_Cliente());
+
+         if (venta.getId_Cliente() == -1) {
+        stmt.setNull(2, Types.INTEGER);
+    } else {
+        stmt.setInt(2, venta.getId_Cliente());
+    }
+
             stmt.setInt(3, venta.getId_Empleado());
-            stmt.setBigDecimal(4, venta.getDescuento());
+
+            if (venta.getDescuento() == null) {
+                stmt.setNull(4, java.sql.Types.DECIMAL);
+            } else {
+                stmt.setBigDecimal(4, venta.getDescuento());
+            }
+
             stmt.setInt(5, venta.getId_Producto());
             stmt.setInt(6, venta.getCantidad());
 
@@ -74,44 +88,38 @@ public class CRUD_Venta_Producto {
 
 
 
-
     public DefaultTableModel mostrarDatosVenta() {
-    ResultSet rs;
-    DefaultTableModel modelo;
+        ResultSet rs;
+        DefaultTableModel modelo;
 
-    String[] titulos = {"Id_Venta", "Producto", "Cantidad", "Descuento", "Cliente", "Empleado", "Fecha_Hora", "Total", "TotalGeneral"};
-    String[] registro = new String[9];
+        String[] titulos = {"Id_Venta", "Producto", "Cantidad", "Descuento", "Cliente", "Empleado", "Fecha_Hora", "Total", "TotalGeneral"};
+        String[] registro = new String[9];
 
-    modelo = new DefaultTableModel(null, titulos);
+        modelo = new DefaultTableModel(null, titulos);
 
-    try {
-        CallableStatement call = cn.prepareCall("{call MostrarVentaYProducto}");
-        rs = call.executeQuery();
+        try {
+            CallableStatement call = cn.prepareCall("{call MostrarVentaYProducto}");
+            rs = call.executeQuery();
 
-        while (rs.next()) {
-            registro[0] = rs.getString("Id_Venta");
-            registro[1] = rs.getString("Producto");
-            registro[2] = rs.getString("Cantidad");
-            registro[3] = rs.getString("Descuento");
-            registro[4] = rs.getString("Cliente");
-            registro[5] = rs.getString("Empleado");
-            registro[6] = rs.getString("Fecha_Hora");
-            registro[7] = String.valueOf(rs.getDouble("Total"));
-            registro[8] = String.valueOf(rs.getDouble("TotalGeneral"));
+            while (rs.next()) {
+                registro[0] = rs.getString("Id_Venta");
+                registro[1] = rs.getString("Producto");
+                registro[2] = rs.getString("Cantidad");
+                registro[3] = rs.getString("Descuento");
+                registro[4] = rs.getString("Cliente");
+                registro[5] = rs.getString("Empleado");
+                registro[6] = rs.getString("Fecha_Hora");
+                registro[7] = String.valueOf(rs.getDouble("Total"));
+                registro[8] = String.valueOf(rs.getDouble("TotalGeneral"));
 
-            modelo.addRow(registro);
+                modelo.addRow(registro);
+            }
+            return modelo;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
         }
-        return modelo;
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
-        return null;
     }
-}
-
-
-   
-
-
 
     public void eliminarVentaYProducto(int idVenta) {
         String sql = "{CALL EliminarVentaYProducto(?)}";
@@ -159,10 +167,6 @@ public class CRUD_Venta_Producto {
             return null;
         }
     }
-
- 
-
-
 
     public ResultSet obtenerNombreApellidoCliente() throws SQLException {
         String query = "{CALL ObtenerNombreApellidoCliente()}";
@@ -269,24 +273,31 @@ public class CRUD_Venta_Producto {
         }
     }
 
-    public ArrayList<Clase_Producto> mostrarDatosCombo(String busqueda) {
-        ArrayList<Clase_Producto> listaProductos = new ArrayList<>();
+    public ArrayList<Clase_Producto_Cargardatos> buscarProductos(String busqueda) {
+        ArrayList<Clase_Producto_Cargardatos> listaProductos = new ArrayList<>();
+
         try {
-            String query = "{ CALL MostrarProductos(?) }";
+            String query = "{ CALL BuscaProductos(?) }";
             CallableStatement cstmt = cn.prepareCall(query);
             cstmt.setString(1, busqueda);
             ResultSet rs = cstmt.executeQuery();
+
             while (rs.next()) {
                 int idProducto = rs.getInt("Id_Producto");
                 String nombreProducto = rs.getString("Nombre");
+                String descripcionProducto = rs.getString("Descripcion");
                 float precioVenta = rs.getFloat("Precio_Venta");
+                String categoria = rs.getString("Categoria");
+                String presentacion = rs.getString("Presentacion");
+                String laboratorio = rs.getString("Laboratorio");
 
-                Clase_Producto producto = new Clase_Producto(idProducto, nombreProducto, precioVenta);
+                Clase_Producto_Cargardatos producto = new Clase_Producto_Cargardatos(idProducto, nombreProducto, descripcionProducto, precioVenta, categoria, presentacion, laboratorio);
                 listaProductos.add(producto);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
+            e.printStackTrace();
         }
+
         return listaProductos;
     }
 

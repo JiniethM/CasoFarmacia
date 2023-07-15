@@ -511,7 +511,7 @@
                               <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
                               <Component id="jComboProveedor" min="-2" pref="273" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jTextField_Fecha_Hora" min="-2" pref="177" max="-2" attributes="0"/>
+                              <Component id="jTextField_Fecha_Hora_Compra" min="-2" pref="177" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
@@ -535,7 +535,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jTextField_Fecha_Hora" min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="jTextField_Fecha_Hora_Compra" min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="jComboProveedor" min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
@@ -551,7 +551,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JTextField" name="jTextField_Fecha_Hora">
+            <Component class="javax.swing.JTextField" name="jTextField_Fecha_Hora_Compra">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -566,7 +566,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_Fecha_Hora"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_Fecha_Hora_Compra"/>
               </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="jComboProveedor">

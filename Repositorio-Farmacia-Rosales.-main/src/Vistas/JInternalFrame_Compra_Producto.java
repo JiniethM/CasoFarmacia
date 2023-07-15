@@ -11,7 +11,9 @@ import java.awt.Font;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -31,6 +34,7 @@ import javax.swing.text.DateFormatter;
 public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
 
     private BigDecimal totalActual = BigDecimal.ZERO;
+    private Timer timer;
 
     public JInternalFrame_Compra_Producto() {
         initComponents();
@@ -42,10 +46,11 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
                 jButton_guardar_compra(evt);
             }
         });
-        jTextField_Fecha_Hora.setEditable(false); // Establecer el campo de texto como no editable
-        mostrarFechaActual();
+        mostrarFechaHora();
+        iniciarTimer();
+        jTextField_Fecha_Hora_Compra.setEditable(false); // Establecer el campo de texto como no editable
         llenarComboProveedor(jComboProveedor);
-        jTextField_Fecha_Hora.setBackground(Color.WHITE);
+        jTextField_Fecha_Hora_Compra.setBackground(Color.WHITE);
         jComboBox_Producto.setBackground(Color.WHITE);
         jSpinner_Cantidad_Producto.setBackground(Color.WHITE);
         // Configurar el aspecto del jSlider_Descuanto
@@ -55,6 +60,7 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
         UIManager.put("Slider.thumb", Color.DARK_GRAY);
 
     }
+
     private void centrarRegistrosTabla() {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -113,10 +119,22 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
         jTextField_Total.setText(totalActual.toString());
     }
 
-    private void mostrarFechaActual() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Define el formato deseado de la fecha
-        String fechaActual = dateFormat.format(new Date()); // Obtiene la fecha actual formateada
-        jTextField_Fecha_Hora.setText(fechaActual); // Establece el valor de la fecha en el jTextField
+    private void iniciarTimer() {
+        int intervaloActualizacion = 1000;
+        timer = new Timer(intervaloActualizacion, e -> {
+            mostrarFechaHora();
+        });
+        timer.start();
+    }
+
+    private void mostrarFechaHora() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        String formattedDateTime = currentDateTime.format(formatter);
+        jTextField_Fecha_Hora_Compra.setText(formattedDateTime);
+
+        // Cambiar el color de fondo del JTextField
+        jTextField_Fecha_Hora_Compra.setBackground(Color.WHITE);
     }
 
     public void Limpiar() {
@@ -152,55 +170,84 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
         jComboProveedor.setBackground(Color.WHITE);
     }
 
- public void guardarCompraProducto() {
-        CRUD_Compra_Producto compraProductoDAO = new CRUD_Compra_Producto();
+   public void guardarCompraProducto() {
+    CRUD_Compra_Producto compraProductoDAO = new CRUD_Compra_Producto();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+    LocalDateTime fechaCompra = LocalDateTime.parse(jTextField_Fecha_Hora_Compra.getText().trim(), formatter);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate fechaCompra = LocalDate.parse(jTextField_Fecha_Hora.getText().trim(), formatter);
+    Clase_Proveedor proveedorSeleccionado = (Clase_Proveedor) jComboProveedor.getSelectedItem();
 
-        Clase_Proveedor proveedorSeleccionado = (Clase_Proveedor) jComboProveedor.getSelectedItem();
-
-        if (proveedorSeleccionado == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor válido.");
-            return;
-        }
-
-        int idProveedor = proveedorSeleccionado.getId_Proveedor();
-
-        // Obtener el modelo de la tabla de productos
-        DefaultTableModel modelo = (DefaultTableModel) jTable_Producto.getModel();
-
-        List<Class_Compra> compras = new ArrayList<>();
-
-        for (int i = 0; i < modelo.getRowCount(); i++) {
-            int idProducto = 0;
-            int cantidad = 0;
-
-            Object idProductoObj = modelo.getValueAt(i, 0);
-            Object cantidadObj = modelo.getValueAt(i, 3);
-
-            if (idProductoObj != null && cantidadObj != null) {
-                idProducto = Integer.parseInt(idProductoObj.toString());
-                cantidad = Integer.parseInt(cantidadObj.toString());
-
-                Class_Compra compra = new Class_Compra(fechaCompra, idProveedor, cantidad, idProducto);
-                compras.add(compra);
-            }
-        }
-
-        // Agregar todas las compras y productos en la base de datos
-        compraProductoDAO.agregarComprasYProductos(compras);
-
-        JOptionPane.showMessageDialog(null, "Se guardó correctamente la compra.");
-
-        // Resto del código para mostrar el formulario y realizar otras operaciones
-        // ...
+    if (proveedorSeleccionado == null) {
+        JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor válido.");
+        return;
     }
 
+    int idProveedor = proveedorSeleccionado.getId_Proveedor();
 
+    DefaultTableModel modelo = (DefaultTableModel) jTable_Producto.getModel();
 
-        
-    
+    List<Class_Compra> compras = new ArrayList<>();
+
+    for (int i = 0; i < modelo.getRowCount(); i++) {
+        int idProducto = 0;
+        int cantidad = 0;
+
+        Object idProductoObj = modelo.getValueAt(i, 0); // Columna 1 (Id_Producto)
+        Object cantidadObj = modelo.getValueAt(i, 3); // Columna 3 (Cantidad)
+
+        if (idProductoObj != null && cantidadObj != null) {
+            idProducto = Integer.parseInt(idProductoObj.toString());
+            cantidad = Integer.parseInt(cantidadObj.toString());
+
+            Class_Compra compra = new Class_Compra(fechaCompra, idProveedor, idProducto, cantidad);
+            compras.add(compra);
+        }
+    }
+
+    compraProductoDAO.agregarComprasYProductos(compras);
+
+    JOptionPane.showMessageDialog(null, "Se guardó correctamente la compra.");
+}
+   public void guardarCompraProductos() {
+    CRUD_Compra_Producto ventaProductoDAO = new CRUD_Compra_Producto();
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+    LocalDateTime fechaHora = LocalDateTime.parse(jTextField_Fecha_Hora_Compra.getText().trim(), formatter);
+
+    Clase_Proveedor proveedorSeleccionado = (Clase_Proveedor) jComboProveedor.getSelectedItem();
+
+    if (proveedorSeleccionado == null) {
+        JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor válido.");
+        return;
+    }
+
+    int idProveedor = proveedorSeleccionado.getId_Proveedor();
+
+    // Obtener el modelo de la tabla de productos
+    DefaultTableModel modelo = (DefaultTableModel) jTable_Producto.getModel();
+
+    List<Class_Compra> ventas = new ArrayList<>();
+
+    for (int i = 0; i < modelo.getRowCount(); i++) {
+        int idProducto = 0;
+        int cantidad = 0;
+
+        Object idProductoObj = modelo.getValueAt(i, 0);
+        Object cantidadObj = modelo.getValueAt(i, 3);
+
+        if (idProductoObj != null && cantidadObj != null) {
+            idProducto = Integer.parseInt(idProductoObj.toString());
+            cantidad = Integer.parseInt(cantidadObj.toString());
+
+            Class_Compra venta = new Class_Compra(fechaHora, idProveedor,idProducto,cantidad);
+            ventas.add(venta);
+        }
+    }
+
+    // Agregar todas las ventas y productos en la base de datos
+    ventaProductoDAO.agregarComprasYProductos(ventas);
+}
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -229,7 +276,7 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jTextField_Fecha_Hora = new javax.swing.JTextField();
+        jTextField_Fecha_Hora_Compra = new javax.swing.JTextField();
         jComboProveedor = new javax.swing.JComboBox<>();
         jButton_guardar_compra = new javax.swing.JButton();
         jTextField_Total = new javax.swing.JTextField();
@@ -430,12 +477,12 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jTextField_Fecha_Hora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Fecha_Hora.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
-        jTextField_Fecha_Hora.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_Fecha_Hora.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_Fecha_Hora_Compra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Fecha_Hora_Compra.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Fecha_Hora_Compra.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Fecha_Hora_Compra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Fecha_Hora(evt);
+                jTextField_Fecha_Hora_Compra(evt);
             }
         });
 
@@ -486,7 +533,7 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
                         .addGap(0, 20, Short.MAX_VALUE)
                         .addComponent(jComboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField_Fecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField_Fecha_Hora_Compra, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(125, 125, 125)
                         .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -504,7 +551,7 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField_Fecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Fecha_Hora_Compra, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
                 .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -691,16 +738,16 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jTextField_Fecha_Hora(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Fecha_Hora
-        mostrarFechaActual();
-    }//GEN-LAST:event_jTextField_Fecha_Hora
+    private void jTextField_Fecha_Hora_Compra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Fecha_Hora_Compra
+        mostrarFechaHora();
+    }//GEN-LAST:event_jTextField_Fecha_Hora_Compra
 
     private void jComboProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProveedorActionPerformed
 
     }//GEN-LAST:event_jComboProveedorActionPerformed
 
     private void jButton_guardar_compra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardar_compra
-        guardarCompraProducto();
+        guardarCompraProductos();
         Container container = getParent();
         if (container instanceof JDesktopPane) {
             JDesktopPane desktopPane = (JDesktopPane) container;
@@ -861,7 +908,7 @@ public class JInternalFrame_Compra_Producto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField_Busqueda_Combo;
-    private javax.swing.JTextField jTextField_Fecha_Hora;
+    private javax.swing.JTextField jTextField_Fecha_Hora_Compra;
     private javax.swing.JTextField jTextField_Total;
     // End of variables declaration//GEN-END:variables
 }
