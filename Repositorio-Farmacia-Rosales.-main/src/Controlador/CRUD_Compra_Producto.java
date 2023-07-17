@@ -29,6 +29,44 @@ public class CRUD_Compra_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
+    
+    public int obtenerCantidadStockProducto(String busqueda) {
+    int cantidadStock = 0;
+    try {
+        String query = "{ CALL MostrarCantidadStok(?) }";
+        CallableStatement cstmt = cn.prepareCall(query);
+        cstmt.setString(1, busqueda);
+        ResultSet rs = cstmt.executeQuery();
+        if (rs.next()) {
+            cantidadStock = rs.getInt("Cantidad_Producto");
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e);
+    }
+    return cantidadStock;
+}
+    
+     public ArrayList<Clase_Producto> mostrarDatosComboCompra(String busqueda) {
+        ArrayList<Clase_Producto> listaProductos = new ArrayList<>();
+        try {
+            String query = "{ CALL MostrarProductosCompra(?) }";
+            CallableStatement cstmt = cn.prepareCall(query);
+            cstmt.setString(1, busqueda);
+            ResultSet rs = cstmt.executeQuery();
+            while (rs.next()) {
+                int idProducto = rs.getInt("Id_Producto");
+                String nombreProducto = rs.getString("Nombre");
+                float precioCompra = rs.getFloat("Precio_Compra");
+
+                Clase_Producto producto = new Clase_Producto(idProducto, nombreProducto, precioCompra);
+                listaProductos.add(producto);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return listaProductos;
+    }
+
 
     public void agregarComprasYProductos(List<Class_Compra> compras) {
         String sql = "{CALL AgregarCompraYProducto(?, ?, ?, ?)}";
@@ -70,7 +108,7 @@ public class CRUD_Compra_Producto {
         ResultSet rs;
         DefaultTableModel modelo;
 
-        String[] titulos = {"Id_Compra", "Producto", "Cantidad", "Proveedor", "Fecha_Compra", "Total", "TotalGeneral"};
+        String[] titulos = {"ID", "Producto", "Cantidad", "Proveedor", "Fecha de Compra", "Total", "Total General"};
         String[] registro = new String[7];
 
         modelo = new DefaultTableModel(null, titulos);
@@ -143,26 +181,7 @@ public class CRUD_Compra_Producto {
         return Proveedor;
     }
 
-    public ArrayList<Clase_Producto> mostrarDatosComboCompra(String busqueda) {
-        ArrayList<Clase_Producto> listaProductos = new ArrayList<>();
-        try {
-            String query = "{ CALL MostrarProductosCompra(?) }";
-            CallableStatement cstmt = cn.prepareCall(query);
-            cstmt.setString(1, busqueda);
-            ResultSet rs = cstmt.executeQuery();
-            while (rs.next()) {
-                int idProducto = rs.getInt("Id_Producto");
-                String nombreProducto = rs.getString("Nombre");
-                float precioCompra = rs.getFloat("Precio_Compra");
-
-                Clase_Producto producto = new Clase_Producto(idProducto, nombreProducto, precioCompra);
-                listaProductos.add(producto);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-        return listaProductos;
-    }
+   
 
     public boolean verificarCompraProducto(String dato) {
         ResultSet rs;
@@ -179,5 +198,8 @@ public class CRUD_Compra_Producto {
             return false;
         }
     }
+   
+
+
 
 }

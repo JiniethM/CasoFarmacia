@@ -5,6 +5,7 @@ import Controlador.CRUD_Presentacion;
 import Modelo.Clase_Laboratorio;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
@@ -13,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -26,29 +28,44 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
         initComponents();
 
         jTextField_id_laboratorio.setEditable(false);
-        ajustarAlturaFilasTabla();
-        centrarRegistrosTabla();
+        setTitle("Laboratorio");
+        setFrameIcon(new ImageIcon("C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Iconos\\apothecary-IconoPequeño.png"));
         personalizarTitulosTabla();
-    }
+        ajustarAlturaFilasTabla();
+        colorearFilasTabla();
 
-    private void centrarRegistrosTabla() {
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        jTable_Laboratorio.setDefaultRenderer(Object.class, centerRenderer);
     }
 
     private void personalizarTitulosTabla() {
         DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) jTable_Laboratorio.getTableHeader().getDefaultRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER); // Centra los títulos
         jTable_Laboratorio.getTableHeader().setDefaultRenderer(headerRenderer);
-        jTable_Laboratorio.getTableHeader().setBackground(new Color(0, 153, 153));
-        jTable_Laboratorio.getTableHeader().setForeground(Color.WHITE);
-        jTable_Laboratorio.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        jTable_Laboratorio.getTableHeader().setBackground(new Color(0, 255, 255)); // Cambia el color de los títulos
+        jTable_Laboratorio.getTableHeader().setForeground(Color.BLACK); // Cambia el color del texto de los títulos a negro
+        Font headerFont = new Font("Segoe UI", Font.BOLD, 12); // Cambia el tamaño de letra de los títulos
+        jTable_Laboratorio.getTableHeader().setFont(headerFont);
         jTable_Laboratorio.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
     private void ajustarAlturaFilasTabla() {
-        jTable_Laboratorio.setRowHeight(25); // Ajusta aquí la altura deseada en píxeles
+        jTable_Laboratorio.setRowHeight(35); // Ajusta aquí la altura deseada en píxeles
+    }
+
+    private void colorearFilasTabla() {
+        jTable_Laboratorio.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (row % 2 == 0) {
+                    setBackground(new Color(204, 255, 255));
+                } else {
+                    setBackground(new Color(204, 255, 255));
+                }
+                setHorizontalAlignment(SwingConstants.CENTER); // Centramos el contenido
+                return this;
+            }
+        });
     }
 
     public void limpiar() {
@@ -107,18 +124,17 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
         jButton_Editar = new javax.swing.JButton();
         jButton_Actualizar = new javax.swing.JButton();
         jButton_Eliminar = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
         setVisible(true);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTextField_Buscar.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_Buscar.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jTextField_Buscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Buscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_Buscar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Buscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -137,8 +153,9 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jTextField_Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 220, 45));
 
+        jTextField_Nombre.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_Nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Nombre.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Nombre.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_Nombre.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Nombre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -157,8 +174,9 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jTextField_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 270, 45));
 
+        jTextField_id_laboratorio.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_id_laboratorio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_id_laboratorio.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ID Laboratorio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_id_laboratorio.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ID Laboratorio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_id_laboratorio.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_id_laboratorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,12 +209,12 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTable_Laboratorio);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 610, 120));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 610, 240));
 
-        jButton_Agregar.setBackground(new java.awt.Color(153, 255, 153));
+        jButton_Agregar.setBackground(new java.awt.Color(51, 255, 51));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Agregar.setText("Agregar");
-        jButton_Agregar.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createTitledBorder(""), javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        jButton_Agregar.setBorder(null);
         jButton_Agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Agregar(evt);
@@ -207,7 +225,7 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
         jButton_Editar.setBackground(new java.awt.Color(255, 255, 51));
         jButton_Editar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Editar.setText("Editar");
-        jButton_Editar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Editar.setBorder(null);
         jButton_Editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Editar(evt);
@@ -215,66 +233,39 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jButton_Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 80, 30));
 
-        jButton_Actualizar.setBackground(new java.awt.Color(51, 204, 255));
+        jButton_Actualizar.setBackground(new java.awt.Color(102, 204, 255));
         jButton_Actualizar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Actualizar.setText("Actualizar");
-        jButton_Actualizar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton_Actualizar.setBorder(null);
         jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Actualizar(evt);
             }
         });
-        jPanel1.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 90, 80, 30));
+        jPanel1.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, 80, 30));
 
         jButton_Eliminar.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Eliminar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Eliminar.setText("Eliminar");
-        jButton_Eliminar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Eliminar.setBorder(null);
         jButton_Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Eliminar(evt);
             }
         });
-        jPanel1.add(jButton_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, 70, 30));
-
-        jPanel7.setBackground(new java.awt.Color(0, 153, 153));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Farmacia Rosales");
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 49, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                    .addContainerGap(12, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addContainerGap(12, Short.MAX_VALUE)))
-        );
+        jPanel1.add(jButton_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 90, 70, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
         );
 
         pack();
@@ -482,9 +473,7 @@ public class JInternalFrame_Laboratorio extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton_Agregar;
     private javax.swing.JButton jButton_Editar;
     private javax.swing.JButton jButton_Eliminar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Laboratorio;
     private javax.swing.JTextField jTextField_Buscar;

@@ -21,7 +21,7 @@ public class CRUD_Laboratorio {
     public DefaultTableModel mostrarDatos() {
     ResultSet rs;
     DefaultTableModel modelo;
-    String[] titulos = {"Id_Laboratorio", "Nombre"};
+    String[] titulos = {"ID", "Nombre"};
     String[] registro = new String[2];
 
     modelo = new DefaultTableModel(null, titulos);
@@ -47,7 +47,7 @@ public DefaultTableModel buscarDatos(String textoBusqueda) {
     ResultSet rs;
     DefaultTableModel modelo;
 
-    String[] titulos = {"Id_Laboratorio", "Nombre"};
+    String[] titulos = {"ID", "Nombre"};
     String[] registro = new String[2];
 
     modelo = new DefaultTableModel(null, titulos);

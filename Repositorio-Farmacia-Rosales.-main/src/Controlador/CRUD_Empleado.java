@@ -106,7 +106,7 @@ public class CRUD_Empleado {
     public DefaultTableModel mostrarDatos() {
         ResultSet rs;
         DefaultTableModel modelo;
-        String[] titulos = {"Id_Empleado", "Cedula", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2", "Salario", "Hora_Entrada", "Hora_Salida", "Numero_Celular", "Gmail", "Direccion"};
+        String[] titulos = {"ID", "Cedula", "Primer N", "Segundo N", "Primer A", "Segundo A", "Salario", "Hora de Entrada", "Hora de Salida", "Telefono", "Gmail", "Direccion"};
         String[] registro = new String[12];
 
         modelo = new DefaultTableModel(null, titulos);

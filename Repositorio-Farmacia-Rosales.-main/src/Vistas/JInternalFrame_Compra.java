@@ -1,10 +1,11 @@
-
 package Vistas;
 
 import Controlador.CRUD_Compra_Producto;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -18,9 +19,12 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -35,46 +39,62 @@ import javax.swing.table.TableRowSorter;
  */
 public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
 
-
     public JInternalFrame_Compra() {
         initComponents();
-   this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        centrarRegistrosTabla();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setTitle("Compras Realizada");
+        setFrameIcon(new ImageIcon("C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Iconos\\apothecary-IconoPequeño.png"));
+
+        colorearFilasTabla();
         personalizarTitulosTabla();
         ajustarAlturaFilasTabla();
 
     }
 
-    private void centrarRegistrosTabla() {
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        jTable_Compra.setDefaultRenderer(Object.class, centerRenderer);
-    }
-
     private void personalizarTitulosTabla() {
         DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) jTable_Compra.getTableHeader().getDefaultRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER); // Centra los títulos
         jTable_Compra.getTableHeader().setDefaultRenderer(headerRenderer);
-        jTable_Compra.getTableHeader().setBackground(new Color(0, 153, 153));
-        jTable_Compra.getTableHeader().setForeground(Color.WHITE);
-        jTable_Compra.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        jTable_Compra.getTableHeader().setBackground(new Color(0, 255, 255)); // Cambia el color de los títulos
+        jTable_Compra.getTableHeader().setForeground(Color.BLACK); // Cambia el color del texto de los títulos a negro
+        Font headerFont = new Font("Segoe UI", Font.BOLD, 12); // Cambia el tamaño de letra de los títulos
+        jTable_Compra.getTableHeader().setFont(headerFont);
         jTable_Compra.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
     private void ajustarAlturaFilasTabla() {
-        jTable_Compra.setRowHeight(30); // Ajusta aquí la altura deseada en píxeles
+        jTable_Compra.setRowHeight(35); // Ajusta aquí la altura deseada en píxeles
     }
-     public void mostrar() {
-    try {
-        DefaultTableModel modelo;
-        CRUD_Compra_Producto ventaProductoDAO = new CRUD_Compra_Producto();
-        modelo = ventaProductoDAO.mostrarDatosCompra();
-        jTable_Compra.setModel(modelo);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, e);
+
+    private void colorearFilasTabla() {
+        jTable_Compra.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (row % 2 == 0) {
+                    setBackground(new Color(204, 255, 255));
+                } else {
+                    setBackground(new Color(204, 255, 255));
+                }
+                setHorizontalAlignment(SwingConstants.CENTER); // Centramos el contenido
+                return this;
+            }
+        });
     }
-}
-     public void buscarCompraYProducto() {
+
+    public void mostrar() {
+        try {
+            DefaultTableModel modelo;
+            CRUD_Compra_Producto ventaProductoDAO = new CRUD_Compra_Producto();
+            modelo = ventaProductoDAO.mostrarDatosCompra();
+            jTable_Compra.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void buscarCompraYProducto() {
         try {
             String busqueda = jTextField_Buscar.getText();
 
@@ -92,10 +112,8 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
 
     // Método para aplicar el borde doblado a un botón
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -106,13 +124,11 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
         jTextField_Buscar = new javax.swing.JTextField();
         jButton_Borrar = new javax.swing.JButton();
         jButton_Agregar = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable_Compra.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -140,10 +156,11 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTable_Compra);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 970, 330));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 1120, 330));
 
+        jTextField_Buscar.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_Buscar.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField_Buscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        jTextField_Buscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_Buscar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,7 +177,7 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
         jButton_Borrar.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Borrar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Borrar.setText("Eliminar");
-        jButton_Borrar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Borrar.setBorder(null);
         jButton_Borrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_BorrarActionPerformed(evt);
@@ -168,7 +185,7 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jButton_Borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 80, 30));
 
-        jButton_Agregar.setBackground(new java.awt.Color(153, 255, 153));
+        jButton_Agregar.setBackground(new java.awt.Color(51, 255, 51));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Agregar.setText("Agregar");
         jButton_Agregar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -179,38 +196,15 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jButton_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 80, 30));
 
-        jPanel8.setBackground(new java.awt.Color(0, 153, 153));
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Farmacia Rosales");
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9)
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1016, Short.MAX_VALUE)
-            .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1162, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -224,7 +218,47 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField_BuscarActionPerformed
 
     private void jButton_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AgregarActionPerformed
-        // TODO add your handling code here:
+       Container container = getParent();
+    if (container instanceof JDesktopPane) {
+        JDesktopPane desktopPane = (JDesktopPane) container;
+
+        // Buscar el formulario JInternalFrame_Compra_Producto en el JDesktopPane
+        JInternalFrame_Compra_Producto compraProductoForm = null;
+        JInternalFrame[] frames = desktopPane.getAllFrames();
+        for (JInternalFrame frame : frames) {
+            if (frame instanceof JInternalFrame_Compra_Producto) {
+                compraProductoForm = (JInternalFrame_Compra_Producto) frame;
+                break;
+            }
+        }
+
+        if (compraProductoForm != null) {
+            // Si el formulario ya está abierto, selecciónalo
+            try {
+                compraProductoForm.setSelected(true);
+            } catch (java.beans.PropertyVetoException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Si el formulario no está abierto, crea una nueva instancia y añádela al JDesktopPane
+            compraProductoForm = new JInternalFrame_Compra_Producto();
+            desktopPane.add(compraProductoForm);
+
+            // Centrar el formulario en el JDesktopPane
+            Dimension desktopSize = desktopPane.getSize();
+            Dimension frameSize = compraProductoForm.getSize();
+            int x = (desktopSize.width - frameSize.width) / 2;
+            int y = (desktopSize.height - frameSize.height) / 2;
+            compraProductoForm.setLocation(x, y);
+
+            compraProductoForm.setVisible(true);
+            try {
+                compraProductoForm.setSelected(true);
+            } catch (java.beans.PropertyVetoException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     }//GEN-LAST:event_jButton_AgregarActionPerformed
 
     private void jTable_Compra(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable_Compra
@@ -232,7 +266,7 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTable_Compra
 
     private void jButton_BorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarActionPerformed
-      
+
         int selectedRow = jTable_Compra.getSelectedRow();
         if (selectedRow != -1) {
             JPanel panel = new JPanel();
@@ -296,9 +330,7 @@ public class JInternalFrame_Compra extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Agregar;
     private javax.swing.JButton jButton_Borrar;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTable_Compra;
     private javax.swing.JTextField jTextField_Buscar;

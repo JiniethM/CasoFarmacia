@@ -93,49 +93,63 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         }
     }
 
-    public void configurarTabla() {
-        // ...
+   public void configurarTabla() {
+    // ...
 
-        int rowHeight = 84; // Altura deseada de la fila en píxeles
-        jTable_Producto1.setRowHeight(rowHeight);
+    int rowHeight = 84; // Altura deseada de la fila en píxeles
+    jTable_Producto1.setRowHeight(rowHeight);
 
-        // ...
-        // Centrar los datos en las celdas de texto
-        DefaultTableCellRenderer textRenderer = new DefaultTableCellRenderer();
-        textRenderer.setHorizontalAlignment(JLabel.CENTER); // Centra el texto
-        jTable_Producto1.setDefaultRenderer(Object.class, textRenderer);
+    // Establecer el ancho preferido de cada columna
+    jTable_Producto1.getColumnModel().getColumn(0).setPreferredWidth(60);
+    jTable_Producto1.getColumnModel().getColumn(1).setPreferredWidth(90);
+    jTable_Producto1.getColumnModel().getColumn(2).setPreferredWidth(100);
+    jTable_Producto1.getColumnModel().getColumn(3).setPreferredWidth(80);
+    jTable_Producto1.getColumnModel().getColumn(4).setPreferredWidth(120);
+    jTable_Producto1.getColumnModel().getColumn(5).setPreferredWidth(120);
+    jTable_Producto1.getColumnModel().getColumn(6).setPreferredWidth(100);
+    jTable_Producto1.getColumnModel().getColumn(7).setPreferredWidth(120);
+    jTable_Producto1.getColumnModel().getColumn(8).setPreferredWidth(110);
+    jTable_Producto1.getColumnModel().getColumn(9).setPreferredWidth(120);
+    jTable_Producto1.getColumnModel().getColumn(10).setPreferredWidth(110);
+    jTable_Producto1.getColumnModel().getColumn(11).setPreferredWidth(125);
 
-        // Establecer el tamaño de la columna de imagen
-        TableColumnModel columnModel = jTable_Producto1.getColumnModel();
-        TableColumn imageColumn = columnModel.getColumn(6); // Columna de la imagen
-        imageColumn.setPreferredWidth(100); // Ajusta el tamaño según tus necesidades
+    // Centrar los datos en las celdas de texto
+    DefaultTableCellRenderer textRenderer = new DefaultTableCellRenderer();
+    textRenderer.setHorizontalAlignment(JLabel.CENTER); // Centra el texto
+    jTable_Producto1.setDefaultRenderer(Object.class, textRenderer);
 
-        // Obtener el renderizador actual para la columna de imagen
-        TableCellRenderer defaultRenderer = jTable_Producto1.getDefaultRenderer(ImageIcon.class);
+    // Establecer el tamaño de la columna de imagen
+    TableColumnModel columnModel = jTable_Producto1.getColumnModel();
+    TableColumn imageColumn = columnModel.getColumn(6); // Columna de la imagen
+    imageColumn.setPreferredWidth(100); // Ajusta el tamaño según tus necesidades
 
-        // Crear un nuevo renderizador para la columna de imagen
-        TableCellRenderer imageRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                if (value instanceof ImageIcon) {
-                    ImageIcon originalIcon = (ImageIcon) value;
-                    Image image = originalIcon.getImage();
-                    if (image != null) {
-                        Image resizedImage = image.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
-                        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+    // Obtener el renderizador actual para la columna de imagen
+    TableCellRenderer defaultRenderer = jTable_Producto1.getDefaultRenderer(ImageIcon.class);
 
-                        JLabel label = new JLabel(resizedIcon);
-                        label.setHorizontalAlignment(JLabel.CENTER); // Centra la imagen
-                        return label;
-                    }
+    // Crear un nuevo renderizador para la columna de imagen
+    TableCellRenderer imageRenderer = new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if (value instanceof ImageIcon) {
+                ImageIcon originalIcon = (ImageIcon) value;
+                Image image = originalIcon.getImage();
+                if (image != null) {
+                    Image resizedImage = image.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+                    ImageIcon resizedIcon = new ImageIcon(resizedImage);
+
+                    JLabel label = new JLabel(resizedIcon);
+                    label.setHorizontalAlignment(JLabel.CENTER); // Centra la imagen
+                    return label;
                 }
-                return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }
-        };
+            return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
+    };
 
-        // Establecer el nuevo renderizador para la columna de imagen
-        jTable_Producto1.getColumnModel().getColumn(6).setCellRenderer(imageRenderer);
-    }
+    // Establecer el nuevo renderizador para la columna de imagen
+    jTable_Producto1.getColumnModel().getColumn(6).setCellRenderer(imageRenderer);
+}
+
 
     private byte[] obtenerBytesDesdeImagen(ImageIcon imagenIcono, String formato) {
         BufferedImage bufferedImage = new BufferedImage(imagenIcono.getIconWidth(), imagenIcono.getIconHeight(), BufferedImage.TYPE_INT_RGB);
@@ -159,7 +173,7 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
             crudProducto.mostrarProductoConProveedor();
 
             // Obtener los datos del modelo de la tabla
-            String[] columnas = {"ID Producto", "Nombre", "Descripción", "Cantidad", "Precio Compra", "Precio Venta", "Imagen", "Fecha Caducidad", "Categoría", "Presentación", "Laboratorio", "Proveedor"};
+            String[] columnas = {"ID", "Nombre", "Descripción", "Cantidad", "Precio de Compra", "Precio de Venta", "Imagen", "Fecha de Caducidad", "Categoría", "Presentación", "Laboratorio", "Proveedor"};
             Object[][] datos = obtenerDatosTabla(jTable_Producto1);
 
             if (datos != null && datos.length > 0) {
@@ -278,8 +292,9 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         setIconifiable(true);
         setPreferredSize(new java.awt.Dimension(1200, 579));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
+        jTable_Producto1.setBackground(new java.awt.Color(204, 255, 255));
         jTable_Producto1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null, null},
@@ -312,10 +327,10 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         });
         jScrollPane6.setViewportView(jTable_Producto1);
 
-        jButton_Editar.setBackground(new java.awt.Color(204, 255, 255));
+        jButton_Editar.setBackground(new java.awt.Color(255, 255, 51));
         jButton_Editar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Editar.setText("Editar");
-        jButton_Editar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Editar.setBorder(null);
         jButton_Editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Editar(evt);
@@ -332,9 +347,9 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
             }
         });
 
+        jTextField_Buscar.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_Buscar.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jTextField_Buscar.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField_Buscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 153, 153))); // NOI18N
+        jTextField_Buscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Buscar(evt);
@@ -346,10 +361,10 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
             }
         });
 
-        jButton_Agregar.setBackground(new java.awt.Color(204, 255, 255));
+        jButton_Agregar.setBackground(new java.awt.Color(51, 255, 51));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Agregar.setText("Agregar");
-        jButton_Agregar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar.setBorder(null);
         jButton_Agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Agregar(evt);
@@ -360,30 +375,32 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
                 .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
+                .addGap(44, 44, 44)
                 .addComponent(jButton_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
+                .addGap(35, 35, 35)
                 .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99))
+                .addGap(212, 212, 212))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 1315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -391,11 +408,15 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1324, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();

@@ -92,7 +92,7 @@ public class CRUD_Venta_Producto {
         ResultSet rs;
         DefaultTableModel modelo;
 
-        String[] titulos = {"Id_Venta", "Producto", "Cantidad", "Descuento", "Cliente", "Empleado", "Fecha_Hora", "Total", "TotalGeneral"};
+        String[] titulos = {"ID", "Producto", "Cantidad", "Descuento", "Cliente", "Empleado", "Fecha y Hora", "Total", "Total General"};
         String[] registro = new String[9];
 
         modelo = new DefaultTableModel(null, titulos);

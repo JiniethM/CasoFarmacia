@@ -17,6 +17,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import java.math.BigDecimal;
@@ -28,12 +29,15 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities;
@@ -234,16 +238,26 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         }
     }
 
-  public void agregarProductoATabla() {
+public void agregarProductoATabla() {
     Clase_Producto_Cargardatos productoSeleccionado = (Clase_Producto_Cargardatos) jComboBox_Producto.getSelectedItem();
     int cantidad = (int) jSpinner_Cantidad_Producto.getValue();
+
+    // Verificar si el producto ya está agregado en la tabla
+    DefaultTableModel modelProducto = (DefaultTableModel) jTable_Producto.getModel();
+    for (int i = 0; i < modelProducto.getRowCount(); i++) {
+        Integer idProducto = (Integer) modelProducto.getValueAt(i, 0);
+        if (idProducto != null && idProducto.intValue() == productoSeleccionado.getId_Producto()) {
+            JOptionPane.showMessageDialog(null, "El producto ya ha sido agregado a la tabla.");
+            return;
+        }
+    }
+
     if (productoSeleccionado == null || cantidad <= 0) {
         JOptionPane.showMessageDialog(null, "Debe seleccionar un producto y especificar una cantidad válida.");
         return;
     }
 
     // Agregamos los detalles del producto a la primera tabla
-    DefaultTableModel modelProducto = (DefaultTableModel) jTable_Producto.getModel();
     BigDecimal precioVenta = BigDecimal.valueOf(productoSeleccionado.getPrecio_Venta());
     BigDecimal total = precioVenta.multiply(BigDecimal.valueOf(cantidad));
 
@@ -271,6 +285,8 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
     jComboBox_Producto.setSelectedIndex(-1);
     jSpinner_Cantidad_Producto.setValue(0);
 }
+
+
 
 
 
@@ -503,7 +519,7 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_ver_Formulario_venta.setBackground(new java.awt.Color(255, 255, 204));
+        jButton_ver_Formulario_venta.setBackground(new java.awt.Color(204, 204, 255));
         jButton_ver_Formulario_venta.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_ver_Formulario_venta.setText("Ver Ventas");
         jButton_ver_Formulario_venta.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -894,7 +910,22 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton_Borrar_p
 
     private void jSpinner_Cantidad_Producto(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSpinner_Cantidad_Producto
-                    jSpinner_Cantidad_Producto.setBackground(Color.WHITE);
+        jSpinner_Cantidad_Producto.setBackground(new Color(204, 255, 255));
+                    
+                    
+        JSpinner spinner = (JSpinner) evt.getSource();
+        JComponent editor = spinner.getEditor();
+        JFormattedTextField textField = ((JSpinner.DefaultEditor) editor).getTextField();
+
+        textField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+        });
 
     }//GEN-LAST:event_jSpinner_Cantidad_Producto
 

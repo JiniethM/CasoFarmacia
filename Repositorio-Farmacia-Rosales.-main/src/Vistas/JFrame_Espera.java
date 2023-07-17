@@ -12,39 +12,33 @@ public class JFrame_Espera extends javax.swing.JFrame {
 
     
     public JFrame_Espera() {
-        
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
         cargarProyecto();
-        
-        
-    
     }
+
     private void cargarProyecto() {
-        // Crear un hilo separado para la simulación de carga del proyecto
         Thread cargaThread = new Thread(new Runnable() {
             public void run() {
-                // Simulación de carga del proyecto (sustituir con la lógica real de carga)
                 try {
-                    Thread.sleep(3000); // Espera de 3 segundos
+                    Thread.sleep(3000);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
 
-                // Después de la carga, mostrar el formulario de inicio de sesión y cerrar el formulario de espera
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
                         Login_Form loginForm = new Login_Form();
                         loginForm.setLocationRelativeTo(null);
                         loginForm.setVisible(true);
-                        dispose(); // Cerrar el formulario de espera
+                        dispose();
                     }
                 });
             }
         });
 
-        cargaThread.start(); // Iniciar el hilo de carga
+        cargaThread.start();
     }
 
     

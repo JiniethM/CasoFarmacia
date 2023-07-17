@@ -41,7 +41,7 @@ public class CRUD_Cliente {
     public DefaultTableModel mostrarDatos() {
         ResultSet rs;
         DefaultTableModel modelo;
-        String[] titulos = {"Id_Cliente", "Cedula", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2", "Numero_Celular", "Gmail", "Direccion"};
+        String[] titulos = {"ID", "Cedula", "Primer N", "Segundo N", "Primer A", "Segundo A", "Telefono", "Gmail", "Direccion"};
         String[] registro = new String[9];
 
         modelo = new DefaultTableModel(null, titulos);
@@ -73,7 +73,7 @@ public class CRUD_Cliente {
     public DefaultTableModel BuscarCliente(String textoBusqueda) {
         ResultSet rs;
         DefaultTableModel modelo;
-        String[] titulos = {"Id_Cliente", "Cedula", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2", "Numero_Celular", "Gmail", "Direccion"};
+        String[] titulos = {"ID", "Cedula", "Primer N", "Segundo N", "Primer A", "Segundo A", "Telefono", "Gmail", "Direccion"};
         String[] registro = new String[9];
 
         modelo = new DefaultTableModel(null, titulos);

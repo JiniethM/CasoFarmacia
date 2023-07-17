@@ -461,10 +461,10 @@ public class MDIMenu1 extends javax.swing.JFrame {
         int x = (jDesktopPane.getWidth() / 2) - est.getWidth() / 2;
         int y = (jDesktopPane.getHeight() / 2) - est.getHeight() / 2;
         est.setLocation(x, y);
-        est.mostrar();
+        est.mostrarCategoria();
         jDesktopPane.add(est);
         est.setVisible(true);
-        est.mostrar();
+        est.mostrarCategoria();
     }//GEN-LAST:event_jButton_Categoria
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

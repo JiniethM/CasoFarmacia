@@ -21,7 +21,7 @@ public class CRUD_Categoria {
     public DefaultTableModel mostrarDatos() {
         ResultSet rs;
         DefaultTableModel modelo;
-        String[] titulos = {"Id_Categoria", "Nombre_Categoria", "Descripcion"};
+        String[] titulos = {"ID", "Nombre de Categoria", "Descripcion"};
         String[] registro = new String[3];
 
         modelo = new DefaultTableModel(null, titulos);
@@ -48,7 +48,7 @@ public class CRUD_Categoria {
         ResultSet rs;
         DefaultTableModel modelo;
 
-        String[] titulos = {"Id_Categoria", "Nombre_Categoria", "Descripcion"};
+        String[] titulos = {"ID", "Nombre de Categoria", "Descripcion"};
         String[] registro = new String[3];
 
         modelo = new DefaultTableModel(null, titulos);

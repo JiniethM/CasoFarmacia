@@ -21,7 +21,7 @@ public class CRUD_Presentacion {
     public DefaultTableModel mostrarDatos() {
     ResultSet rs;
     DefaultTableModel modelo;
-    String[] titulos = {"Id_Presentacion", "Nombre_Presentacion", "Detalle"};
+    String[] titulos = {"ID", "Nombre de Presentacion", "Detalle"};
     String[] registro = new String[3];
 
     modelo = new DefaultTableModel(null, titulos);
@@ -48,7 +48,7 @@ public DefaultTableModel buscarDatos(String textoBusqueda) {
         ResultSet rs;
         DefaultTableModel modelo;
 
-        String[] titulos = {"Id_Presentacion", "Nombre_Presentacion", "Detalle"};
+        String[] titulos = {"ID", "Nombre de Presentacion", "Detalle"};
         String[] registro = new String[3];
 
         modelo = new DefaultTableModel(null, titulos);
