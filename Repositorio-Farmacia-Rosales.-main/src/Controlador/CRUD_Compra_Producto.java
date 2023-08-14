@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,26 @@ public class CRUD_Compra_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
+    
+    public void agregarLote(Clase_Producto producto) {
+    String sql = "{CALL AgregarLote(?, ?, ?, ?, ?)}";
+
+    try (CallableStatement stmt = cn.prepareCall(sql)) {
+        stmt.setInt(1, producto.Id_Producto);
+        stmt.setDate(2, producto.Fecha_Caducidad);
+        stmt.setFloat(3, producto.Precio_Compra);
+        stmt.setFloat(4, producto.Precio_Venta);
+        stmt.setInt(5, producto.Cantidad_Producto);
+
+        stmt.execute();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+
+    
+    
     
     public int obtenerCantidadStockProducto(String busqueda) {
     int cantidadStock = 0;

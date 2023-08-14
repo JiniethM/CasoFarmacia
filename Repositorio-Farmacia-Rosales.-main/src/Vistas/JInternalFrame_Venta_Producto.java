@@ -7,7 +7,6 @@ import Modelo.Clase_Empleado;
 import Vistas.JInternalFrame_Venta;
 import java.util.List;
 
-
 import Modelo.Clase_Producto;
 import Modelo.Clase_Producto_Cargardatos;
 import Modelo.Clase_Venta;
@@ -38,6 +37,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities;
@@ -51,19 +51,22 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
 
     private Timer timer;
     private BigDecimal totalActual = BigDecimal.ZERO;
-        private BigDecimal tasaCambioNicaragua;
-
+    private BigDecimal tasaCambioNicaragua;
 
     public JInternalFrame_Venta_Producto() {
         initComponents();
-      centrarRegistrosTabla();
-        personalizarTitulosTabla();
-        ajustarAlturaFilasTabla();
-        jButton_guardar_venta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_guardar_venta(evt);
-            }
-        });
+        personalizarTabla(jTable_Producto);
+        ajustarAlturaFilasTabla(jTable_Producto);
+        colorearFilasTabla(jTable_Producto);
+
+        personalizarTabla(jTable_Prsmks);
+        ajustarAlturaFilasTabla(jTable_Prsmks);
+        colorearFilasTabla(jTable_Prsmks);
+
+        setTitle("Venta");
+        setFrameIcon(new ImageIcon("C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Iconos\\apothecary-IconoPequeño.png"));
+
+       
         jTextField_Pago.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -80,6 +83,7 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
                 calcularCambio();
             }
         });
+
         jTextField_Descuento.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -96,7 +100,7 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
                 calcularTotalConDescuento();
             }
         });
-        
+
         jTextField_Total.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -113,38 +117,43 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
                 calcularCambio();
             }
         });
-        
-        
+         jComboBox_Producto.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Clase_Producto_Cargardatos) {
+                    Clase_Producto_Cargardatos producto = (Clase_Producto_Cargardatos) value;
+                    label.setText("<html><font color='blue'>Nombre:</font> " + producto.getNombre() + ", <font color='blue'>Precio:</font> " + producto.getPrecio_Venta() 
+                                  + ", <font color='blue'>Categoría:</font> " + producto.getId_Categoria() 
+                                  + ", <font color='blue'>Presentación:</font> " + producto.getId_Presentacion() 
+                                  + ", <font color='blue'>Laboratorio:</font> " + producto.getId_Laboratorio() + "</html>");
+                }
+                return label;
+            }
+        });
+
         mostrarFechaHora();
         iniciarTimer();
         jTextField_Fecha_Hora.setEditable(false);
-     
-        llenarComboEmpleados(jComboEmpleado);
-        
-      
-        jComboCliente.setBackground(Color.WHITE);
-        jComboBox_Producto.setBackground(Color.WHITE);
-       
-        jTable_Producto.setBackground(Color.WHITE);
-        // Configurar el aspecto del jSlider_Descuanto
-        UIManager.put("Slider.background", Color.WHITE);
-        UIManager.put("Slider.foreground", Color.BLUE);
-        UIManager.put("Slider.track", Color.LIGHT_GRAY);
-        UIManager.put("Slider.thumb", Color.DARK_GRAY);
 
+        llenarComboEmpleados(jComboEmpleado);
+        jComboBox_Producto.setBackground(new Color(204, 255, 255));
+
+        UIManager.put("Slider.background", Color.WHITE);
     }
+
     private void calcularTotalConDescuento() {
         try {
             String descuentoStr = jTextField_Descuento.getText().trim();
             BigDecimal descuento;
-            
+
             // Verificar si la caja de descuento está vacía.
             if (!descuentoStr.isEmpty()) {
                 descuento = new BigDecimal(descuentoStr).divide(new BigDecimal("100"));
             } else {
                 descuento = BigDecimal.ZERO;
             }
-            
+
             BigDecimal totalConDescuento = totalActual.subtract(totalActual.multiply(descuento));
             jTextField_Total.setText(totalConDescuento.toString());
         } catch (NumberFormatException e) {
@@ -152,7 +161,7 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "El valor ingresado en la caja de descuento no es válido. Por favor ingrese un número.");
         }
     }
-    
+
     private void calcularCambio() {
         try {
             BigDecimal pago = new BigDecimal(jTextField_Pago.getText().trim());
@@ -165,43 +174,62 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         }
     }
 
-
-    
-
-  
-
-    private void centrarRegistrosTabla() {
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        jTable_Producto.setDefaultRenderer(Object.class, centerRenderer);
-    }
-
-    private void personalizarTitulosTabla() {
-        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) jTable_Producto.getTableHeader().getDefaultRenderer();
+    private void personalizarTabla(JTable table) {
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer();
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        jTable_Producto.getTableHeader().setDefaultRenderer(headerRenderer);
-        jTable_Producto.getTableHeader().setBackground(new Color(0, 153, 153));
-        jTable_Producto.getTableHeader().setForeground(Color.WHITE);
-        jTable_Producto.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        jTable_Producto.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        table.getTableHeader().setDefaultRenderer(headerRenderer);
+        table.getTableHeader().setBackground(new Color(0, 255, 255));
+        table.getTableHeader().setForeground(Color.BLACK);
+        Font headerFont = new Font("Segoe UI", Font.BOLD, 12);
+        table.getTableHeader().setFont(headerFont);
+        table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
-    private void ajustarAlturaFilasTabla() {
-        jTable_Producto.setRowHeight(25); // Ajusta aquí la altura deseada en píxeles
+    private void ajustarAlturaFilasTabla(JTable table) {
+        table.setRowHeight(35);
     }
 
-    public void limpiarCampos() {
-      
-        jComboCliente.setSelectedIndex(-1);
-        jComboEmpleado.setSelectedIndex(-1);
-        jTextField_BuscarCliente.setText("");
+    private void colorearFilasTabla(JTable table) {
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (row % 2 == 0) {
+                    setBackground(new Color(204, 255, 255));
+                } else {
+                    setBackground(new Color(204, 255, 255));
+                }
+                setHorizontalAlignment(SwingConstants.CENTER);
+                return this;
+            }
+        });
     }
 
-    public void Limpiar() {
-    jTextField_Busqueda_Combo.setText("");
-    jSpinner_Cantidad_Producto.setValue(0);
+   public void limpiarCampos() {
+    jComboCliente.setSelectedIndex(-1);
+    jTextField_BuscarCliente.setText("");
+    jTextField_Descuento.setText("");
+    jTextField_Cambio.setText("");
+    jTextField_Pago.setText("");
+    jTextField_Total.setText("");
+
+    // Limpiar jTable_Producto
+    DefaultTableModel modeloTablaProducto = (DefaultTableModel) jTable_Producto.getModel();
+    modeloTablaProducto.setRowCount(0);
+
+    // Limpiar jTable_Prsmks
+    DefaultTableModel modeloTablaPrsmks = (DefaultTableModel) jTable_Prsmks.getModel();
+    modeloTablaPrsmks.setRowCount(0);
 }
 
+
+    public void Limpiar() {
+        jTextField_Busqueda_Combo.setText("");
+        jSpinner_Cantidad_Producto.setValue(0);
+        jComboBox_Producto.setSelectedIndex(-1);
+        jTextField_Stok.setText("");
+    }
 
     private void iniciarTimer() {
         int intervaloActualizacion = 1000;
@@ -211,23 +239,24 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         timer.start();
     }
 
-   private void mostrarFechaHora() {
-    LocalDateTime currentDateTime = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-    String formattedDateTime = currentDateTime.format(formatter);
-    jTextField_Fecha_Hora.setText(formattedDateTime);
-    
-    // Cambiar el color de fondo del JTextField
-    jTextField_Fecha_Hora.setBackground(Color.WHITE);
-}
-   private boolean isValidNumber(String text) {
-    try {
-        int value = Integer.parseInt(text);
-        return value >= 0 && value <= 100;
-    } catch (NumberFormatException e) {
-        return false;
+    private void mostrarFechaHora() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        String formattedDateTime = currentDateTime.format(formatter);
+        jTextField_Fecha_Hora.setText(formattedDateTime);
+
+        // Cambiar el color de fondo del JTextField
+        jTextField_Fecha_Hora.setBackground(new Color(204, 255, 255));
     }
-}
+
+    private boolean isValidNumber(String text) {
+        try {
+            int value = Integer.parseInt(text);
+            return value >= 0 && value <= 100;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
     public void llenarproducto(String busqueda) {
         CRUD_Venta_Producto gr = new CRUD_Venta_Producto();
@@ -235,12 +264,14 @@ public class JInternalFrame_Venta_Producto extends javax.swing.JInternalFrame {
         jComboBox_Producto.removeAllItems();
         for (Clase_Producto_Cargardatos producto : listaProductos) {
             jComboBox_Producto.addItem(producto);
+
         }
     }
 
-public void agregarProductoATabla() {
+    public void agregarProductoATabla() {
     Clase_Producto_Cargardatos productoSeleccionado = (Clase_Producto_Cargardatos) jComboBox_Producto.getSelectedItem();
     int cantidad = (int) jSpinner_Cantidad_Producto.getValue();
+    int cantidadStock = Integer.parseInt(jTextField_Stok.getText());
 
     // Verificar si el producto ya está agregado en la tabla
     DefaultTableModel modelProducto = (DefaultTableModel) jTable_Producto.getModel();
@@ -254,6 +285,12 @@ public void agregarProductoATabla() {
 
     if (productoSeleccionado == null || cantidad <= 0) {
         JOptionPane.showMessageDialog(null, "Debe seleccionar un producto y especificar una cantidad válida.");
+        return;
+    }
+    
+    // Comprobar si la cantidad especificada supera la cantidad en el stock
+    if (cantidad > cantidadStock) {
+        JOptionPane.showMessageDialog(null, "La cantidad especificada supera la cantidad disponible en el stock.");
         return;
     }
 
@@ -287,131 +324,121 @@ public void agregarProductoATabla() {
 }
 
 
-
-
-
-
     private void calcularTotalTabla() {
         DefaultTableModel model = (DefaultTableModel) jTable_Producto.getModel();
         BigDecimal total = BigDecimal.ZERO;
         for (int i = 0; i < model.getRowCount(); i++) {
             BigDecimal filaTotal = (BigDecimal) model.getValueAt(i, 4);
-            total = total.add(filaTotal);
+            if (filaTotal != null) {  // Comprobar si el valor es nulo antes de sumarlo al total
+                total = total.add(filaTotal);
+            }
         }
         totalActual = total;
         jTextField_Total.setText(totalActual.toString());
     }
 
     public void llenarComboClientes(JComboBox<Clase_Cliente> jComboCliente, String busqueda) {
-    CRUD_Venta_Producto gr = new CRUD_Venta_Producto();
-    ArrayList<Clase_Cliente> clientes = gr.obtenerNombresApellidosCliente();
-    jComboCliente.removeAllItems(); // Limpiar el JComboBox
-    for (Clase_Cliente cliente : clientes) {
-        jComboCliente.addItem(cliente);
-    }
-
-}
-
-
-   public void llenarComboEmpleados(JComboBox<Clase_Empleado> jComboEmpleado) {
-    CRUD_Venta_Producto gr = new CRUD_Venta_Producto();
-    ArrayList<Clase_Empleado> empleados = gr.obtenerEmpleados();
-    jComboEmpleado.removeAllItems(); // Limpiar el JComboBox
-
-    // Configurar el renderizador personalizado
-    jComboEmpleado.setRenderer(new DefaultListCellRenderer() {
-        @Override
-        public Component getListCellRendererComponent(JList<?> list, Object value, int index,
-                boolean isSelected, boolean cellHasFocus) {
-            if (value instanceof Clase_Empleado) {
-                Clase_Empleado empleado = (Clase_Empleado) value;
-                String displayText = empleado.getId_Empleado() + " - " + empleado.getNombre_1() + " " + empleado.getApellido_1();
-                return super.getListCellRendererComponent(list, displayText, index, isSelected, cellHasFocus);
-            } else {
-                return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            }
+        CRUD_Venta_Producto gr = new CRUD_Venta_Producto();
+        ArrayList<Clase_Cliente> clientes = gr.obtenerNombresApellidosCliente();
+        jComboCliente.removeAllItems(); // Limpiar el JComboBox
+        for (Clase_Cliente cliente : clientes) {
+            jComboCliente.addItem(cliente);
         }
-    });
 
-    // Agregar los empleados al JComboBox
-    for (Clase_Empleado empleado : empleados) {
-        jComboEmpleado.addItem(empleado);
     }
 
-    // Establecer el color de fondo
-    jComboEmpleado.setBackground(Color.WHITE);
-}
+    public void llenarComboEmpleados(JComboBox<Clase_Empleado> jComboEmpleado) {
+        CRUD_Venta_Producto gr = new CRUD_Venta_Producto();
+        ArrayList<Clase_Empleado> empleados = gr.obtenerEmpleados();
+        jComboEmpleado.removeAllItems(); // Limpiar el JComboBox
 
-  public void guardarVentaProducto() {
-    CRUD_Venta_Producto ventaProductoDAO = new CRUD_Venta_Producto();
+        // Configurar el renderizador personalizado
+        jComboEmpleado.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                    boolean isSelected, boolean cellHasFocus) {
+                if (value instanceof Clase_Empleado) {
+                    Clase_Empleado empleado = (Clase_Empleado) value;
+                    String displayText = empleado.getId_Empleado() + " - " + empleado.getNombre_1() + " " + empleado.getApellido_1();
+                    return super.getListCellRendererComponent(list, displayText, index, isSelected, cellHasFocus);
+                } else {
+                    return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                }
+            }
+        });
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-    LocalDateTime fechaHora = LocalDateTime.parse(jTextField_Fecha_Hora.getText().trim(), formatter);
+        // Agregar los empleados al JComboBox
+        for (Clase_Empleado empleado : empleados) {
+            jComboEmpleado.addItem(empleado);
+        }
 
-    Clase_Cliente clienteSeleccionado = (Clase_Cliente) jComboCliente.getSelectedItem();
-    int idCliente = (clienteSeleccionado != null) ? clienteSeleccionado.getId_Cliente() : -1;
-
-    Object itemEmpleado = jComboEmpleado.getSelectedItem();
-    Clase_Empleado empleadoSeleccionado = null;
-    try {
-        empleadoSeleccionado = (Clase_Empleado) itemEmpleado;
-    } catch (ClassCastException e) {
-        JOptionPane.showMessageDialog(null, "El item seleccionado no es una instancia de Clase_Empleado");
-        e.printStackTrace();
-        return;
+        // Establecer el color de fondo
+        jComboEmpleado.setBackground(new Color(204, 255, 255));
     }
-    int idEmpleado = (empleadoSeleccionado != null) ? empleadoSeleccionado.getId_Empleado() : 0;
 
-    String descuentoStr = jTextField_Descuento.getText().trim();
-    descuentoStr = descuentoStr.replace("%", "");
-    BigDecimal descuento = null;
+    public void guardarVentaProducto() {
+        CRUD_Venta_Producto ventaProductoDAO = new CRUD_Venta_Producto();
 
-    if (!descuentoStr.isEmpty()) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        LocalDateTime fechaHora = LocalDateTime.parse(jTextField_Fecha_Hora.getText().trim(), formatter);
+
+        Clase_Cliente clienteSeleccionado = (Clase_Cliente) jComboCliente.getSelectedItem();
+        int idCliente = (clienteSeleccionado != null) ? clienteSeleccionado.getId_Cliente() : -1;
+
+        Object itemEmpleado = jComboEmpleado.getSelectedItem();
+        Clase_Empleado empleadoSeleccionado = null;
         try {
-            descuento = new BigDecimal(descuentoStr);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Por favor, introduce un número válido para el descuento.");
+            empleadoSeleccionado = (Clase_Empleado) itemEmpleado;
+        } catch (ClassCastException e) {
+            JOptionPane.showMessageDialog(null, "El item seleccionado no es una instancia de Clase_Empleado");
+            e.printStackTrace();
             return;
         }
-    }
+        int idEmpleado = (empleadoSeleccionado != null) ? empleadoSeleccionado.getId_Empleado() : 0;
 
-    // Obtener el modelo de la tabla de productos
-    DefaultTableModel modelo = (DefaultTableModel) jTable_Producto.getModel();
+        String descuentoStr = jTextField_Descuento.getText().trim();
+        descuentoStr = descuentoStr.replace("%", "");
+        BigDecimal descuento = null;
 
-    List<Clase_Venta> ventas = new ArrayList<>();
-
-    for (int i = 0; i < modelo.getRowCount(); i++) {
-        int idProducto = 0;
-        int cantidad = 0;
-
-        Object idProductoObj = modelo.getValueAt(i, 0);
-        Object cantidadObj = modelo.getValueAt(i, 3);
-
-        if (idProductoObj != null && cantidadObj != null) {
-            idProducto = Integer.parseInt(idProductoObj.toString());
-            cantidad = Integer.parseInt(cantidadObj.toString());
-
-            Clase_Venta venta = new Clase_Venta(fechaHora, idCliente, idEmpleado, cantidad, descuento, idProducto);
-            ventas.add(venta);
+        if (!descuentoStr.isEmpty()) {
+            try {
+                descuento = new BigDecimal(descuentoStr);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Por favor, introduce un número válido para el descuento.");
+                return;
+            }
         }
+
+        // Obtener el modelo de la tabla de productos
+        DefaultTableModel modelo = (DefaultTableModel) jTable_Producto.getModel();
+
+        List<Clase_Venta> ventas = new ArrayList<>();
+
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            int idProducto = 0;
+            int cantidad = 0;
+
+            Object idProductoObj = modelo.getValueAt(i, 0);
+            Object cantidadObj = modelo.getValueAt(i, 3);
+
+            if (idProductoObj != null && cantidadObj != null) {
+                idProducto = Integer.parseInt(idProductoObj.toString());
+                cantidad = Integer.parseInt(cantidadObj.toString());
+
+                Clase_Venta venta = new Clase_Venta(fechaHora, idCliente, idEmpleado, cantidad, descuento, idProducto);
+                ventas.add(venta);
+            }
+        }
+
+        // Agregar todas las ventas y productos en la base de datos
+        ventaProductoDAO.agregarVentasYProductos(ventas);
     }
-
-    // Agregar todas las ventas y productos en la base de datos
-    ventaProductoDAO.agregarVentasYProductos(ventas);
-}
-
-
-
-
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jTextField_BuscarCliente = new javax.swing.JTextField();
         jTextField_Fecha_Hora = new javax.swing.JTextField();
@@ -420,13 +447,12 @@ public void agregarProductoATabla() {
         jButton_guardar_venta = new javax.swing.JButton();
         jButton_ver_Formulario_venta = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jTextField_Pago = new javax.swing.JTextField();
         jTextField_Cambio = new javax.swing.JTextField();
         jTextField_Total = new javax.swing.JTextField();
-        jTextField_Pago = new javax.swing.JTextField();
         jTextField_Descuento = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jTextField_Busqueda_Combo = new javax.swing.JTextField();
-        jSpinner_Cantidad_Producto = new javax.swing.JSpinner();
         jComboBox_Producto = new javax.swing.JComboBox<>();
         jButton_Agregar = new javax.swing.JButton();
         jButton_Borrar_p = new javax.swing.JButton();
@@ -434,6 +460,8 @@ public void agregarProductoATabla() {
         jTable_Prsmks = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Producto = new javax.swing.JTable();
+        jSpinner_Cantidad_Producto = new javax.swing.JSpinner();
+        jTextField_Stok = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -442,36 +470,12 @@ public void agregarProductoATabla() {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel5.setBackground(new java.awt.Color(0, 153, 153));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Farmacia Rosales");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBackground(new java.awt.Color(204, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        jTextField_BuscarCliente.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_BuscarCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_BuscarCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_BuscarCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_BuscarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_BuscarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -484,8 +488,9 @@ public void agregarProductoATabla() {
             }
         });
 
+        jTextField_Fecha_Hora.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_Fecha_Hora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Fecha_Hora.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha y Hora", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Fecha_Hora.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha y Hora", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_Fecha_Hora.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Fecha_Hora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -493,23 +498,25 @@ public void agregarProductoATabla() {
             }
         });
 
+        jComboEmpleado.setBackground(new java.awt.Color(204, 255, 255));
         jComboEmpleado.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jComboEmpleado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jComboEmpleado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jComboEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboEmpleadoActionPerformed(evt);
             }
         });
 
+        jComboCliente.setBackground(new java.awt.Color(204, 255, 255));
         jComboCliente.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jComboCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jComboCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jComboCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboClienteActionPerformed(evt);
             }
         });
 
-        jButton_guardar_venta.setBackground(new java.awt.Color(153, 255, 153));
+        jButton_guardar_venta.setBackground(new java.awt.Color(51, 255, 51));
         jButton_guardar_venta.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_guardar_venta.setText("Guardar");
         jButton_guardar_venta.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -522,18 +529,29 @@ public void agregarProductoATabla() {
         jButton_ver_Formulario_venta.setBackground(new java.awt.Color(204, 204, 255));
         jButton_ver_Formulario_venta.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_ver_Formulario_venta.setText("Ver Ventas");
-        jButton_ver_Formulario_venta.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton_ver_Formulario_venta.setBorder(null);
         jButton_ver_Formulario_venta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ver_Formulario_ventaActionPerformed(evt);
             }
         });
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBackground(new java.awt.Color(204, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
+        jTextField_Pago.setBackground(new java.awt.Color(204, 255, 255));
+        jTextField_Pago.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Pago.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pago", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
+        jTextField_Pago.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Pago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_Pago(evt);
+            }
+        });
+
+        jTextField_Cambio.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_Cambio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Cambio.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vuelto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Cambio.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vuelto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_Cambio.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Cambio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -541,21 +559,13 @@ public void agregarProductoATabla() {
             }
         });
 
+        jTextField_Total.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_Total.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Total.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Total.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_Total.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Total.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Total(evt);
-            }
-        });
-
-        jTextField_Pago.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Pago.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pago", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
-        jTextField_Pago.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField_Pago.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Pago(evt);
             }
         });
 
@@ -565,28 +575,27 @@ public void agregarProductoATabla() {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField_Cambio)
-                    .addComponent(jTextField_Pago)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 3, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(jTextField_Pago)
+                .addGap(31, 31, 31)
+                .addComponent(jTextField_Cambio)
+                .addGap(30, 30, 30)
+                .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jTextField_Pago, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField_Cambio, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_Pago, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Cambio, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
 
+        jTextField_Descuento.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_Descuento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Descuento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Descuento %", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Descuento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Descuento %", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_Descuento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Descuento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -609,33 +618,37 @@ public void agregarProductoATabla() {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jTextField_BuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jTextField_Descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField_Fecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(17, 17, 17)
+                                .addComponent(jTextField_BuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jComboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(34, 34, 34)
-                                        .addComponent(jButton_guardar_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton_ver_Formulario_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(38, Short.MAX_VALUE))
+                                        .addComponent(jTextField_Descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextField_Fecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jComboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jComboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(70, 70, 70)
+                                                .addComponent(jButton_guardar_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton_ver_Formulario_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 32, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField_BuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -644,26 +657,24 @@ public void agregarProductoATabla() {
                     .addComponent(jTextField_Descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_Fecha_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jComboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton_guardar_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton_ver_Formulario_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(131, 131, 131))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                .addComponent(jComboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_guardar_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_ver_Formulario_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 490, 490));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 530));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        jTextField_Busqueda_Combo.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_Busqueda_Combo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField_Busqueda_Combo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Busqueda_Combo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_Busqueda_Combo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Busqueda_Combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -676,18 +687,8 @@ public void agregarProductoATabla() {
             }
         });
 
-        jSpinner_Cantidad_Producto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cantidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
-        jSpinner_Cantidad_Producto.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jSpinner_Cantidad_Producto(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-
-        jComboBox_Producto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jComboBox_Producto.setBackground(new java.awt.Color(204, 255, 255));
+        jComboBox_Producto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jComboBox_Producto.setMinimumSize(new java.awt.Dimension(72, 45));
         jComboBox_Producto.setPreferredSize(new java.awt.Dimension(72, 4));
         jComboBox_Producto.addActionListener(new java.awt.event.ActionListener() {
@@ -696,7 +697,7 @@ public void agregarProductoATabla() {
             }
         });
 
-        jButton_Agregar.setBackground(new java.awt.Color(153, 255, 153));
+        jButton_Agregar.setBackground(new java.awt.Color(51, 255, 51));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Agregar.setForeground(new java.awt.Color(51, 51, 51));
         jButton_Agregar.setText("Agregar");
@@ -710,7 +711,7 @@ public void agregarProductoATabla() {
         jButton_Borrar_p.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Borrar_p.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Borrar_p.setText("Eliminar");
-        jButton_Borrar_p.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Borrar_p.setBorder(null);
         jButton_Borrar_p.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Borrar_p(evt);
@@ -730,7 +731,7 @@ public void agregarProductoATabla() {
         ));
         jScrollPane2.setViewportView(jTable_Prsmks);
 
-        jTable_Producto.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jTable_Producto.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jTable_Producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -759,27 +760,49 @@ public void agregarProductoATabla() {
         jTable_Producto.setShowGrid(true);
         jScrollPane1.setViewportView(jTable_Producto);
 
+        jSpinner_Cantidad_Producto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cantidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jSpinner_Cantidad_Producto.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jSpinner_Cantidad_Producto(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        jTextField_Stok.setEditable(false);
+        jTextField_Stok.setBackground(new java.awt.Color(204, 255, 255));
+        jTextField_Stok.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Stok.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Stok", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
+        jTextField_Stok.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Stok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_Stok(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jComboBox_Producto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_Busqueda_Combo, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)
-                                .addComponent(jButton_Borrar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jSpinner_Cantidad_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField_Busqueda_Combo, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jButton_Borrar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jSpinner_Cantidad_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addComponent(jTextField_Stok, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -787,20 +810,20 @@ public void agregarProductoATabla() {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField_Busqueda_Combo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinner_Cantidad_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Stok, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Borrar_p, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox_Producto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSpinner_Cantidad_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(286, 286, 286))
+                .addComponent(jComboBox_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(184, 184, 184))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 620, 490));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, 820, 530));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -817,46 +840,10 @@ public void agregarProductoATabla() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_guardar_venta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardar_venta
-        // Guardar la venta y los productos
+      
         guardarVentaProducto();
-
-        // Obtener una referencia al contenedor padre (MDIMenu)
-        Container container = getParent();
-        if (container instanceof JDesktopPane) {
-            JDesktopPane desktopPane = (JDesktopPane) container;
-
-            // Cerrar el formulario actual
-            dispose();
-
-            // Buscar el formulario JInternalFrame_Venta en el JDesktopPane
-            JInternalFrame_Venta ventaForm = null;
-            JInternalFrame[] frames = desktopPane.getAllFrames();
-            for (JInternalFrame frame : frames) {
-                if (frame instanceof JInternalFrame_Venta) {
-                    ventaForm = (JInternalFrame_Venta) frame;
-                    break;
-                }
-            }
-
-            if (ventaForm != null) {
-                try {
-                    ventaForm.setSelected(true);
-                    return; // Salir del método después de seleccionar el formulario
-                } catch (java.beans.PropertyVetoException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                // Mostrar el formulario JInternalFrame_Venta si no se encontró
-                ventaForm = new JInternalFrame_Venta();
-                desktopPane.add(ventaForm);
-                ventaForm.setVisible(true);
-                try {
-                    ventaForm.setSelected(true);
-                } catch (java.beans.PropertyVetoException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        limpiarCampos();
+         JOptionPane.showMessageDialog(this, "¡La venta fue agregada correctamente!");
 
 
     }//GEN-LAST:event_jButton_guardar_venta
@@ -870,7 +857,7 @@ public void agregarProductoATabla() {
     }//GEN-LAST:event_jTextField_Fecha_Hora
 
     private void jComboBox_Producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Producto
-      jComboBox_Producto.setBackground(Color.WHITE);
+        jComboBox_Producto.setBackground(new Color(204, 255, 255));
 
     }//GEN-LAST:event_jComboBox_Producto
 
@@ -879,13 +866,21 @@ public void agregarProductoATabla() {
     }//GEN-LAST:event_jTextField_Busqueda_Combo
 
     private void jTextField_Busqueda_ComboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_Busqueda_ComboKeyReleased
-        String busqueda = jTextField_Busqueda_Combo.getText(); // Obtener el texto ingresado en el campo de búsqueda
+        String busqueda = jTextField_Busqueda_Combo.getText();
 
-        CRUD_Venta_Producto gr = new CRUD_Venta_Producto();
-        ArrayList<Clase_Producto_Cargardatos> listaProductos = gr.buscarProductos(busqueda);
+        CRUD_Venta_Producto crudVentaProducto = new CRUD_Venta_Producto();
+
+        ArrayList<Clase_Producto_Cargardatos> listaProductos = crudVentaProducto.buscarProductos(busqueda);
         jComboBox_Producto.removeAllItems();
         for (Clase_Producto_Cargardatos producto : listaProductos) {
             jComboBox_Producto.addItem(producto);
+        }
+
+        // Obtener la cantidad de stock del producto y mostrarlo en jTextField_Stok
+        if (!listaProductos.isEmpty()) {
+            Clase_Producto_Cargardatos productoSeleccionado = listaProductos.get(0); // Obtener el primer producto de la lista
+            int cantidadStock = crudVentaProducto.obtenerCantidadStockProducto(String.valueOf(productoSeleccionado.getId_Producto()));
+            jTextField_Stok.setText(String.valueOf(cantidadStock));
         }
     }//GEN-LAST:event_jTextField_Busqueda_ComboKeyReleased
 
@@ -895,24 +890,38 @@ public void agregarProductoATabla() {
     }//GEN-LAST:event_jButton_Agregar
 
     private void jButton_Borrar_p(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Borrar_p
-        int filaSeleccionada = jTable_Producto.getSelectedRow();
-        if (filaSeleccionada == -1) {
+        int filaSeleccionadaProducto = jTable_Producto.getSelectedRow();
+        int filaSeleccionadaDetalles = jTable_Prsmks.getSelectedRow();
 
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila para borrar.");
-            return;
+        DefaultTableModel modeloProducto = (DefaultTableModel) jTable_Producto.getModel();
+        DefaultTableModel modeloDetalles = (DefaultTableModel) jTable_Prsmks.getModel();
+
+        // Si seleccionamos fila en jTable_Producto
+        if (filaSeleccionadaProducto != -1 && filaSeleccionadaProducto < modeloDetalles.getRowCount()) {
+            modeloProducto.removeRow(filaSeleccionadaProducto);
+            modeloDetalles.removeRow(filaSeleccionadaProducto);
+
+            calcularTotalTabla();
+            return;  // Regresamos para no ejecutar el siguiente bloque de eliminación
         }
 
-        DefaultTableModel modelo = (DefaultTableModel) jTable_Producto.getModel();
+        // Si seleccionamos fila en jTable_Prsmks
+        if (filaSeleccionadaDetalles != -1 && filaSeleccionadaDetalles < modeloProducto.getRowCount()) {
+            modeloDetalles.removeRow(filaSeleccionadaDetalles);
+            modeloProducto.removeRow(filaSeleccionadaDetalles);
 
-        modelo.removeRow(filaSeleccionada);
+            calcularTotalTabla();
+            return;  // Regresamos para no mostrar el mensaje de error
+        }
 
-        jTable_Producto.setModel(modelo);
+        JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila para borrar.");
+
+
     }//GEN-LAST:event_jButton_Borrar_p
 
     private void jSpinner_Cantidad_Producto(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSpinner_Cantidad_Producto
         jSpinner_Cantidad_Producto.setBackground(new Color(204, 255, 255));
-                    
-                    
+
         JSpinner spinner = (JSpinner) evt.getSource();
         JComponent editor = spinner.getEditor();
         JFormattedTextField textField = ((JSpinner.DefaultEditor) editor).getTextField();
@@ -934,23 +943,23 @@ public void agregarProductoATabla() {
     }//GEN-LAST:event_jTextField_Descuento
 
     private void jTextField_DescuentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_DescuentoKeyTyped
-     char c = evt.getKeyChar();
-    
-    // Verificar si el caracter es un dígito o el carácter de retroceso (backspace)
-    if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
-        evt.consume(); // Consumir el evento para evitar que se ingrese el carácter no válido
-    }
-    
-    // Obtener el texto actual en el JTextField
-    String currentText = jTextField_Descuento.getText();
-    
-    // Obtener el nuevo texto agregando el carácter actual
-    String newText = currentText + c;
-    
-    // Verificar si el nuevo texto es un número válido en el rango de 0 a 100
-    if (!isValidNumber(newText)) {
-        evt.consume(); // Consumir el evento para evitar que se ingrese el carácter no válido
-    }
+        char c = evt.getKeyChar();
+
+        // Verificar si el caracter es un dígito o el carácter de retroceso (backspace)
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume(); // Consumir el evento para evitar que se ingrese el carácter no válido
+        }
+
+        // Obtener el texto actual en el JTextField
+        String currentText = jTextField_Descuento.getText();
+
+        // Obtener el nuevo texto agregando el carácter actual
+        String newText = currentText + c;
+
+        // Verificar si el nuevo texto es un número válido en el rango de 0 a 100
+        if (!isValidNumber(newText)) {
+            evt.consume(); // Consumir el evento para evitar que se ingrese el carácter no válido
+        }
     }//GEN-LAST:event_jTextField_DescuentoKeyTyped
 
     private void jTextField_Total(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Total
@@ -963,7 +972,7 @@ public void agregarProductoATabla() {
     }//GEN-LAST:event_jComboEmpleadoActionPerformed
 
     private void jComboClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboClienteActionPerformed
-       
+
     }//GEN-LAST:event_jComboClienteActionPerformed
 
     private void jTextField_BuscarClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_BuscarClienteKeyReleased
@@ -975,6 +984,7 @@ public void agregarProductoATabla() {
         for (Clase_Cliente cliente : listaClientes) {
             jComboCliente.addItem(cliente);
         }
+
     }//GEN-LAST:event_jTextField_BuscarClienteKeyReleased
 
     private void jButton_ver_Formulario_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ver_Formulario_ventaActionPerformed
@@ -1018,12 +1028,16 @@ public void agregarProductoATabla() {
     }//GEN-LAST:event_jTextField_Cambio
 
     private void jTextField_DescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_DescuentoKeyReleased
-     
+
     }//GEN-LAST:event_jTextField_DescuentoKeyReleased
 
     private void jTextField_Pago(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Pago
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_Pago
+
+    private void jTextField_Stok(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Stok
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_Stok
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1034,16 +1048,14 @@ public void agregarProductoATabla() {
     public static javax.swing.JComboBox<Clase_Producto_Cargardatos> jComboBox_Producto;
     public static javax.swing.JComboBox<Clase_Cliente> jComboCliente;
     public javax.swing.JComboBox<Clase_Empleado> jComboEmpleado;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner_Cantidad_Producto;
-    public static javax.swing.JTable jTable_Producto;
+    private javax.swing.JTable jTable_Producto;
     private javax.swing.JTable jTable_Prsmks;
     private javax.swing.JTextField jTextField_BuscarCliente;
     private javax.swing.JTextField jTextField_Busqueda_Combo;
@@ -1051,6 +1063,7 @@ public void agregarProductoATabla() {
     public static javax.swing.JTextField jTextField_Descuento;
     private javax.swing.JTextField jTextField_Fecha_Hora;
     private javax.swing.JTextField jTextField_Pago;
+    private javax.swing.JTextField jTextField_Stok;
     private javax.swing.JTextField jTextField_Total;
     // End of variables declaration//GEN-END:variables
 }

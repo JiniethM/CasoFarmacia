@@ -21,7 +21,7 @@ public class CRUD_Proveedor {
     public DefaultTableModel mostrarDatos() {
         ResultSet rs;
         DefaultTableModel modelo;
-        String[] titulos = {"Id_Proveedor", "Cedula", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2", "Gmail", "Numero_Celular", "Direccion"};
+        String[] titulos = {"ID", "Cedula", "Primer N", "Segundo N", "Primer A", "Segundo A", "Gmail", "Telefono", "Direccion"};
         String[] registro = new String[9];
 
         modelo = new DefaultTableModel(null, titulos);
@@ -54,7 +54,7 @@ public class CRUD_Proveedor {
         ResultSet rs;
         DefaultTableModel modelo;
 
-        String[] titulos = {"Id_Proveedor", "Cedula", "Nombre_1", "Nombre_2", "Apellido_1", "Apellido_2", "Gmail", "Numero_Celular", "Direccion"};
+        String[] titulos ={"ID", "Cedula", "Primer N", "Segundo N", "Primer A", "Segundo A", "Gmail", "Telefono", "Direccion"};
         String[] registro = new String[9];
 
         modelo = new DefaultTableModel(null, titulos);

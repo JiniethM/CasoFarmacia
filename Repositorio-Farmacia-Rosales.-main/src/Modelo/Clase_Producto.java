@@ -24,6 +24,14 @@ public class Clase_Producto extends Clase_Proveedor {
     public int Id_Presentacion;
     public int Id_Laboratorio;
 
+    public Clase_Producto(int Id_Producto, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, Date Fecha_Caducidad) {
+        this.Id_Producto = Id_Producto;
+        this.Cantidad_Producto = Cantidad_Producto;
+        this.Precio_Compra = Precio_Compra;
+        this.Precio_Venta = Precio_Venta;
+        this.Fecha_Caducidad = Fecha_Caducidad;
+    }
+
     public Clase_Producto(int Id_Producto, String Nombre, String Descripcion, float Precio_Venta, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio) {
         this.Id_Producto = Id_Producto;
         this.Nombre = Nombre;
@@ -115,7 +123,7 @@ public class Clase_Producto extends Clase_Proveedor {
 
     @Override
     public String toString() {
-        return "ID: " + Id_Producto + ", Nombre: " + Nombre + ", Precio: " + String.valueOf(Precio_Venta);
+        return "Nombre: " + Nombre + ", Precio: " + String.valueOf(Precio_Venta);
     }
    
 

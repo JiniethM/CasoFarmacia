@@ -39,6 +39,22 @@ public class CRUD_Producto {
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
     
+    public int obtenerTotalCantidadProducto() {
+    try {
+        CallableStatement statement = cn.prepareCall("{CALL CalcularTotalCantidadProducto}");
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getInt("TotalCantidad");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return 0; 
+}
+
+    
      public void borrarProductoYProveedor(int IdProducto) {
         String sql = "{call BorrarProductoYProveedor(?)}";
         try (CallableStatement stmt = cn.prepareCall(sql)) {

@@ -46,26 +46,52 @@ import javax.swing.border.Border;
  * @author Diers
  */
 public class Login_Form extends javax.swing.JFrame {
-      private ImageIcon hideIcon;
-    private ImageIcon showIcon; private Connection cn;
-    
+
+    private ImageIcon hideIcon;
+    private ImageIcon showIcon;
+    private Connection cn;
+
     private String rol;
 
-
-   public Login_Form() {
+    public Login_Form() {
         initComponents();
-          setTitle("Farmacia Rosales");
-         try {
+        setTitle("Farmacia Rosales");
+        try {
             Image image = ImageIO.read(getClass().getResource("/Vistas_Iconos/apothecary-IconoPequeño.png"));
             setIconImage(image);
         } catch (IOException e) {
             e.printStackTrace();
         }
-         
+        getRootPane().setDefaultButton(jButton_Iniciar_sesion);
+        jTextField_Contraseña.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String usuario = jComboBox_Usuario.getSelectedItem().toString();
+                String contraseña = jTextField_Contraseña.getText();
+
+                if (cn != null) {
+                    if (Login.validarCredenciales(cn, usuario, contraseña)) {
+                        rol = Login.obtenerRol(cn, usuario); // Asignar el valor del rol
+
+                        if (rol.equals("Gerente")) {
+                            MDIMenu farmacia = new MDIMenu();
+                            farmacia.setVisible(true);
+                        } else if (rol.equals("Vendedor")) {
+                            MDIMenu1 farmacia1 = new MDIMenu1();
+                            farmacia1.setVisible(true);
+                        }
+
+                        dispose(); // Cerrar el formulario de inicio de sesión
+                    } else {
+                        JOptionPane.showMessageDialog(Login_Form.this, "Contraseña incorrecta. Por favor, inténtalo de nuevo.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+
         Conexion conexion = new Conexion();
         cn = conexion.conectar();
-       
-       hideIcon = new ImageIcon(getClass().getResource("/Vistas_Iconos/private.png"));
+
+        hideIcon = new ImageIcon(getClass().getResource("/Vistas_Iconos/private.png"));
         showIcon = new ImageIcon(getClass().getResource("/Vistas_Iconos/show.png"));
 
         jTextField_Contraseña.setEchoChar('*');
@@ -83,8 +109,6 @@ public class Login_Form extends javax.swing.JFrame {
             }
         });
 
-       
-
         jComboBox_Usuario.setBackground(new Color(204, 255, 255));
         jComboBox_Rol.setBackground(new Color(204, 255, 255));
         jTextField_Contraseña.setBackground(new Color(204, 255, 255));
@@ -92,14 +116,10 @@ public class Login_Form extends javax.swing.JFrame {
         UIManager.put("Slider.background", new Color(204, 255, 255));
 
     }
-   
 
     public String getRol() {
         return rol;
     }
-
-  
-
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -276,31 +296,31 @@ public class Login_Form extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox_Rol
 
     private void jButton_Iniciar_sesion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Iniciar_sesion
-   String usuario = jComboBox_Usuario.getSelectedItem().toString();
-    String contraseña = jTextField_Contraseña.getText();
+        String usuario = jComboBox_Usuario.getSelectedItem().toString();
+        String contraseña = jTextField_Contraseña.getText();
 
-    if (cn != null) {
-        if (Login.validarCredenciales(cn, usuario, contraseña)) {
-            rol = Login.obtenerRol(cn, usuario); // Asignar el valor del rol
+        if (cn != null) {
+            if (Login.validarCredenciales(cn, usuario, contraseña)) {
+                rol = Login.obtenerRol(cn, usuario); // Asignar el valor del rol
 
-            if (rol.equals("Gerente")) {
-                MDIMenu farmacia = new MDIMenu();
-                farmacia.setVisible(true);
-            } else if (rol.equals("Vendedor")) {
-                MDIMenu1 farmacia1 = new MDIMenu1();
-                farmacia1.setVisible(true);
+                if (rol.equals("Gerente")) {
+                    MDIMenu farmacia = new MDIMenu();
+                    farmacia.setVisible(true);
+                } else if (rol.equals("Vendedor")) {
+                    MDIMenu1 farmacia1 = new MDIMenu1();
+                    farmacia1.setVisible(true);
+                }
+
+                dispose(); // Cerrar el formulario de inicio de sesión
+            } else {
+                JOptionPane.showMessageDialog(this, "Contraseña incorrecta. Por favor, inténtalo de nuevo.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
             }
-
-            dispose(); // Cerrar el formulario de inicio de sesión
-        } else {
-            JOptionPane.showMessageDialog(this, "Contraseña incorrecta. Por favor, inténtalo de nuevo.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
         }
-    }
 
     }//GEN-LAST:event_jButton_Iniciar_sesion
 
     private void jTextField_ContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ContraseñaActionPerformed
-     
+
     }//GEN-LAST:event_jTextField_ContraseñaActionPerformed
 
     private void jButton_VerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_VerActionPerformed

@@ -6,6 +6,7 @@ import Controlador_Conexion_DB.Conexion;
 import Modelo.Clase_Venta;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridBagLayout;
@@ -20,6 +21,7 @@ import javax.swing.JLabel;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -38,30 +40,44 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
     public JInternalFrame_Venta() {
         initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        centrarRegistrosTabla();
+       setTitle("Ventas Realizadas");
+        setFrameIcon(new ImageIcon("C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Iconos\\apothecary-IconoPequeño.png"));
         personalizarTitulosTabla();
         ajustarAlturaFilasTabla();
+        colorearFilasTabla();
 
-    }
-
-    private void centrarRegistrosTabla() {
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        jTable_GestionVenta.setDefaultRenderer(Object.class, centerRenderer);
     }
 
     private void personalizarTitulosTabla() {
         DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) jTable_GestionVenta.getTableHeader().getDefaultRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER); // Centra los títulos
         jTable_GestionVenta.getTableHeader().setDefaultRenderer(headerRenderer);
-        jTable_GestionVenta.getTableHeader().setBackground(new Color(0, 153, 153));
-        jTable_GestionVenta.getTableHeader().setForeground(Color.WHITE);
-        jTable_GestionVenta.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        jTable_GestionVenta.getTableHeader().setBackground(new Color(0, 255, 255)); // Cambia el color de los títulos
+        jTable_GestionVenta.getTableHeader().setForeground(Color.BLACK); // Cambia el color del texto de los títulos a negro
+        Font headerFont = new Font("Segoe UI", Font.BOLD, 12); // Cambia el tamaño de letra de los títulos
+        jTable_GestionVenta.getTableHeader().setFont(headerFont);
         jTable_GestionVenta.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
     private void ajustarAlturaFilasTabla() {
-        jTable_GestionVenta.setRowHeight(30); // Ajusta aquí la altura deseada en píxeles
+        jTable_GestionVenta.setRowHeight(35); // Ajusta aquí la altura deseada en píxeles
+    }
+
+    private void colorearFilasTabla() {
+        jTable_GestionVenta.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (row % 2 == 0) {
+                    setBackground(new Color(204, 255, 255));
+                } else {
+                    setBackground(new Color(204, 255, 255));
+                }
+                setHorizontalAlignment(SwingConstants.CENTER); // Centramos el contenido
+                return this;
+            }
+        });
     }
 
     public void mostrar() {
@@ -111,14 +127,13 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
         jButton_Reportemes = new javax.swing.JButton();
         jButton_Reportetoaventa = new javax.swing.JButton();
         jButton_productosmasvendido = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
 
         jPanel9.setBackground(new java.awt.Color(0, 153, 153));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBackground(new java.awt.Color(204, 255, 255));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
         jTable_GestionVenta.setModel(new javax.swing.table.DefaultTableModel(
@@ -145,8 +160,9 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jTable_GestionVenta);
 
+        jTextField_Buscar_GetionVenta.setBackground(new java.awt.Color(204, 255, 255));
         jTextField_Buscar_GetionVenta.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jTextField_Buscar_GetionVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jTextField_Buscar_GetionVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         jTextField_Buscar_GetionVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_Buscar_GetionVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,10 +175,10 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Agregar.setBackground(new java.awt.Color(153, 255, 153));
+        jButton_Agregar.setBackground(new java.awt.Color(51, 255, 51));
         jButton_Agregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Agregar.setText("Agregar");
-        jButton_Agregar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Agregar.setBorder(null);
         jButton_Agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_AgregarActionPerformed(evt);
@@ -171,9 +187,8 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
 
         jButton_Eliminar.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Eliminar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton_Eliminar.setForeground(new java.awt.Color(255, 255, 255));
         jButton_Eliminar.setText("Eliminar");
-        jButton_Eliminar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Eliminar.setBorder(null);
         jButton_Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_EliminarActionPerformed(evt);
@@ -239,7 +254,7 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1309, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jTextField_Buscar_GetionVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
@@ -254,7 +269,7 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
                         .addComponent(jButton_Reportetoaventa)
                         .addGap(18, 18, 18)
                         .addComponent(jButton_productosmasvendido)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,28 +284,20 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
                     .addComponent(jButton_Reportetoaventa, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_productosmasvendido, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addGap(25, 25, 25))
         );
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Farmacia Rosales");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -504,7 +511,6 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton_Reportemes;
     private javax.swing.JButton jButton_Reportetoaventa;
     private javax.swing.JButton jButton_productosmasvendido;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;

@@ -8,41 +8,29 @@ import java.awt.event.WindowEvent;
 import Vistas.InternalFrame_Cliente;
 import Vistas.JFrame_Espera;
 
-import Vistas.JInternalFrame_Categoria;
 import Vistas.JInternalFrame_Compra_Producto;
 import Vistas.JInternalFrame_Empleado;
-import Vistas.JInternalFrame_Laboratorio;
-import Vistas.JInternalFrame_Presentacion;
+
 import Vistas.JInternalFrame_Producto;
 import Vistas.JInternalFrame_Proveedor;
 import Vistas.JInternalFrame_Venta;
 import Vistas.JInternalFrame_Venta_Producto;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.TextStyle;
-import java.time.temporal.ChronoField;
+
 import java.util.Locale;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 import javax.swing.Timer;
-import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
 
 /**
  *
@@ -128,9 +116,9 @@ public class MDIMenu extends javax.swing.JFrame {
         jButton_Cliente = new javax.swing.JButton();
         jButton_Proveedor = new javax.swing.JButton();
         jButton_Empleado = new javax.swing.JButton();
+        jLabelFecha = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabelFecha = new javax.swing.JLabel();
         jLabel_Hora = new javax.swing.JLabel();
         jLabel_Mostrar_Fecha_Letra = new javax.swing.JLabel();
 
@@ -156,6 +144,7 @@ public class MDIMenu extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 255, 255));
 
+        jButton4.setBackground(new java.awt.Color(0, 255, 255));
         jButton4.setText("Salir");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,28 +282,39 @@ public class MDIMenu extends javax.swing.JFrame {
                 .addComponent(jButton_Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton_Empleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(422, 422, 422)
-                .addComponent(jButton4)
-                .addGap(129, 129, 129))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(413, 413, 413)
+                        .addComponent(jButton4)
+                        .addGap(138, 138, 138))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(8, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton_Producto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addGap(24, 24, 24))
-                    .addComponent(jButton_Inicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Venta_Producto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Compra_producto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Producto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton_Inicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_Venta_Producto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_Compra_producto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton_Cliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Proveedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Empleado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton_Cliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton_Proveedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton_Empleado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, -1, 80));
@@ -326,11 +326,9 @@ public class MDIMenu extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vistas_Iconos/apothecary-g023478692_1280.png"))); // NOI18N
         jLabel1.setText("Farmacia Rosales");
 
-        jLabelFecha.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-
         jLabel_Hora.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
 
-        jLabel_Mostrar_Fecha_Letra.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel_Mostrar_Fecha_Letra.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -341,10 +339,8 @@ public class MDIMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_Mostrar_Fecha_Letra, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 750, Short.MAX_VALUE))
+                .addComponent(jLabel_Mostrar_Fecha_Letra, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 663, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,17 +348,12 @@ public class MDIMenu extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel_Hora, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel_Hora, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                            .addComponent(jLabel_Mostrar_Fecha_Letra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 16, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel_Mostrar_Fecha_Letra, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 80));
@@ -381,13 +372,6 @@ public class MDIMenu extends javax.swing.JFrame {
         ventaProductoForm.setLocation(x, y);
         jDesktopPane.add(ventaProductoForm);
         ventaProductoForm.setVisible(true);
-        ventaProductoForm.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE); // Configurar el cierre del formulario
-        ventaProductoForm.addInternalFrameListener(new InternalFrameAdapter() {
-            @Override
-            public void internalFrameClosed(InternalFrameEvent e) {
-                mostrarFormularioVenta(); // Mostrar el formulario JInternalFrame_Venta al cerrar JInternalFrame_Venta_Producto
-            }
-        });
     }//GEN-LAST:event_jButton_Venta_Producto
 
     private void jButton_Cliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Cliente
@@ -406,40 +390,22 @@ public class MDIMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_Cliente
 
     private void jButton_Compra_producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Compra_producto
-        JInternalFrame_Compra_Producto compra = new JInternalFrame_Compra_Producto();
-        compra.setSize(1082, 536);
-
-        int desktopPaneWidth = jDesktopPane.getWidth();
-
-        int x = (desktopPaneWidth - compra.getWidth()) / 2;
-        int y = 0;
-
-        compra.setLocation(x, y);
-        compra.setVisible(true);
-
-        jDesktopPane.removeAll();
-        jDesktopPane.add(compra);
-        try {
-            compra.setSelected(true);
-        } catch (java.beans.PropertyVetoException e) {
-            e.printStackTrace();
-        }
+        JInternalFrame_Compra_Producto est = new JInternalFrame_Compra_Producto();
+        int x = (jDesktopPane.getWidth() / 2) - est.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - est.getHeight() / 2;
+        est.setLocation(x, y);
+        jDesktopPane.add(est);
+        est.setVisible(true);
     }//GEN-LAST:event_jButton_Compra_producto
 
     private void jButton_Producto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Producto
+        JInternalFrame_Producto est = new JInternalFrame_Producto();
+        int x = (jDesktopPane.getWidth() / 2) - est.getWidth() / 2;
+        int y = (jDesktopPane.getHeight() / 2) - est.getHeight() / 2;
+        est.setLocation(x, y);
 
-        JInternalFrame_Producto vistaProducto = new JInternalFrame_Producto();
-        vistaProducto.setSize(1065, 562);
-        vistaProducto.setLocation(0, 0);
-        vistaProducto.setVisible(true);
-
-        jDesktopPane.removeAll();
-        jDesktopPane.add(vistaProducto);
-        try {
-            vistaProducto.setSelected(true);
-        } catch (java.beans.PropertyVetoException e) {
-            e.printStackTrace();
-        }
+        jDesktopPane.add(est);
+        est.setVisible(true);
 
 
     }//GEN-LAST:event_jButton_Producto

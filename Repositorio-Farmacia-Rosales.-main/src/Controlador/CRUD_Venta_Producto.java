@@ -35,6 +35,49 @@ public class CRUD_Venta_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
+    
+    public int obtenerCantidadStockProducto(String busqueda) {
+    int cantidadStock = 0;
+    try {
+        String query = "{ CALL MostrarCantidadStok(?) }";
+        CallableStatement cstmt = cn.prepareCall(query);
+        cstmt.setString(1, busqueda);
+        ResultSet rs = cstmt.executeQuery();
+        if (rs.next()) {
+            cantidadStock = rs.getInt("Cantidad_Producto");
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e);
+    }
+    return cantidadStock;
+}
+     public ArrayList<Clase_Producto_Cargardatos> buscarProductos(String busqueda) {
+        ArrayList<Clase_Producto_Cargardatos> listaProductos = new ArrayList<>();
+
+        try {
+            String query = "{ CALL BuscaProductos(?) }";
+            CallableStatement cstmt = cn.prepareCall(query);
+            cstmt.setString(1, busqueda);
+            ResultSet rs = cstmt.executeQuery();
+
+            while (rs.next()) {
+                int idProducto = rs.getInt("Id_Producto");
+                String nombreProducto = rs.getString("Nombre");
+                String descripcionProducto = rs.getString("Descripcion");
+                float precioVenta = rs.getFloat("Precio_Venta");
+                String categoria = rs.getString("Categoria");
+                String presentacion = rs.getString("Presentacion");
+                String laboratorio = rs.getString("Laboratorio");
+
+                Clase_Producto_Cargardatos producto = new Clase_Producto_Cargardatos(idProducto, nombreProducto, descripcionProducto, precioVenta, categoria, presentacion, laboratorio);
+                listaProductos.add(producto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listaProductos;
+    }
 
    public void agregarVentasYProductos(List<Clase_Venta> ventas) {
     String sql = "{CALL AgregarVentaYProducto(?, ?, ?, ?, ?, ?)}";
@@ -272,35 +315,6 @@ public class CRUD_Venta_Producto {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-
-    public ArrayList<Clase_Producto_Cargardatos> buscarProductos(String busqueda) {
-        ArrayList<Clase_Producto_Cargardatos> listaProductos = new ArrayList<>();
-
-        try {
-            String query = "{ CALL BuscaProductos(?) }";
-            CallableStatement cstmt = cn.prepareCall(query);
-            cstmt.setString(1, busqueda);
-            ResultSet rs = cstmt.executeQuery();
-
-            while (rs.next()) {
-                int idProducto = rs.getInt("Id_Producto");
-                String nombreProducto = rs.getString("Nombre");
-                String descripcionProducto = rs.getString("Descripcion");
-                float precioVenta = rs.getFloat("Precio_Venta");
-                String categoria = rs.getString("Categoria");
-                String presentacion = rs.getString("Presentacion");
-                String laboratorio = rs.getString("Laboratorio");
-
-                Clase_Producto_Cargardatos producto = new Clase_Producto_Cargardatos(idProducto, nombreProducto, descripcionProducto, precioVenta, categoria, presentacion, laboratorio);
-                listaProductos.add(producto);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return listaProductos;
-    }
-
     public ArrayList<Clase_Cliente> buscarClientes(String busqueda) {
         ArrayList<Clase_Cliente> listaClientes = new ArrayList<>();
         try {

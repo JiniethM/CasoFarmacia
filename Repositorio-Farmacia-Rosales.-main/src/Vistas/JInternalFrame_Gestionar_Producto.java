@@ -61,7 +61,6 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
     private ImageIcon imagenGuardada;
     private int idProductoActual;
 
-
     Conexion conexion = new Conexion();
 
     public JInternalFrame_Gestionar_Producto() {
@@ -70,6 +69,8 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         UIManager.put("TableHeader.foreground", Color.BLACK);
 
         initComponents();  // Inicializa los componentes antes de usarlos
+        mostrarCantidadStock();
+       
 
         setLayout(new FlowLayout());
 
@@ -93,63 +94,62 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         }
     }
 
-   public void configurarTabla() {
-    // ...
+    public void configurarTabla() {
+        // ...
 
-    int rowHeight = 84; // Altura deseada de la fila en píxeles
-    jTable_Producto1.setRowHeight(rowHeight);
+        int rowHeight = 84; // Altura deseada de la fila en píxeles
+        jTable_Producto1.setRowHeight(rowHeight);
 
-    // Establecer el ancho preferido de cada columna
-    jTable_Producto1.getColumnModel().getColumn(0).setPreferredWidth(60);
-    jTable_Producto1.getColumnModel().getColumn(1).setPreferredWidth(90);
-    jTable_Producto1.getColumnModel().getColumn(2).setPreferredWidth(100);
-    jTable_Producto1.getColumnModel().getColumn(3).setPreferredWidth(80);
-    jTable_Producto1.getColumnModel().getColumn(4).setPreferredWidth(120);
-    jTable_Producto1.getColumnModel().getColumn(5).setPreferredWidth(120);
-    jTable_Producto1.getColumnModel().getColumn(6).setPreferredWidth(100);
-    jTable_Producto1.getColumnModel().getColumn(7).setPreferredWidth(120);
-    jTable_Producto1.getColumnModel().getColumn(8).setPreferredWidth(110);
-    jTable_Producto1.getColumnModel().getColumn(9).setPreferredWidth(120);
-    jTable_Producto1.getColumnModel().getColumn(10).setPreferredWidth(110);
-    jTable_Producto1.getColumnModel().getColumn(11).setPreferredWidth(125);
+        // Establecer el ancho preferido de cada columna
+        jTable_Producto1.getColumnModel().getColumn(0).setPreferredWidth(60);
+        jTable_Producto1.getColumnModel().getColumn(1).setPreferredWidth(90);
+        jTable_Producto1.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable_Producto1.getColumnModel().getColumn(3).setPreferredWidth(80);
+        jTable_Producto1.getColumnModel().getColumn(4).setPreferredWidth(120);
+        jTable_Producto1.getColumnModel().getColumn(5).setPreferredWidth(120);
+        jTable_Producto1.getColumnModel().getColumn(6).setPreferredWidth(100);
+        jTable_Producto1.getColumnModel().getColumn(7).setPreferredWidth(120);
+        jTable_Producto1.getColumnModel().getColumn(8).setPreferredWidth(110);
+        jTable_Producto1.getColumnModel().getColumn(9).setPreferredWidth(120);
+        jTable_Producto1.getColumnModel().getColumn(10).setPreferredWidth(110);
+        jTable_Producto1.getColumnModel().getColumn(11).setPreferredWidth(125);
 
-    // Centrar los datos en las celdas de texto
-    DefaultTableCellRenderer textRenderer = new DefaultTableCellRenderer();
-    textRenderer.setHorizontalAlignment(JLabel.CENTER); // Centra el texto
-    jTable_Producto1.setDefaultRenderer(Object.class, textRenderer);
+        // Centrar los datos en las celdas de texto
+        DefaultTableCellRenderer textRenderer = new DefaultTableCellRenderer();
+        textRenderer.setHorizontalAlignment(JLabel.CENTER); // Centra el texto
+        jTable_Producto1.setDefaultRenderer(Object.class, textRenderer);
 
-    // Establecer el tamaño de la columna de imagen
-    TableColumnModel columnModel = jTable_Producto1.getColumnModel();
-    TableColumn imageColumn = columnModel.getColumn(6); // Columna de la imagen
-    imageColumn.setPreferredWidth(100); // Ajusta el tamaño según tus necesidades
+        // Establecer el tamaño de la columna de imagen
+        TableColumnModel columnModel = jTable_Producto1.getColumnModel();
+        TableColumn imageColumn = columnModel.getColumn(6); // Columna de la imagen
+        imageColumn.setPreferredWidth(100); // Ajusta el tamaño según tus necesidades
 
-    // Obtener el renderizador actual para la columna de imagen
-    TableCellRenderer defaultRenderer = jTable_Producto1.getDefaultRenderer(ImageIcon.class);
+        // Obtener el renderizador actual para la columna de imagen
+        TableCellRenderer defaultRenderer = jTable_Producto1.getDefaultRenderer(ImageIcon.class);
 
-    // Crear un nuevo renderizador para la columna de imagen
-    TableCellRenderer imageRenderer = new DefaultTableCellRenderer() {
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            if (value instanceof ImageIcon) {
-                ImageIcon originalIcon = (ImageIcon) value;
-                Image image = originalIcon.getImage();
-                if (image != null) {
-                    Image resizedImage = image.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
-                    ImageIcon resizedIcon = new ImageIcon(resizedImage);
+        // Crear un nuevo renderizador para la columna de imagen
+        TableCellRenderer imageRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                if (value instanceof ImageIcon) {
+                    ImageIcon originalIcon = (ImageIcon) value;
+                    Image image = originalIcon.getImage();
+                    if (image != null) {
+                        Image resizedImage = image.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+                        ImageIcon resizedIcon = new ImageIcon(resizedImage);
 
-                    JLabel label = new JLabel(resizedIcon);
-                    label.setHorizontalAlignment(JLabel.CENTER); // Centra la imagen
-                    return label;
+                        JLabel label = new JLabel(resizedIcon);
+                        label.setHorizontalAlignment(JLabel.CENTER); // Centra la imagen
+                        return label;
+                    }
                 }
+                return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }
-            return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        }
-    };
+        };
 
-    // Establecer el nuevo renderizador para la columna de imagen
-    jTable_Producto1.getColumnModel().getColumn(6).setCellRenderer(imageRenderer);
-}
-
+        // Establecer el nuevo renderizador para la columna de imagen
+        jTable_Producto1.getColumnModel().getColumn(6).setCellRenderer(imageRenderer);
+    }
 
     private byte[] obtenerBytesDesdeImagen(ImageIcon imagenIcono, String formato) {
         BufferedImage bufferedImage = new BufferedImage(imagenIcono.getIconWidth(), imagenIcono.getIconHeight(), BufferedImage.TYPE_INT_RGB);
@@ -165,6 +165,21 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         }
         return baos.toByteArray();
     }
+
+    public void mostrarCantidadStock() {
+        CRUD_Producto crudProducto = new CRUD_Producto();
+
+        try {
+            int totalCantidad = crudProducto.obtenerTotalCantidadProducto();
+            jTextField_Stok.setText(String.valueOf(totalCantidad));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+  
+
+
 
     public void mostrar() {
         try {
@@ -252,29 +267,24 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
 
         return formularioProducto;
     }
-   public void BuscarProducto() {
-    try {
-        DefaultTableModel modelo;
-        CRUD_Producto cli = new CRUD_Producto();
-        modelo = cli.BuscarProducto(jTextField_Buscar.getText());
 
-        if (modelo != null) {
-            jTable_Producto1.setModel(modelo);
-            configurarTabla(); // llama a configurarTabla() después de establecer el nuevo modelo
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontraron resultados.");
+    public void BuscarProducto() {
+        try {
+            DefaultTableModel modelo;
+            CRUD_Producto cli = new CRUD_Producto();
+            modelo = cli.BuscarProducto(jTextField_Buscar.getText());
+
+            if (modelo != null) {
+                jTable_Producto1.setModel(modelo);
+                configurarTabla(); // llama a configurarTabla() después de establecer el nuevo modelo
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error: " + e.getMessage());
         }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Ha ocurrido un error: " + e.getMessage());
+
     }
-    
-}
-
-   
-
-
-
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -287,6 +297,7 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         jButton_Eliminar = new javax.swing.JButton();
         jTextField_Buscar = new javax.swing.JTextField();
         jButton_Agregar = new javax.swing.JButton();
+        jTextField_Stok = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -340,7 +351,7 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         jButton_Eliminar.setBackground(new java.awt.Color(255, 102, 102));
         jButton_Eliminar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jButton_Eliminar.setText("Eliminar");
-        jButton_Eliminar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jButton_Eliminar.setBorder(null);
         jButton_Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Eliminar(evt);
@@ -371,35 +382,47 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
             }
         });
 
+        jTextField_Stok.setEditable(false);
+        jTextField_Stok.setBackground(new java.awt.Color(204, 255, 255));
+        jTextField_Stok.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Stok.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos en Stok", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 51, 255))); // NOI18N
+        jTextField_Stok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_StokActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jButton_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(212, 212, 212))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 1315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField_Stok, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jButton_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 1315, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Stok, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                    .addComponent(jButton_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -427,41 +450,41 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
     }//GEN-LAST:event_jTable_Producto1
 
     private void jButton_Editar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Editar
-       int selectedRow = jTable_Producto1.getSelectedRow();
-    if (selectedRow != -1) {
-        // Obtener los datos de la fila seleccionada
-        String idProducto = jTable_Producto1.getValueAt(selectedRow, 0).toString();
-        String nombre = jTable_Producto1.getValueAt(selectedRow, 1).toString();
-        String descripcion = jTable_Producto1.getValueAt(selectedRow, 2).toString();
-        int cantidad = (int) jTable_Producto1.getValueAt(selectedRow, 3);
-        float precioCompra = (float) jTable_Producto1.getValueAt(selectedRow, 4);
-        float precioVenta = (float) jTable_Producto1.getValueAt(selectedRow, 5);
-        ImageIcon imagenIcono = (ImageIcon) jTable_Producto1.getValueAt(selectedRow, 6);
-        String fechaCaducidad = jTable_Producto1.getValueAt(selectedRow, 7).toString();
-        String idCategoria = jTable_Producto1.getValueAt(selectedRow, 8).toString();
-        String idPresentacion = jTable_Producto1.getValueAt(selectedRow, 9).toString();
-        String idLaboratorio = jTable_Producto1.getValueAt(selectedRow, 10).toString();
-        String idProveedor = jTable_Producto1.getValueAt(selectedRow, 11).toString();
+        int selectedRow = jTable_Producto1.getSelectedRow();
+        if (selectedRow != -1) {
+            // Obtener los datos de la fila seleccionada
+            String idProducto = jTable_Producto1.getValueAt(selectedRow, 0).toString();
+            String nombre = jTable_Producto1.getValueAt(selectedRow, 1).toString();
+            String descripcion = jTable_Producto1.getValueAt(selectedRow, 2).toString();
+            int cantidad = (int) jTable_Producto1.getValueAt(selectedRow, 3);
+            float precioCompra = (float) jTable_Producto1.getValueAt(selectedRow, 4);
+            float precioVenta = (float) jTable_Producto1.getValueAt(selectedRow, 5);
+            ImageIcon imagenIcono = (ImageIcon) jTable_Producto1.getValueAt(selectedRow, 6);
+            String fechaCaducidad = jTable_Producto1.getValueAt(selectedRow, 7).toString();
+            String idCategoria = jTable_Producto1.getValueAt(selectedRow, 8).toString();
+            String idPresentacion = jTable_Producto1.getValueAt(selectedRow, 9).toString();
+            String idLaboratorio = jTable_Producto1.getValueAt(selectedRow, 10).toString();
+            String idProveedor = jTable_Producto1.getValueAt(selectedRow, 11).toString();
 
-        // Crear una instancia del formulario JInternalFrame_Producto
-        JInternalFrame_Producto formularioProducto = new JInternalFrame_Producto();
+            // Crear una instancia del formulario JInternalFrame_Producto
+            JInternalFrame_Producto formularioProducto = new JInternalFrame_Producto();
 
-        // Establecer los valores en los campos del formulario JInternalFrame_Producto
-        formularioProducto.setDatos(Integer.parseInt(idProducto), nombre, descripcion, cantidad, precioCompra, precioVenta, imagenIcono, fechaCaducidad, idCategoria, idPresentacion, idLaboratorio, idProveedor);
+            // Establecer los valores en los campos del formulario JInternalFrame_Producto
+            formularioProducto.setDatos(Integer.parseInt(idProducto), nombre, descripcion, cantidad, precioCompra, precioVenta, imagenIcono, fechaCaducidad, idCategoria, idPresentacion, idLaboratorio, idProveedor);
 
-        // Agregar el formulario al contenedor MDIParent (jdpane)
-        getParent().add(formularioProducto);
+            // Agregar el formulario al contenedor MDIParent (jdpane)
+            getParent().add(formularioProducto);
 
-        // Ubicar el formulario en el centro del contenedor
-        int x = (getParent().getWidth() - formularioProducto.getWidth()) / 2;
-        int y = (getParent().getHeight() - formularioProducto.getHeight()) / 2;
-        formularioProducto.setLocation(x, y);
+            // Ubicar el formulario en el centro del contenedor
+            int x = (getParent().getWidth() - formularioProducto.getWidth()) / 2;
+            int y = (getParent().getHeight() - formularioProducto.getHeight()) / 2;
+            formularioProducto.setLocation(x, y);
 
-        // Mostrar el formulario JInternalFrame_Producto
-        formularioProducto.setVisible(true);
-    } else {
-        JOptionPane.showMessageDialog(null, "Debe seleccionar un Producto.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+            // Mostrar el formulario JInternalFrame_Producto
+            formularioProducto.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Producto.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton_Editar
 
     private void jButton_Eliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Eliminar
@@ -551,6 +574,10 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
         BuscarProducto();
     }//GEN-LAST:event_jTextField_BuscarKeyReleased
 
+    private void jTextField_StokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StokActionPerformed
+        mostrarCantidadStock();
+    }//GEN-LAST:event_jTextField_StokActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Agregar;
@@ -560,5 +587,6 @@ public class JInternalFrame_Gestionar_Producto extends javax.swing.JInternalFram
     private javax.swing.JScrollPane jScrollPane6;
     public static javax.swing.JTable jTable_Producto1;
     private javax.swing.JTextField jTextField_Buscar;
+    private javax.swing.JTextField jTextField_Stok;
     // End of variables declaration//GEN-END:variables
 }

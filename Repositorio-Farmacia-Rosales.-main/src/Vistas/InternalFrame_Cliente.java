@@ -316,15 +316,23 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
 
         jTable_Cliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id cliente", "Cedula", "Nombre 1", "Nombre 2", "Apellido 1", "Apellido 2", "Telefono", "Dirección"
+                "ID", "Cedula", "Primer N", "Segundo N", "Primer A", "Segundo A", "Telefono", "Gmail", "Dirección"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable_Cliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTable_Cliente.setGridColor(new java.awt.Color(0, 153, 153));
         jTable_Cliente.setShowGrid(false);
@@ -448,7 +456,6 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
         jPanel1_Cliente.add(JtextFiel_Nombre_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 160, 45));
 
         JtextFiel_Nombre_2.setBackground(new java.awt.Color(204, 255, 255));
-        JtextFiel_Nombre_2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         JtextFiel_Nombre_2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JtextFiel_Nombre_2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Segundo Nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
         JtextFiel_Nombre_2.addActionListener(new java.awt.event.ActionListener() {
@@ -510,7 +517,7 @@ public class InternalFrame_Cliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable_Cliente(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable_Cliente
-
+      
     }//GEN-LAST:event_jTable_Cliente
 
     private void jTable_ClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_ClienteMouseEntered
